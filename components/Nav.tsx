@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
@@ -21,9 +22,13 @@ export default function Nav() {
     >
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
         <a href="#" className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center">
-            <span className="text-white font-bold text-sm">Y</span>
-          </div>
+          <Image
+            src="/logo.jpg"
+            alt="Yeam.ai"
+            width={32}
+            height={32}
+            className="rounded-lg"
+          />
           <span className="font-semibold text-slate-900 text-lg">Yeam.ai</span>
         </a>
 

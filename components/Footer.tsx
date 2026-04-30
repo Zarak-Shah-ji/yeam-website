@@ -11,7 +11,7 @@ export default function Footer() {
               <span className="font-semibold text-white">Yeam.ai</span>
             </div>
             <p className="text-sm text-slate-400 max-w-xs leading-relaxed">
-              AI-embedded EHR for small and mid-size clinics. From patient visit to paid claim.
+              AI medical workforce for clinics. Receptionist, Scribe, Coder, Nurse, and Billing agents working 24/7.
             </p>
           </div>
 
@@ -52,7 +52,7 @@ export default function Footer() {
             © {new Date().getFullYear()} Yeam.ai. All rights reserved.
           </p>
           <p className="text-xs text-slate-600">
-            HIPAA-compliant · Built for small & mid-size clinics
+            HIPAA Compliant · SOC 2 Ready · HL7/FHIR Compatible
           </p>
         </div>
       </div>

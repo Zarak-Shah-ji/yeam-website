@@ -1,17 +1,17 @@
 const agentActivities = [
-  { role: "analytics", color: "bg-blue-100 text-blue-700", message: "Denial rate this month is 8.2% — up from 6.1% last month. Top cause: missing prior authorizations for Z00.00 visits." },
-  { role: "billing", color: "bg-amber-100 text-amber-700", message: "Draft appeal ready for ENC-CMNAPYNX (Kareem Marks, Texas Medicaid). Reason: services medically necessary per clinical notes dated 12/28." },
-  { role: "analytics", color: "bg-blue-100 text-blue-700", message: "Your collection rate (67%) is below the Texas Medicaid benchmark of 78%. Primary gap: 34 claims over 90 days unpursued." },
-  { role: "front desk", color: "bg-green-100 text-green-700", message: "Patient Mohamed Erdman has a lapsed prior auth. Flagging before today's 2:59 PM appointment." },
+  { role: "receptionist", color: "bg-green-100 text-green-700", message: "Scheduled 3 appointments for tomorrow and sent confirmation texts to all patients. Prior auth flagged for Mohamed Erdman, 2:59 PM." },
+  { role: "scribe", color: "bg-violet-100 text-violet-700", message: "SOAP note generated for Dr. Chen's 1:30 PM encounter. ICD-10 Z00.00 and CPT 99397 suggested based on visit documentation." },
+  { role: "coder", color: "bg-amber-100 text-amber-700", message: "3 claims coded and queued for submission. Missing modifier flagged on claim ENC-004 before it goes to payer." },
+  { role: "nurse", color: "bg-blue-100 text-blue-700", message: "Post-visit follow-up completed for 8 patients. 1 abnormal response escalated to Dr. Chen for review." },
 ];
 
 const agentQuestions = [
-  "What is our current denial rate?",
-  "Show me revenue trends for the last 30 days",
-  "How do our collection rates compare to industry benchmark?",
-  "Which payers are denying most frequently?",
-  "Are there anomalies in our denial data?",
-  "Give me a performance report on claims",
+  "What did my AI Scribe document today?",
+  "Show me pending claims from the AI Coder",
+  "Any follow-up flags from the AI Nurse?",
+  "How many appointments did AI Receptionist book?",
+  "Which claims need provider review?",
+  "Give me today's AI workforce summary",
 ];
 
 export default function AISection() {
@@ -20,14 +20,14 @@ export default function AISection() {
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-14">
           <p className="text-blue-600 text-sm font-semibold uppercase tracking-wider mb-3">
-            AI Agents
+            AI Workforce
           </p>
           <h2 className="text-4xl font-bold text-slate-900 mb-4">
-            Not Just a Chatbot. An AI Team.
+            A Full AI Workforce, Not a Feature.
           </h2>
           <p className="text-lg text-slate-500 max-w-2xl mx-auto">
-            Yeam runs multiple AI agents simultaneously — across analytics, billing,
-            and front desk — so your team always knows what needs attention and why.
+            Yeam runs specialized AI agents simultaneously, across reception, documentation,
+            coding, and nursing, so your team always knows what needs attention and why.
           </p>
         </div>
 
@@ -35,7 +35,7 @@ export default function AISection() {
           {/* Agent Activity Feed */}
           <div>
             <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-4">
-              Agent Activity — Live
+              Agent Activity, Live
             </h3>
             <div className="space-y-3">
               {agentActivities.map((activity, i) => (
@@ -53,14 +53,14 @@ export default function AISection() {
               ))}
             </div>
             <p className="text-xs text-slate-400 mt-3 text-center">
-              AI agents work continuously in the background — you're always informed.
+              AI agents work continuously in the background, keeping you always informed.
             </p>
           </div>
 
-          {/* Analytics AI Chat */}
+          {/* AI Command Center */}
           <div>
             <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-4">
-              Ask the Analytics Agent
+              Ask Your AI Workforce
             </h3>
             <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
               <div className="p-4 border-b border-slate-100 bg-slate-50">
@@ -77,13 +77,13 @@ export default function AISection() {
               </div>
               <div className="p-4">
                 <div className="bg-slate-50 rounded-lg p-3 mb-3 text-sm text-slate-700 border border-slate-100">
-                  <span className="font-medium text-blue-600">Analytics Agent: </span>
-                  Yes — I have access to the statewide Texas Medicaid dataset (11M+ claims, 2018–2024) and your clinic&apos;s own EHR data. I can benchmark your performance against the full industry.
+                  <span className="font-medium text-blue-600">AI Workforce: </span>
+                  Today your AI Receptionist booked 11 appointments, AI Scribe documented 9 encounters, AI Coder queued 14 claims, and AI Nurse completed 8 patient follow-ups. One escalation is pending your review.
                 </div>
                 <div className="flex items-center gap-2 rounded-lg border border-slate-200 px-3 py-2.5 bg-white">
                   <input
                     type="text"
-                    placeholder="Ask anything about your practice data..."
+                    placeholder="Ask anything about your clinic operations..."
                     className="flex-1 text-sm text-slate-500 outline-none bg-transparent"
                     readOnly
                   />
@@ -99,13 +99,13 @@ export default function AISection() {
               </div>
             </div>
 
-            {/* Benchmark callout */}
+            {/* Workforce callout */}
             <div className="mt-4 bg-blue-600 rounded-xl p-5 text-white">
               <div className="text-xs font-semibold uppercase tracking-wider text-blue-200 mb-2">
-                Industry Benchmarking
+                Why AI Employees?
               </div>
               <p className="text-sm text-blue-100 leading-relaxed">
-                Yeam is trained on <strong className="text-white">11M+ Texas Medicaid claims</strong> (2018–2024) — so you can see exactly how your denial rate, collection rate, and top diagnoses compare to every other clinic in your state.
+                Unlike software tools, Yeam&apos;s AI agents <strong className="text-white">take action autonomously</strong>, not just surface information. They schedule, document, code, follow up, and bill, all without a human in the loop unless escalation is needed.
               </p>
             </div>
           </div>

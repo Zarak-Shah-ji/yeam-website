@@ -1,27 +1,27 @@
 const steps = [
   {
     number: "01",
-    title: "Patient Checks In",
+    title: "Patient Calls or Books Online",
     description:
-      "Front desk logs the appointment. Insurance is verified. The encounter is opened — and every subsequent action is linked to this visit.",
+      "AI Receptionist answers the call, schedules the appointment, verifies insurance, and sends an automated reminder, all without a human at the front desk.",
   },
   {
     number: "02",
-    title: "Provider Documents, Claim Is Generated",
+    title: "Provider Sees the Patient",
     description:
-      "The provider documents the encounter with clinical notes and diagnosis codes. Yeam maps this to a claim automatically, flagging any coding gaps before submission.",
+      "AI Scribe listens to the encounter in real time and generates complete SOAP notes automatically. The provider reviews, signs, and moves on. No typing required.",
   },
   {
     number: "03",
-    title: "Claim Submitted. AI Monitors.",
+    title: "AI Codes and Submits the Claim",
     description:
-      "The claim goes to the payer. Yeam tracks every status update. If a denial comes back, it's surfaced immediately — not buried in a worklist.",
+      "AI Coder maps clinical notes to accurate ICD-10 and CPT codes, flagging any gaps before submission. AI Billing then submits the claim and monitors payer responses.",
   },
   {
     number: "04",
-    title: "Denial Received — AI Appeals in One Click",
+    title: "Denial Received, AI Appeals in One Click",
     description:
-      "Click 'AI Appeal.' Yeam drafts a complete, professional appeal letter using the denial reason, payer rules, and the patient's clinical record. Review and submit.",
+      "If a claim is denied, AI Billing drafts a complete, professional appeal letter using the denial reason, payer rules, and the patient record. Review and submit.",
   },
 ];
 
@@ -34,11 +34,10 @@ export default function HowItWorks() {
             How It Works
           </p>
           <h2 className="text-4xl font-bold text-slate-900 mb-4">
-            Patient Visit to Paid Claim — All in One System
+            Patient Call to Paid Claim, All Handled by AI
           </h2>
           <p className="text-lg text-slate-500 max-w-xl mx-auto">
-            Yeam connects every step of the revenue cycle so nothing falls through
-            the cracks.
+            Every step of the patient journey has a dedicated AI agent working behind the scenes.
           </p>
         </div>
 
@@ -47,7 +46,7 @@ export default function HowItWorks() {
           <div className="hidden md:block absolute left-[2.25rem] top-10 bottom-10 w-px bg-slate-200" />
 
           <div className="space-y-8">
-            {steps.map((step, i) => (
+            {steps.map((step) => (
               <div key={step.number} className="flex gap-6 items-start relative">
                 <div className="shrink-0 w-[4.5rem] h-[4.5rem] rounded-2xl bg-blue-50 border-2 border-blue-100 flex flex-col items-center justify-center z-10">
                   <span className="text-xs font-bold text-blue-400">{step.number}</span>
