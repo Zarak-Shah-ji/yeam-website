@@ -1,5 +1,39 @@
 "use client";
 
+// ECG waveform: 10 cycles × 240px = 2400px per sweep, doubled for seamless scroll
+const W = 240;   // one heartbeat cycle width
+const B = 60;    // baseline y inside the 120-height SVG viewport
+const N = 10;    // cycles per half (one full screen sweep)
+
+function buildEcg(totalCycles: number): string {
+  let d = "";
+  for (let i = 0; i < totalCycles; i++) {
+    const x = i * W;
+    d += `${i === 0 ? "M" : "L"}${x},${B} `;
+    d += `L${x + 45},${B} `;                          // flat baseline
+    d += `L${x + 50},${B - 5} `;                      // P wave rise
+    d += `L${x + 55},${B} `;                          // P wave fall
+    d += `L${x + 68},${B} `;                          // PR interval
+    d += `L${x + 71},${B - 50} `;                     // R peak (QRS up)
+    d += `L${x + 74},${B + 46} `;                     // S trough (QRS down)
+    d += `L${x + 77},${B} `;                          // QRS return
+    d += `L${x + 95},${B} `;                          // ST segment
+    d += `Q${x + 118},${B - 20} ${x + 140},${B} `;   // T wave
+    d += `L${x + W},${B} `;                           // flat to next beat
+  }
+  return d.trim();
+}
+
+// Build 2N cycles so we can scroll by exactly N×W and loop seamlessly
+const ECG_PATH = buildEcg(N * 2);
+const SWEEP_PX = N * W; // 2400 — the translateX jump, matching CSS keyframe below
+
+const TRACES = [
+  { top: "18%",  opacity: 0.10, color: "#3b82f6", stroke: 1,   duration: 20, delay: -8  },
+  { top: "50%",  opacity: 0.22, color: "#3b82f6", stroke: 1.5, duration: 15, delay:  0, glow: true },
+  { top: "78%",  opacity: 0.08, color: "#818cf8", stroke: 1,   duration: 24, delay: -14 },
+];
+
 const NODES = [
   { id: "receptionist", label: "AI Receptionist", left: "8%",  top: "18%", delay: "0s" },
   { id: "scribe",       label: "AI Scribe",        left: "78%", top: "12%", delay: "1s" },
@@ -21,20 +55,32 @@ export default function Hero() {
         }}
       />
 
-      {/* Medical AI Constellation */}
+      {/* ECG traces + agent nodes */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-        {/* Animated connection lines */}
-        <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
-          <line x1="8%"  y1="18%" x2="78%" y2="12%" stroke="#3b82f6" strokeWidth="1" strokeDasharray="6 5" opacity="0.18" style={{ animation: "heroDashFlow 4s linear infinite" }} />
-          <line x1="78%" y1="12%" x2="82%" y2="68%" stroke="#3b82f6" strokeWidth="1" strokeDasharray="6 5" opacity="0.18" style={{ animation: "heroDashFlow 4s linear infinite 0.7s" }} />
-          <line x1="82%" y1="68%" x2="46%" y2="80%" stroke="#3b82f6" strokeWidth="1" strokeDasharray="6 5" opacity="0.18" style={{ animation: "heroDashFlow 4s linear infinite 1.4s" }} />
-          <line x1="46%" y1="80%" x2="6%"  y2="70%" stroke="#3b82f6" strokeWidth="1" strokeDasharray="6 5" opacity="0.18" style={{ animation: "heroDashFlow 4s linear infinite 2.1s" }} />
-          <line x1="6%"  y1="70%" x2="8%"  y2="18%" stroke="#3b82f6" strokeWidth="1" strokeDasharray="6 5" opacity="0.18" style={{ animation: "heroDashFlow 4s linear infinite 2.8s" }} />
-          <line x1="8%"  y1="18%" x2="82%" y2="68%" stroke="#818cf8" strokeWidth="1" strokeDasharray="4 7" opacity="0.10" style={{ animation: "heroDashFlow 5s linear infinite 1s" }} />
-          <line x1="78%" y1="12%" x2="6%"  y2="70%" stroke="#818cf8" strokeWidth="1" strokeDasharray="4 7" opacity="0.10" style={{ animation: "heroDashFlow 5s linear infinite 3s" }} />
-        </svg>
 
-        {/* Floating agent nodes */}
+        {/* Scrolling ECG heartbeat lines */}
+        {TRACES.map((t, i) => (
+          <div
+            key={i}
+            className="absolute overflow-hidden"
+            style={{ top: t.top, left: 0, right: 0, height: 120, marginTop: -60, opacity: t.opacity }}
+          >
+            <svg
+              width={SWEEP_PX * 2}
+              height={120}
+              viewBox={`0 0 ${SWEEP_PX * 2} 120`}
+              style={{
+                animation: `ecgScroll ${t.duration}s linear infinite`,
+                animationDelay: `${t.delay}s`,
+                filter: t.glow ? "drop-shadow(0 0 4px #3b82f6)" : "none",
+              }}
+            >
+              <path d={ECG_PATH} fill="none" stroke={t.color} strokeWidth={t.stroke} />
+            </svg>
+          </div>
+        ))}
+
+        {/* Floating agent node pills */}
         {NODES.map((node) => (
           <div
             key={node.id}
@@ -42,7 +88,7 @@ export default function Hero() {
             style={{
               left: node.left,
               top: node.top,
-              animation: `heroFloat 7s ease-in-out infinite`,
+              animation: "heroFloat 7s ease-in-out infinite",
               animationDelay: node.delay,
             }}
           >
@@ -52,20 +98,14 @@ export default function Hero() {
             </div>
           </div>
         ))}
-
-        {/* Soft glowing orbs */}
-        <div className="absolute w-80 h-80 rounded-full bg-blue-200/25 blur-3xl" style={{ top: "2%", left: "2%", animation: "heroOrb 10s ease-in-out infinite" }} />
-        <div className="absolute w-72 h-72 rounded-full bg-indigo-200/20 blur-3xl" style={{ top: "5%", right: "5%", animation: "heroOrb 12s ease-in-out infinite 3s" }} />
-        <div className="absolute w-60 h-60 rounded-full bg-teal-200/20 blur-3xl" style={{ bottom: "10%", right: "10%", animation: "heroOrb 9s ease-in-out infinite 6s" }} />
-        <div className="absolute w-56 h-56 rounded-full bg-violet-200/15 blur-3xl" style={{ bottom: "8%", left: "8%", animation: "heroOrb 11s ease-in-out infinite 1.5s" }} />
       </div>
 
-      {/* Center radial fade for text readability */}
+      {/* Center radial fade so headline stays readable */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 65% 75% at 50% 42%, rgba(255,255,255,0.88) 0%, transparent 100%)",
+            "radial-gradient(ellipse 65% 75% at 50% 42%, rgba(255,255,255,0.90) 0%, transparent 100%)",
         }}
       />
 
