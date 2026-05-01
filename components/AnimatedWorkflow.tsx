@@ -149,7 +149,7 @@ const steps = [
           <div>
             <div className="text-xs text-slate-400 mb-1">Denial Reason</div>
             <div className="text-sm text-slate-700 font-medium leading-snug">
-              Missing prior authorization for wellness visit (Z00.00) — procedure not pre-approved by payer.
+              Missing prior authorization for wellness visit (Z00.00), procedure not pre-approved by payer.
             </div>
           </div>
           <div className="grid grid-cols-2 gap-3 text-sm">
@@ -167,7 +167,7 @@ const steps = [
           <svg className="w-3.5 h-3.5 text-blue-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09Z" />
           </svg>
-          AI is ready to draft an appeal — click AI Appeal
+          AI is ready to draft an appeal, click AI Appeal
         </div>
       </div>
     ),
@@ -269,7 +269,7 @@ export default function AnimatedWorkflow() {
   const [paused, setPaused] = useState(false);
   const [progress, setProgress] = useState(0);
 
-  // Advance step on a clean timeout — no interval interference
+  // Advance step on a clean timeout, no interval interference
   useEffect(() => {
     if (paused) return;
     const timer = setTimeout(() => {
@@ -305,8 +305,8 @@ export default function AnimatedWorkflow() {
             From Patient Visit to Paid Claim
           </h2>
           <p className="text-lg text-slate-500 max-w-xl mx-auto">
-            Watch how Yeam moves a claim through the full revenue cycle —
-            and recovers denied revenue automatically.
+            Watch how Yeam moves a claim through the full revenue cycle,
+            recovering denied revenue automatically.
           </p>
         </div>
 

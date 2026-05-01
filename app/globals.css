@@ -14,3 +14,13 @@ body {
   background: #ffffff;
   color: #0f172a;
 }
+
+@keyframes heroFloat {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-14px); }
+}
+
+@keyframes ecgScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-2400px); }
+}

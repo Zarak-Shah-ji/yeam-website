@@ -8,13 +8,13 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Yeam.ai — AI-Powered EHR for Small & Mid-Size Clinics",
+  title: "Yeam.ai - AI Medical Workforce for Clinics",
   description:
-    "Yeam is the AI-embedded EHR that gives clinics full visibility from patient visit to insurance claim — slashing denial rates and protecting revenue at every step.",
+    "Yeam deploys a full team of AI agents into your clinic, handling reception, documentation, coding, and billing, so your human staff can focus entirely on patients.",
   openGraph: {
-    title: "Yeam.ai — AI-Powered EHR for Small & Mid-Size Clinics",
+    title: "Yeam.ai - AI Medical Workforce for Clinics",
     description:
-      "Stop losing revenue to denied claims. Yeam embeds AI across your entire billing cycle — from patient visit to claim appeal.",
+      "Hire AI medical employees, not software. Yeam deploys AI Receptionist, Scribe, Coder, and Billing agents that work 24/7 in your clinic.",
     url: "https://yeam.ai",
     siteName: "Yeam.ai",
     type: "website",

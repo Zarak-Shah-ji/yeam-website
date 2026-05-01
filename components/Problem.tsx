@@ -7,31 +7,31 @@ export default function Problem() {
             The Problem
           </p>
           <h2 className="text-4xl font-bold text-white">
-            Your EHR Generates Data.
+            Your Clinic Is Drowning
             <br />
-            Your Revenue Disappears Anyway.
+            in Work That AI Can Handle.
           </h2>
         </div>
 
         <div className="grid md:grid-cols-3 gap-6">
           {[
             {
-              stat: "5–8%",
-              title: "Average denial rate",
+              stat: "$800B",
+              title: "Spent on medical staff annually",
               body:
-                "The average small clinic denies 5–8% of claims — and most never know why. That's thousands of dollars walking out the door every month.",
+                "Clinics spend hundreds of thousands each year on receptionists, scribes, coders, and billing staff. Most of that time goes to repetitive tasks AI can handle instantly.",
             },
             {
-              stat: "40%",
-              title: "Of billing time is rework",
+              stat: "3–4 hrs",
+              title: "Documentation per provider daily",
               body:
-                "Billing staff spend nearly half their day chasing down denied claims, correcting errors, and resubmitting — instead of growing the practice.",
+                "Physicians spend up to 40% of their working day on paperwork, notes, and administrative tasks, leaving less time for actual patient care and accelerating burnout.",
             },
             {
-              stat: "60%",
-              title: "Of denied claims go unappealed",
+              stat: "35%",
+              title: "Average medical staff turnover",
               body:
-                "Most denied claims are never appealed — not because they can't be won, but because drafting appeals takes too long. Clinics just write it off.",
+                "High turnover in front desk and billing roles creates constant retraining costs and revenue gaps. AI medical employees never quit, never call in sick, and never need onboarding.",
             },
           ].map((item) => (
             <div
@@ -46,8 +46,8 @@ export default function Problem() {
         </div>
 
         <p className="text-center text-slate-400 mt-10 text-base">
-          Most EHRs show you what happened. Yeam tells you what to do about it —{" "}
-          <span className="text-white font-medium">automatically.</span>
+          Most clinics hire more staff to solve these problems. Yeam lets you{" "}
+          <span className="text-white font-medium">deploy AI employees instead.</span>
         </p>
       </div>
     </section>

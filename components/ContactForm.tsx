@@ -68,12 +68,12 @@ export default function ContactForm() {
               Book a Demo
             </p>
             <h2 className="text-4xl font-bold mb-5 leading-tight">
-              See Yeam Working in Your Clinic&apos;s Data.
+              See Your AI Medical Workforce in Action.
             </h2>
             <p className="text-blue-100 text-lg leading-relaxed mb-8">
-              We&apos;ll walk you through a live demo using real clinic data — so you can see
-              exactly how Yeam surfaces denial patterns, drafts appeals, and shows you where your
-              revenue is going.
+              We&apos;ll walk you through a live demo showing how Yeam&apos;s AI agents handle
+              reception, documentation, coding, and billing, so you can see exactly what
+              replacing manual work with AI looks like for your clinic.
             </p>
             <ul className="space-y-3">
               {[
