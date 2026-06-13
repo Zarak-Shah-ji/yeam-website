@@ -1,9 +1,16 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-background: #ffffff;
-  --color-foreground: #0f172a;
-  --font-sans: var(--font-inter);
+  --color-background: #FAF7F2;
+  --color-foreground: #1C1C1C;
+  --font-sans: var(--font-sans);
+
+  --color-cream: #FAF7F2;
+  --color-charcoal: #1C1C1C;
+  --color-terracotta: #C4622D;
+  --color-terracotta-hover: #A8522A;
+  --color-amber-warm: #D4956A;
+  --color-warm-border: #E8DDD4;
 }
 
 html {
@@ -11,8 +18,8 @@ html {
 }
 
 body {
-  background: #ffffff;
-  color: #0f172a;
+  background: #FAF7F2;
+  color: #1C1C1C;
 }
 
 @keyframes heroFloat {
@@ -41,13 +48,11 @@ body {
   to   { transform: rotate(360deg); }
 }
 
-/* Background mega-rings: tilt + slow Z-spin combined */
 @keyframes bgRingsSpin {
   from { transform: rotateX(55deg) rotateZ(0deg); }
   to   { transform: rotateX(55deg) rotateZ(360deg); }
 }
 
-/* Each ring counter-spins so they move at different apparent speeds */
 @keyframes bgRing1 {
   from { transform: rotate(0deg); }
   to   { transform: rotate(360deg); }
@@ -66,18 +71,7 @@ body {
   50%       { opacity: 0.6; }
 }
 
-/* Aurora blobs */
-@keyframes auroraBlob1 {
-  0%, 100% { transform: translate(0, 0) scale(1);      opacity: 0.18; }
-  33%      { transform: translate(70px, -50px) scale(1.09);  opacity: 0.23; }
-  66%      { transform: translate(-40px, 40px) scale(0.93); opacity: 0.14; }
-}
-@keyframes auroraBlob2 {
-  0%, 100% { transform: translate(0, 0) scale(1);       opacity: 0.16; }
-  40%      { transform: translate(-60px, 70px) scale(1.11);  opacity: 0.21; }
-  75%      { transform: translate(50px, -30px) scale(0.95);  opacity: 0.13; }
-}
-@keyframes auroraBlob3 {
-  0%, 100% { transform: translate(0, 0) scale(1);            opacity: 0.13; }
-  50%      { transform: translate(40px, -60px) scale(1.07);  opacity: 0.18; }
+@keyframes ringPulse {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50%       { opacity: 1; transform: scale(1.04); }
 }

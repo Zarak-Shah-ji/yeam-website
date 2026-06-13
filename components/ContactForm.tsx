@@ -41,7 +41,7 @@ export default function ContactForm() {
 
   if (status === "success") {
     return (
-      <section id="contact" className="py-20 px-6 bg-blue-600">
+      <section id="contact" className="py-20 px-6 bg-[#C4622D]">
         <div className="max-w-xl mx-auto text-center">
           <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6">
             <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -49,7 +49,7 @@ export default function ContactForm() {
             </svg>
           </div>
           <h2 className="text-3xl font-bold text-white mb-3">We&apos;ll be in touch soon.</h2>
-          <p className="text-blue-100 text-lg">
+          <p className="text-[#FDEEE6] text-lg">
             Thanks for reaching out. Someone from the Yeam team will follow up within one
             business day.
           </p>
@@ -59,18 +59,18 @@ export default function ContactForm() {
   }
 
   return (
-    <section id="contact" className="py-20 px-6 bg-blue-600">
+    <section id="contact" className="py-20 px-6 bg-[#C4622D]">
       <div className="max-w-5xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-12 items-start">
           {/* Left: copy */}
           <div className="text-white">
-            <p className="text-blue-200 text-sm font-semibold uppercase tracking-wider mb-4">
+            <p className="text-[#F5D5C0] text-sm font-semibold uppercase tracking-wider mb-4">
               Book a Demo
             </p>
             <h2 className="text-4xl font-bold mb-5 leading-tight">
               See Your AI Medical Workforce in Action.
             </h2>
-            <p className="text-blue-100 text-lg leading-relaxed mb-8">
+            <p className="text-[#FDEEE6] text-lg leading-relaxed mb-8">
               We&apos;ll walk you through a live demo showing how Yeam&apos;s AI agents handle
               reception, documentation, coding, and billing, so you can see exactly what
               replacing manual work with AI looks like for your clinic.
@@ -81,8 +81,8 @@ export default function ContactForm() {
                 "Personalized to your clinic size & payer mix",
                 "No commitment required",
               ].map((item) => (
-                <li key={item} className="flex items-center gap-3 text-blue-100">
-                  <svg className="w-5 h-5 text-blue-300 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                <li key={item} className="flex items-center gap-3 text-[#FDEEE6]">
+                  <svg className="w-5 h-5 text-[#F5D5C0] shrink-0" fill="currentColor" viewBox="0 0 20 20">
                     <path
                       fillRule="evenodd"
                       d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
@@ -97,11 +97,11 @@ export default function ContactForm() {
 
           {/* Right: form */}
           <div className="bg-white rounded-2xl p-8 shadow-xl">
-            <h3 className="text-xl font-bold text-slate-900 mb-6">Request a Demo</h3>
+            <h3 className="text-xl font-bold text-[#1C1C1C] mb-6">Request a Demo</h3>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1.5">
+                  <label className="block text-sm font-medium text-[#3A3A3A] mb-1.5">
                     Full Name <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -111,11 +111,11 @@ export default function ContactForm() {
                     onChange={handleChange}
                     required
                     placeholder="Jane Smith"
-                    className="w-full px-3 py-2.5 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-3 py-2.5 rounded-lg border border-[#E8DDD4] text-sm focus:outline-none focus:ring-2 focus:ring-[#C4622D] focus:border-transparent"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1.5">
+                  <label className="block text-sm font-medium text-[#3A3A3A] mb-1.5">
                     Clinic Name <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -125,13 +125,13 @@ export default function ContactForm() {
                     onChange={handleChange}
                     required
                     placeholder="Riverside Family Clinic"
-                    className="w-full px-3 py-2.5 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-3 py-2.5 rounded-lg border border-[#E8DDD4] text-sm focus:outline-none focus:ring-2 focus:ring-[#C4622D] focus:border-transparent"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1.5">
+                <label className="block text-sm font-medium text-[#3A3A3A] mb-1.5">
                   Clinic Email <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -141,19 +141,19 @@ export default function ContactForm() {
                   onChange={handleChange}
                   required
                   placeholder="jane@rivesideclinic.com"
-                  className="w-full px-3 py-2.5 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-3 py-2.5 rounded-lg border border-[#E8DDD4] text-sm focus:outline-none focus:ring-2 focus:ring-[#C4622D] focus:border-transparent"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1.5">
+                <label className="block text-sm font-medium text-[#3A3A3A] mb-1.5">
                   Monthly Claim Volume
                 </label>
                 <select
                   name="claimVolume"
                   value={form.claimVolume}
                   onChange={handleChange}
-                  className="w-full px-3 py-2.5 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-slate-700 bg-white"
+                  className="w-full px-3 py-2.5 rounded-lg border border-[#E8DDD4] text-sm focus:outline-none focus:ring-2 focus:ring-[#C4622D] focus:border-transparent text-[#3A3A3A] bg-white"
                 >
                   <option value="">Select range...</option>
                   <option value="0-1,000">0 – 1,000 claims/month</option>
@@ -163,8 +163,8 @@ export default function ContactForm() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1.5">
-                  Message <span className="text-slate-400 font-normal">(optional)</span>
+                <label className="block text-sm font-medium text-[#3A3A3A] mb-1.5">
+                  Message <span className="text-[#8A7060] font-normal">(optional)</span>
                 </label>
                 <textarea
                   name="message"
@@ -172,7 +172,7 @@ export default function ContactForm() {
                   onChange={handleChange}
                   rows={3}
                   placeholder="Tell us about your current billing challenges..."
-                  className="w-full px-3 py-2.5 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                  className="w-full px-3 py-2.5 rounded-lg border border-[#E8DDD4] text-sm focus:outline-none focus:ring-2 focus:ring-[#C4622D] focus:border-transparent resize-none"
                 />
               </div>
 
@@ -183,12 +183,12 @@ export default function ContactForm() {
               <button
                 type="submit"
                 disabled={status === "loading"}
-                className="w-full py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+                className="w-full py-3 bg-[#C4622D] text-white font-semibold rounded-lg hover:bg-[#A8522A] transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
               >
                 {status === "loading" ? "Sending..." : "Request Demo"}
               </button>
 
-              <p className="text-xs text-slate-400 text-center">
+              <p className="text-xs text-[#8A7060] text-center">
                 We&apos;ll follow up within one business day at the email provided.
               </p>
             </form>

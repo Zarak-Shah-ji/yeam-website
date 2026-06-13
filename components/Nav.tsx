@@ -16,7 +16,7 @@ export default function Nav() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-200 ${
         scrolled
-          ? "bg-white/95 backdrop-blur-sm border-b border-slate-200 shadow-sm"
+          ? "bg-[#FAF7F2]/95 backdrop-blur-sm border-b border-[#E8DDD4] shadow-sm"
           : "bg-transparent"
       }`}
     >
@@ -29,13 +29,13 @@ export default function Nav() {
             height={36}
             className="rounded-lg"
           />
-          <span className="font-semibold text-slate-900 text-lg">Yeam.ai</span>
+          <span className="font-semibold text-[#1C1C1C] text-lg">Yeam.ai</span>
         </a>
 
         <nav className="hidden md:flex items-center gap-8">
-          <a href="#features" className="text-sm text-slate-600 hover:text-slate-900 transition-colors">Features</a>
-          <a href="#how-it-works" className="text-sm text-slate-600 hover:text-slate-900 transition-colors">How It Works</a>
-          <a href="#contact" className="text-sm text-slate-600 hover:text-slate-900 transition-colors">Contact</a>
+          <a href="#workflow" className="text-sm text-[#5C4A3A] hover:text-[#1C1C1C] transition-colors">How It Works</a>
+          <a href="#ai-workforce" className="text-sm text-[#5C4A3A] hover:text-[#1C1C1C] transition-colors">AI Workforce</a>
+          <a href="#contact" className="text-sm text-[#5C4A3A] hover:text-[#1C1C1C] transition-colors">Contact</a>
         </nav>
 
         <div className="flex items-center gap-2">
@@ -43,13 +43,13 @@ export default function Nav() {
             href="https://yeamagentsystem.vercel.app/login"
             target="_blank"
             rel="noopener noreferrer"
-            className="px-4 py-2 text-slate-700 text-sm font-medium rounded-lg border border-slate-200 hover:bg-slate-50 transition-colors"
+            className="px-4 py-2 text-[#5C4A3A] text-sm font-medium rounded-lg border border-[#E8DDD4] hover:bg-[#F0EBE4] transition-colors"
           >
             Log In
           </a>
           <a
             href="#contact"
-            className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors"
+            className="px-4 py-2 bg-[#C4622D] text-white text-sm font-medium rounded-lg hover:bg-[#A8522A] transition-colors"
           >
             Book a Demo
           </a>

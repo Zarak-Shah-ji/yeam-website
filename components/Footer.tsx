@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function Footer() {
   return (
-    <footer className="relative bg-slate-900 py-12 px-6 overflow-hidden">
+    <footer className="relative bg-[#1C1C1C] py-12 px-6 overflow-hidden">
       {/* Background YEAM text */}
       <div
         aria-hidden="true"
@@ -11,7 +11,7 @@ export default function Footer() {
       >
         <span
           className="font-black text-white select-none"
-          style={{ fontSize: "clamp(6rem, 20vw, 16rem)", opacity: 0.05, letterSpacing: "0.15em" }}
+          style={{ fontSize: "clamp(6rem, 20vw, 16rem)", opacity: 0.04, letterSpacing: "0.15em" }}
         >
           YEAM
         </span>
@@ -30,14 +30,14 @@ export default function Footer() {
               />
               <span className="font-semibold text-white text-base">Yeam.ai</span>
             </div>
-            <p className="text-sm text-slate-400 max-w-xs leading-relaxed">
+            <p className="text-sm text-[#8A8A8A] max-w-xs leading-relaxed">
               AI medical workforce for clinics. Receptionist, Scribe, Coder, Nurse, and Billing agents working 24/7.
             </p>
           </div>
 
           <div className="flex gap-16">
             <div>
-              <h4 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">Platform</h4>
+              <h4 className="text-xs font-semibold text-[#5A5A5A] uppercase tracking-wider mb-3">Platform</h4>
               <ul className="space-y-2">
                 {["Dashboard", "Patients", "Claims", "Billing & Appeals", "Analytics"].map((item) => (
                   <li key={item}>
@@ -45,7 +45,7 @@ export default function Footer() {
                       href="https://yeamagentsystem.vercel.app/login"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-sm text-slate-400 hover:text-white transition-colors"
+                      className="text-sm text-[#8A8A8A] hover:text-[#D4956A] transition-colors"
                     >
                       {item}
                     </a>
@@ -54,7 +54,7 @@ export default function Footer() {
               </ul>
             </div>
             <div>
-              <h4 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">Company</h4>
+              <h4 className="text-xs font-semibold text-[#5A5A5A] uppercase tracking-wider mb-3">Company</h4>
               <ul className="space-y-2">
                 {[
                   { label: "Book a Demo", href: "#contact" },
@@ -62,7 +62,7 @@ export default function Footer() {
                   { label: "info@yeam.ai", href: "mailto:info@yeam.ai" },
                 ].map((item) => (
                   <li key={item.label}>
-                    <a href={item.href} className="text-sm text-slate-400 hover:text-white transition-colors">
+                    <a href={item.href} className="text-sm text-[#8A8A8A] hover:text-[#D4956A] transition-colors">
                       {item.label}
                     </a>
                   </li>
@@ -72,11 +72,11 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-slate-800 pt-6 flex flex-col md:flex-row justify-between items-center gap-3">
-          <p className="text-xs text-slate-500">
+        <div className="border-t border-[#2A2A2A] pt-6 flex flex-col md:flex-row justify-between items-center gap-3">
+          <p className="text-xs text-[#5A5A5A]">
             © {new Date().getFullYear()} Yeam.ai. All rights reserved.
           </p>
-          <p className="text-xs text-slate-600">
+          <p className="text-xs text-[#3A3A3A]">
             HIPAA Compliant · SOC 2 Ready · HL7/FHIR Compatible
           </p>
         </div>
