@@ -1,14 +1,34 @@
+import Image from "next/image";
+
 export default function Footer() {
   return (
-    <footer className="bg-slate-900 py-12 px-6">
-      <div className="max-w-6xl mx-auto">
+    <footer className="relative bg-slate-900 py-12 px-6 overflow-hidden">
+      {/* Background YEAM text */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 flex items-center justify-center"
+        style={{ animation: "footerPulse 6s ease-in-out infinite" }}
+      >
+        <span
+          className="font-black text-white select-none"
+          style={{ fontSize: "clamp(6rem, 20vw, 16rem)", opacity: 0.05, letterSpacing: "0.15em" }}
+        >
+          YEAM
+        </span>
+      </div>
+
+      <div className="relative max-w-6xl mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-start gap-8 mb-10">
           <div>
-            <div className="flex items-center gap-2 mb-3">
-              <div className="w-7 h-7 rounded-md bg-blue-600 flex items-center justify-center">
-                <span className="text-white font-bold text-xs">Y</span>
-              </div>
-              <span className="font-semibold text-white">Yeam.ai</span>
+            <div className="flex items-center gap-2.5 mb-3">
+              <Image
+                src="/logo.png"
+                alt="Yeam.ai"
+                width={32}
+                height={32}
+                className="rounded-lg"
+              />
+              <span className="font-semibold text-white text-base">Yeam.ai</span>
             </div>
             <p className="text-sm text-slate-400 max-w-xs leading-relaxed">
               AI medical workforce for clinics. Receptionist, Scribe, Coder, Nurse, and Billing agents working 24/7.
@@ -21,7 +41,12 @@ export default function Footer() {
               <ul className="space-y-2">
                 {["Dashboard", "Patients", "Claims", "Billing & Appeals", "Analytics"].map((item) => (
                   <li key={item}>
-                    <a href="#features" className="text-sm text-slate-400 hover:text-white transition-colors">
+                    <a
+                      href="https://yeamagentsystem.vercel.app/login"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm text-slate-400 hover:text-white transition-colors"
+                    >
                       {item}
                     </a>
                   </li>
@@ -33,7 +58,7 @@ export default function Footer() {
               <ul className="space-y-2">
                 {[
                   { label: "Book a Demo", href: "#contact" },
-                  { label: "Contact", href: "#contact" },
+                  { label: "Contact",     href: "#contact" },
                   { label: "info@yeam.ai", href: "mailto:info@yeam.ai" },
                 ].map((item) => (
                   <li key={item.label}>

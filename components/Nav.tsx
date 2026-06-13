@@ -23,10 +23,10 @@ export default function Nav() {
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
         <a href="#" className="flex items-center gap-2">
           <Image
-            src="/logo.jpg"
+            src="/logo.png"
             alt="Yeam.ai"
-            width={32}
-            height={32}
+            width={36}
+            height={36}
             className="rounded-lg"
           />
           <span className="font-semibold text-slate-900 text-lg">Yeam.ai</span>
@@ -38,12 +38,22 @@ export default function Nav() {
           <a href="#contact" className="text-sm text-slate-600 hover:text-slate-900 transition-colors">Contact</a>
         </nav>
 
-        <a
-          href="#contact"
-          className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors"
-        >
-          Book a Demo
-        </a>
+        <div className="flex items-center gap-2">
+          <a
+            href="https://yeamagentsystem.vercel.app/login"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-4 py-2 text-slate-700 text-sm font-medium rounded-lg border border-slate-200 hover:bg-slate-50 transition-colors"
+          >
+            Log In
+          </a>
+          <a
+            href="#contact"
+            className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors"
+          >
+            Book a Demo
+          </a>
+        </div>
       </div>
     </header>
   );
