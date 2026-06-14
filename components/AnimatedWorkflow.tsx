@@ -37,8 +37,8 @@ const steps = [
             </div>
           </div>
         </div>
-        <div className="flex items-center gap-2 text-xs text-slate-500 bg-amber-50 border border-amber-100 rounded-lg px-3 py-2">
-          <svg className="w-3.5 h-3.5 text-amber-500 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+        <div className="flex items-center gap-2 text-xs text-slate-500 bg-blue-50 border border-blue-100 rounded-lg px-3 py-2">
+          <svg className="w-3.5 h-3.5 text-blue-500 shrink-0" fill="currentColor" viewBox="0 0 20 20">
             <path fillRule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd"/>
           </svg>
           AI flagged: prior auth may be needed for Z00.00
@@ -93,7 +93,7 @@ const steps = [
     id: 3,
     label: "Claim submitted",
     role: "Billing",
-    roleColor: "text-[#8B4513] bg-[#FDF0E8] border-[#E8C9B4]",
+    roleColor: "text-[#1A4FBF] bg-[#EBF0FA] border-[#A8BFEE]",
     panel: (
       <div className="space-y-3">
         <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Claim Status</span>
@@ -125,7 +125,7 @@ const steps = [
           </div>
         </div>
         <div className="w-full bg-slate-100 rounded-full h-1.5">
-          <div className="bg-blue-500 h-1.5 rounded-full" style={{ width: "40%" }} />
+          <div className="bg-[#1A4FBF] h-1.5 rounded-full" style={{ width: "40%" }} />
         </div>
         <p className="text-xs text-slate-400 text-center">Awaiting payer adjudication · Est. 14–30 days</p>
       </div>
@@ -135,7 +135,7 @@ const steps = [
     id: 4,
     label: "Denial received",
     role: "Billing",
-    roleColor: "text-[#8B4513] bg-[#FDF0E8] border-[#E8C9B4]",
+    roleColor: "text-[#1A4FBF] bg-[#EBF0FA] border-[#A8BFEE]",
     panel: (
       <div className="space-y-3">
         <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Claim Update</span>
@@ -164,7 +164,7 @@ const steps = [
           </div>
         </div>
         <div className="flex items-center gap-2 text-xs text-slate-600 bg-white border border-slate-200 rounded-lg px-3 py-2">
-          <svg className="w-3.5 h-3.5 text-blue-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <svg className="w-3.5 h-3.5 text-[#1A4FBF] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09Z" />
           </svg>
           AI is ready to draft an appeal, click AI Appeal
@@ -176,14 +176,14 @@ const steps = [
     id: 5,
     label: "AI drafts appeal",
     role: "AI Agent",
-    roleColor: "text-[#C4622D] bg-[#FDF0E8] border-[#E8C9B4]",
+    roleColor: "text-[#1A4FBF] bg-[#EBF0FA] border-[#A8BFEE]",
     panel: null, // rendered separately for typewriter
   },
   {
     id: 6,
     label: "Appeal submitted",
     role: "Billing",
-    roleColor: "text-[#8B4513] bg-[#FDF0E8] border-[#E8C9B4]",
+    roleColor: "text-[#1A4FBF] bg-[#EBF0FA] border-[#A8BFEE]",
     panel: (
       <div className="space-y-3">
         <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Appeal Status</span>
@@ -240,7 +240,7 @@ function TypewriterPanel({ active }: { active: boolean }) {
     <div className="space-y-3">
       <div className="flex items-center gap-2">
         <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">AI Appeal Draft</span>
-        <span className="flex items-center gap-1 text-xs font-semibold text-[#C4622D] bg-[#FDF0E8] border border-[#E8C9B4] px-2 py-0.5 rounded-full">
+        <span className="flex items-center gap-1 text-xs font-semibold text-[#1A4FBF] bg-[#EBF0FA] border border-[#A8BFEE] px-2 py-0.5 rounded-full">
           <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
             <path d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09Z" />
           </svg>
@@ -251,12 +251,12 @@ function TypewriterPanel({ active }: { active: boolean }) {
         <pre className="text-xs text-slate-700 whitespace-pre-wrap font-sans leading-relaxed">
           {displayed}
           {displayed.length < APPEAL_TEXT.length && (
-            <span className="inline-block w-0.5 h-3.5 bg-[#C4622D] ml-0.5 animate-pulse align-middle" />
+            <span className="inline-block w-0.5 h-3.5 bg-[#1A4FBF] ml-0.5 animate-pulse align-middle" />
           )}
         </pre>
       </div>
       {displayed.length >= APPEAL_TEXT.length && (
-        <button className="w-full py-2 bg-[#C4622D] text-white text-sm font-semibold rounded-lg hover:bg-[#A8522A] transition-colors">
+        <button className="w-full py-2 bg-[#1A4FBF] text-white text-sm font-semibold rounded-lg hover:bg-[#1540A0] transition-colors">
           Submit Appeal →
         </button>
       )}
@@ -295,37 +295,37 @@ export default function AnimatedWorkflow() {
   const current = steps[activeStep];
 
   return (
-    <section id="workflow" className="py-20 px-6 bg-[#FAF7F2] border-y border-[#E8DDD4]">
+    <section id="workflow" className="py-20 px-6 bg-[#FFFFFF] border-y border-[#E0E6F5]">
       <div className="max-w-5xl mx-auto">
         <div className="text-center mb-12">
-          <p className="text-[#C4622D] text-sm font-semibold uppercase tracking-wider mb-3">
+          <p className="text-[#1A4FBF] text-sm font-semibold uppercase tracking-wider mb-3">
             A Day in the Life
           </p>
           <h2 className="text-4xl font-bold text-[#1C1C1C] mb-4">
             From Patient Visit to Paid Claim
           </h2>
-          <p className="text-lg text-[#8A7060] max-w-xl mx-auto">
+          <p className="text-lg text-[#5A6A8A] max-w-xl mx-auto">
             Watch how Yeam moves a claim through the full revenue cycle,
             recovering denied revenue automatically.
           </p>
         </div>
 
         <div
-          className="bg-white rounded-2xl border border-[#E8DDD4] shadow-sm overflow-hidden"
+          className="bg-white rounded-2xl border border-[#E0E6F5] shadow-sm overflow-hidden"
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
         >
           {/* Progress bar */}
-          <div className="h-0.5 bg-[#E8DDD4]">
+          <div className="h-0.5 bg-[#E0E6F5]">
             <div
-              className="h-full bg-[#C4622D] transition-none"
+              className="h-full bg-[#1A4FBF] transition-none"
               style={{ width: `${progress}%` }}
             />
           </div>
 
           <div className="grid md:grid-cols-[240px_1fr]">
             {/* Left: step list */}
-            <div className="border-r border-[#E8DDD4] p-5 space-y-1">
+            <div className="border-r border-[#E0E6F5] p-5 space-y-1">
               {steps.map((step, i) => {
                 const isActive = i === activeStep;
                 const isDone = i < activeStep;
@@ -334,17 +334,17 @@ export default function AnimatedWorkflow() {
                     key={step.id}
                     onClick={() => setActiveStep(i)}
                     className={`w-full text-left flex items-start gap-3 px-3 py-2.5 rounded-lg transition-colors ${
-                      isActive ? "bg-[#FDF0E8]" : "hover:bg-[#F5F0EB]"
+                      isActive ? "bg-[#EBF0FA]" : "hover:bg-[#F0F4FC]"
                     }`}
                   >
                     {/* Step circle */}
                     <div
                       className={`shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold mt-0.5 transition-colors ${
                         isDone
-                          ? "bg-[#C4622D] text-white"
+                          ? "bg-[#1A4FBF] text-white"
                           : isActive
-                          ? "bg-[#C4622D] text-white"
-                          : "bg-[#F0EBE4] text-[#8A7060]"
+                          ? "bg-[#1A4FBF] text-white"
+                          : "bg-[#EBF0FA] text-[#5A6A8A]"
                       }`}
                     >
                       {isDone ? (
@@ -356,7 +356,7 @@ export default function AnimatedWorkflow() {
                       )}
                     </div>
                     <div>
-                      <div className={`text-sm font-medium leading-snug ${isActive ? "text-[#C4622D]" : isDone ? "text-[#8A7060]" : "text-[#5C4A3A]"}`}>
+                      <div className={`text-sm font-medium leading-snug ${isActive ? "text-[#1A4FBF]" : isDone ? "text-[#5A6A8A]" : "text-[#4A5A7A]"}`}>
                         {step.label}
                       </div>
                       <div className={`text-xs mt-0.5 px-1.5 py-0.5 rounded border inline-block ${step.roleColor}`}>
@@ -366,7 +366,7 @@ export default function AnimatedWorkflow() {
                   </button>
                 );
               })}
-              <p className="text-xs text-[#C8B8A8] text-center pt-2">
+              <p className="text-xs text-[#8A9BBF] text-center pt-2">
                 Hover to pause
               </p>
             </div>

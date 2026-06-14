@@ -11,7 +11,7 @@ const benefits = [
   {
     index: 0,
     headline: "AI Receptionist answers\nin 2 rings.",
-    sub: "Schedules, reschedules, confirms — 24/7, in any language. Zero hold time.",
+    sub: "Schedules, reschedules, and confirms appointments 24/7, in any language. Zero hold time.",
     visual: <PhoneVisual />,
   },
   {
@@ -23,7 +23,7 @@ const benefits = [
   {
     index: 2,
     headline: "Claims submitted\nbefore they walk out.",
-    sub: "ICD-10 coded, scrubbed, and queued for submission — automatically, every visit.",
+    sub: "ICD-10 coded, scrubbed, and queued for submission automatically on every visit.",
     visual: <ClaimVisual />,
   },
 ];
@@ -33,20 +33,20 @@ function PhoneVisual() {
     <div className="flex items-center justify-center w-full h-full">
       <div className="relative">
         {/* Phone outline */}
-        <div className="w-32 h-52 rounded-[2rem] border-4 border-[#C4622D] bg-[#FAF7F2] flex flex-col items-center justify-center gap-3 shadow-xl">
-          <div className="w-12 h-12 rounded-full bg-[#FDF0E8] border-2 border-[#C4622D] flex items-center justify-center">
-            <svg className="w-6 h-6 text-[#C4622D]" fill="currentColor" viewBox="0 0 24 24">
+        <div className="w-32 h-52 rounded-[2rem] border-4 border-[#1A4FBF] bg-[#FFFFFF] flex flex-col items-center justify-center gap-3 shadow-xl">
+          <div className="w-12 h-12 rounded-full bg-[#EBF0FA] border-2 border-[#1A4FBF] flex items-center justify-center">
+            <svg className="w-6 h-6 text-[#1A4FBF]" fill="currentColor" viewBox="0 0 24 24">
               <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
             </svg>
           </div>
-          <div className="text-xs text-[#C4622D] font-semibold">Incoming Call</div>
-          <div className="text-xs text-[#8A7060]">Patient: Sarah M.</div>
+          <div className="text-xs text-[#1A4FBF] font-semibold">Incoming Call</div>
+          <div className="text-xs text-[#5A6A8A]">Patient: Sarah M.</div>
         </div>
         {/* Pulse rings */}
         {[1, 2, 3].map((i) => (
           <div
             key={i}
-            className="absolute inset-0 rounded-[2rem] border-2 border-[#C4622D] opacity-0"
+            className="absolute inset-0 rounded-[2rem] border-2 border-[#1A4FBF] opacity-0"
             style={{
               animation: `ringPulse 2s ease-out ${i * 0.5}s infinite`,
               transform: `scale(${1 + i * 0.12})`,
@@ -64,14 +64,14 @@ function WaveformVisual() {
     <div className="flex items-center justify-center w-full h-full">
       <div className="bg-[#1C1C1C] rounded-2xl p-8 w-72">
         <div className="flex items-center gap-2 mb-4">
-          <div className="w-2 h-2 rounded-full bg-[#C4622D] animate-pulse" />
+          <div className="w-2 h-2 rounded-full bg-[#6B9BF0] animate-pulse" />
           <span className="text-xs text-[#8A8A8A] font-medium">Recording encounter…</span>
         </div>
         <div className="flex items-end gap-1 h-16 justify-center">
           {bars.map((h, i) => (
             <div
               key={i}
-              className="w-1.5 rounded-full bg-[#C4622D]"
+              className="w-1.5 rounded-full bg-[#6B9BF0]"
               style={{
                 height: `${h * 4}px`,
                 opacity: 0.4 + (h / 12) * 0.6,
@@ -94,10 +94,10 @@ function WaveformVisual() {
 function ClaimVisual() {
   return (
     <div className="flex items-center justify-center w-full h-full">
-      <div className="bg-white rounded-2xl shadow-xl border border-[#E8DDD4] p-6 w-72 space-y-3">
+      <div className="bg-white rounded-2xl shadow-xl border border-[#E0E6F5] p-6 w-72 space-y-3">
         <div className="flex items-center justify-between">
-          <span className="text-xs font-semibold text-[#5C4A3A] uppercase tracking-wider">Claim</span>
-          <span className="text-xs font-bold text-[#C4622D] bg-[#FDF0E8] px-2 py-0.5 rounded-full border border-[#E8C9B4]">
+          <span className="text-xs font-semibold text-[#4A5A7A] uppercase tracking-wider">Claim</span>
+          <span className="text-xs font-bold text-[#1A4FBF] bg-[#EBF0FA] px-2 py-0.5 rounded-full border border-[#A8BFEE]">
             Submitted ✓
           </span>
         </div>
@@ -110,12 +110,12 @@ function ClaimVisual() {
             { label: "Amount", value: "$5,125.00" },
           ].map((row) => (
             <div key={row.label} className="flex justify-between text-sm">
-              <span className="text-[#8A7060]">{row.label}</span>
+              <span className="text-[#5A6A8A]">{row.label}</span>
               <span className="font-medium text-[#1C1C1C]">{row.value}</span>
             </div>
           ))}
         </div>
-        <div className="pt-2 border-t border-[#E8DDD4]">
+        <div className="pt-2 border-t border-[#E0E6F5]">
           <div className="flex items-center gap-2 text-xs text-[#5C8A3A]">
             <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
               <path fillRule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clipRule="evenodd"/>
@@ -167,7 +167,7 @@ export default function BenefitsPin() {
   }, { scope: containerRef });
 
   return (
-    <div ref={containerRef} className="relative bg-[#FAF7F2] overflow-hidden" style={{ height: "100vh" }}>
+    <div ref={containerRef} className="relative bg-[#FFFFFF] overflow-hidden" style={{ height: "100vh" }}>
       <style>{`
         @keyframes waveBar {
           from { transform: scaleY(0.4); }
@@ -177,7 +177,7 @@ export default function BenefitsPin() {
 
       {/* Section label */}
       <div className="absolute top-10 left-1/2 -translate-x-1/2 text-center z-10">
-        <p className="text-[#C4622D] text-sm font-semibold uppercase tracking-wider">
+        <p className="text-[#1A4FBF] text-sm font-semibold uppercase tracking-wider">
           What AI Employees Do
         </p>
       </div>
@@ -189,7 +189,7 @@ export default function BenefitsPin() {
             key={i}
             className="w-2 h-2 rounded-full transition-all duration-300"
             style={{
-              backgroundColor: i === activeIndex ? "#C4622D" : "#E8DDD4",
+              backgroundColor: i === activeIndex ? "#1A4FBF" : "#D0DAF5",
               transform: i === activeIndex ? "scale(1.3)" : "scale(1)",
             }}
           />
@@ -209,7 +209,7 @@ export default function BenefitsPin() {
               <div className="text-5xl md:text-6xl font-extrabold text-[#1C1C1C] leading-tight whitespace-pre-line mb-6">
                 {b.headline}
               </div>
-              <p className="text-xl text-[#5C4A3A] leading-relaxed">{b.sub}</p>
+              <p className="text-xl text-[#4A5A7A] leading-relaxed">{b.sub}</p>
             </div>
             {/* Right: visual */}
             <div className="h-64 md:h-80">

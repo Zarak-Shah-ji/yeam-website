@@ -16,7 +16,7 @@ export default function Nav() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-200 ${
         scrolled
-          ? "bg-[#FAF7F2]/95 backdrop-blur-sm border-b border-[#E8DDD4] shadow-sm"
+          ? "bg-[#FFFFFF]/95 backdrop-blur-sm border-b border-[#E0E6F5] shadow-sm"
           : "bg-transparent"
       }`}
     >
@@ -33,9 +33,9 @@ export default function Nav() {
         </a>
 
         <nav className="hidden md:flex items-center gap-8">
-          <a href="#workflow" className="text-sm text-[#5C4A3A] hover:text-[#1C1C1C] transition-colors">How It Works</a>
-          <a href="#ai-workforce" className="text-sm text-[#5C4A3A] hover:text-[#1C1C1C] transition-colors">AI Workforce</a>
-          <a href="#contact" className="text-sm text-[#5C4A3A] hover:text-[#1C1C1C] transition-colors">Contact</a>
+          <a href="#workflow" className="text-sm text-[#4A5A7A] hover:text-[#1C1C1C] transition-colors">How It Works</a>
+          <a href="#ai-workforce" className="text-sm text-[#4A5A7A] hover:text-[#1C1C1C] transition-colors">AI Workforce</a>
+          <a href="#contact" className="text-sm text-[#4A5A7A] hover:text-[#1C1C1C] transition-colors">Contact</a>
         </nav>
 
         <div className="flex items-center gap-2">
@@ -43,13 +43,13 @@ export default function Nav() {
             href="https://yeamagentsystem.vercel.app/login"
             target="_blank"
             rel="noopener noreferrer"
-            className="px-4 py-2 text-[#5C4A3A] text-sm font-medium rounded-lg border border-[#E8DDD4] hover:bg-[#F0EBE4] transition-colors"
+            className="px-4 py-2 text-[#4A5A7A] text-sm font-medium rounded-lg border border-[#E0E6F5] hover:bg-[#EBF0FA] transition-colors"
           >
             Log In
           </a>
           <a
             href="#contact"
-            className="px-4 py-2 bg-[#C4622D] text-white text-sm font-medium rounded-lg hover:bg-[#A8522A] transition-colors"
+            className="px-4 py-2 bg-[#1A4FBF] text-white text-sm font-medium rounded-lg hover:bg-[#1540A0] transition-colors"
           >
             Book a Demo
           </a>

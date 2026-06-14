@@ -18,7 +18,7 @@ const AGENTS = [
 
 export default function Hero() {
   return (
-    <section className="relative pt-28 pb-0 px-6 bg-[#FAF7F2] overflow-hidden min-h-[90vh]">
+    <section className="relative pt-28 pb-0 px-6 bg-[#FFFFFF] overflow-hidden min-h-[90vh]">
 
       {/* Warm grid */}
       <div
@@ -90,7 +90,7 @@ export default function Hero() {
                     left: 0,
                   }}
                 >
-                  <div className="flex items-center gap-1.5 bg-[#FAF7F2]/90 backdrop-blur-sm border border-[#E0E6F5] rounded-full px-2.5 py-1 shadow-md -translate-x-1/2 -translate-y-1/2">
+                  <div className="flex items-center gap-1.5 bg-[#FFFFFF]/90 backdrop-blur-sm border border-[#E0E6F5] rounded-full px-2.5 py-1 shadow-md -translate-x-1/2 -translate-y-1/2">
                     <span
                       className="w-1.5 h-1.5 rounded-full flex-shrink-0 animate-pulse"
                       style={{ backgroundColor: agent.dot }}
@@ -120,7 +120,7 @@ export default function Hero() {
             width: "860px",
             height: "640px",
             background:
-              "radial-gradient(ellipse 65% 75% at 50% 35%, rgba(250,247,242,0.97) 0%, rgba(250,247,242,0.82) 45%, rgba(250,247,242,0.25) 75%, transparent 100%)",
+              "radial-gradient(ellipse 65% 75% at 50% 35%, rgba(255,255,255,0.97) 0%, rgba(255,255,255,0.82) 45%, rgba(255,255,255,0.25) 75%, transparent 100%)",
           }}
         />
 
@@ -168,7 +168,7 @@ export default function Hero() {
             ].map((badge) => (
               <div
                 key={badge.label}
-                className="bg-[#FAF7F2]/80 backdrop-blur-sm rounded-xl p-3 shadow-sm border border-[#E0E6F5] text-center"
+                className="bg-[#FFFFFF]/80 backdrop-blur-sm rounded-xl p-3 shadow-sm border border-[#E0E6F5] text-center"
               >
                 <div className="text-lg font-bold text-[#1A4FBF]">{badge.value}</div>
                 <div className="text-xs text-[#5A6A8A] mt-0.5 leading-snug">{badge.label}</div>

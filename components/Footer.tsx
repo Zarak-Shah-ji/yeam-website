@@ -45,7 +45,7 @@ export default function Footer() {
                       href="https://yeamagentsystem.vercel.app/login"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-sm text-[#8A8A8A] hover:text-[#D4956A] transition-colors"
+                      className="text-sm text-[#8A8A8A] hover:text-[#6B9BF0] transition-colors"
                     >
                       {item}
                     </a>
@@ -60,9 +60,10 @@ export default function Footer() {
                   { label: "Book a Demo", href: "#contact" },
                   { label: "Contact",     href: "#contact" },
                   { label: "info@yeam.ai", href: "mailto:info@yeam.ai" },
+                  { label: "747-388-6386", href: "tel:7473886386" },
                 ].map((item) => (
                   <li key={item.label}>
-                    <a href={item.href} className="text-sm text-[#8A8A8A] hover:text-[#D4956A] transition-colors">
+                    <a href={item.href} className="text-sm text-[#8A8A8A] hover:text-[#6B9BF0] transition-colors">
                       {item.label}
                     </a>
                   </li>
