@@ -41,7 +41,7 @@ export default function ContactForm() {
 
   if (status === "success") {
     return (
-      <section id="contact" className="py-20 px-6 bg-[#C4622D]">
+      <section id="contact" className="py-10 md:py-20 px-6 bg-[#C4622D]">
         <div className="max-w-xl mx-auto text-center">
           <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6">
             <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -59,9 +59,9 @@ export default function ContactForm() {
   }
 
   return (
-    <section id="contact" className="py-20 px-6 bg-[#C4622D]">
+    <section id="contact" className="py-10 md:py-20 px-6 bg-[#C4622D]">
       <div className="max-w-5xl mx-auto">
-        <div className="grid lg:grid-cols-2 gap-12 items-start">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
           {/* Left: copy */}
           <div className="text-white">
             <p className="text-[#F5D5C0] text-sm font-semibold uppercase tracking-wider mb-4">
@@ -96,10 +96,10 @@ export default function ContactForm() {
           </div>
 
           {/* Right: form */}
-          <div className="bg-white rounded-2xl p-8 shadow-xl">
+          <div className="bg-white rounded-2xl p-5 md:p-8 shadow-xl">
             <h3 className="text-xl font-bold text-[#1C1C1C] mb-6">Request a Demo</h3>
             <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-[#3A3A3A] mb-1.5">
                     Full Name <span className="text-red-500">*</span>
