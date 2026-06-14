@@ -16,9 +16,9 @@ const agentQuestions = [
 
 export default function AISection() {
   return (
-    <section id="ai-workforce" className="py-20 px-6 bg-[#F5F0EB]">
+    <section id="ai-workforce" className="py-10 md:py-20 px-6 bg-[#F5F0EB]">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-14">
+        <div className="text-center mb-8 md:mb-14">
           <p className="text-[#C4622D] text-sm font-semibold uppercase tracking-wider mb-3">
             AI Workforce
           </p>
@@ -31,7 +31,7 @@ export default function AISection() {
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-10 items-start">
+        <div className="grid lg:grid-cols-2 gap-6 lg:gap-10 items-start">
           {/* Agent Activity Feed */}
           <div>
             <h3 className="text-sm font-semibold text-[#8A7060] uppercase tracking-wider mb-4">
