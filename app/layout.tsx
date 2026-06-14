@@ -12,6 +12,12 @@ export const metadata: Metadata = {
   title: "Yeam.ai - AI Medical Workforce for Clinics",
   description:
     "Yeam deploys a full team of AI agents into your clinic, handling reception, documentation, coding, and billing, so your human staff can focus entirely on patients.",
+  icons: {
+    icon: [
+      { url: "/icon.png", type: "image/png" },
+    ],
+    apple: "/apple-icon.png",
+  },
   openGraph: {
     title: "Yeam.ai - AI Medical Workforce for Clinics",
     description:

@@ -2,8 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 
 export async function POST(request: NextRequest) {
-  const resend = new Resend(process.env.RESEND_API_KEY);
   try {
+    const resend = new Resend(process.env.RESEND_API_KEY);
     const body = await request.json();
     const { fullName, clinicName, email, claimVolume, message } = body;
 
@@ -41,8 +41,8 @@ export async function POST(request: NextRequest) {
     `;
 
     await resend.emails.send({
-      from: "Yeam.ai Website <noreply@yeam.ai>",
-      to: ["info@yeam.ai"],
+      from: "Yeam.ai Website <onboarding@resend.dev>",
+      to: ["zarak.shahjee1@gmail.com"],
       replyTo: email,
       subject: `Demo Request: ${clinicName} (${fullName})`,
       html: emailHtml,
