@@ -3,17 +3,17 @@
 const TILT = 55;
 
 const RINGS = [
-  { r: 220, color: "rgba(196,98,45,0.30)", glow: "rgba(196,98,45,0.12)" },
-  { r: 360, color: "rgba(139,69,19,0.22)", glow: "rgba(139,69,19,0.08)" },
-  { r: 500, color: "rgba(212,149,106,0.18)", glow: "rgba(212,149,106,0.07)" },
+  { r: 220, color: "rgba(26,79,191,0.30)", glow: "rgba(26,79,191,0.12)" },
+  { r: 360, color: "rgba(21,64,160,0.22)", glow: "rgba(21,64,160,0.08)" },
+  { r: 500, color: "rgba(107,155,240,0.18)", glow: "rgba(107,155,240,0.07)" },
 ];
 
 const AGENTS = [
-  { label: "AI Receptionist", dot: "#C4622D", ring: 0, startDeg:   0, dur: 11 },
-  { label: "AI Scribe",       dot: "#8B4513", ring: 1, startDeg:  80, dur: 17 },
-  { label: "AI Billing",      dot: "#D4956A", ring: 1, startDeg: 255, dur: 17 },
-  { label: "AI Coder",        dot: "#A8522A", ring: 2, startDeg:  35, dur: 24 },
-  { label: "AI Nurse",        dot: "#C4622D", ring: 2, startDeg: 200, dur: 24 },
+  { label: "AI Receptionist", dot: "#1A4FBF", ring: 0, startDeg:   0, dur: 11 },
+  { label: "AI Scribe",       dot: "#0F2E6B", ring: 1, startDeg:  80, dur: 17 },
+  { label: "AI Billing",      dot: "#6B9BF0", ring: 1, startDeg: 255, dur: 17 },
+  { label: "AI Coder",        dot: "#1540A0", ring: 2, startDeg:  35, dur: 24 },
+  { label: "AI Nurse",        dot: "#1A4FBF", ring: 2, startDeg: 200, dur: 24 },
 ];
 
 export default function Hero() {
@@ -26,7 +26,7 @@ export default function Hero() {
         className="absolute inset-0 opacity-[0.08] pointer-events-none"
         style={{
           backgroundImage:
-            "linear-gradient(#C4622D 1px, transparent 1px), linear-gradient(to right, #C4622D 1px, transparent 1px)",
+            "linear-gradient(#1A4FBF 1px, transparent 1px), linear-gradient(to right, #1A4FBF 1px, transparent 1px)",
           backgroundSize: "48px 48px",
         }}
       />
@@ -90,12 +90,12 @@ export default function Hero() {
                     left: 0,
                   }}
                 >
-                  <div className="flex items-center gap-1.5 bg-[#FAF7F2]/90 backdrop-blur-sm border border-[#E8DDD4] rounded-full px-2.5 py-1 shadow-md -translate-x-1/2 -translate-y-1/2">
+                  <div className="flex items-center gap-1.5 bg-[#FAF7F2]/90 backdrop-blur-sm border border-[#E0E6F5] rounded-full px-2.5 py-1 shadow-md -translate-x-1/2 -translate-y-1/2">
                     <span
                       className="w-1.5 h-1.5 rounded-full flex-shrink-0 animate-pulse"
                       style={{ backgroundColor: agent.dot }}
                     />
-                    <span className="text-xs text-[#5C4A3A] font-medium whitespace-nowrap">
+                    <span className="text-xs text-[#4A5A7A] font-medium whitespace-nowrap">
                       {agent.label}
                     </span>
                   </div>
@@ -125,26 +125,26 @@ export default function Hero() {
         />
 
         <div className="relative text-center max-w-3xl pt-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#FDF0E8] text-[#C4622D] rounded-full text-sm font-medium mb-8 border border-[#E8C9B4]">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#C4622D] inline-block animate-pulse" />
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#EBF0FA] text-[#1A4FBF] rounded-full text-sm font-medium mb-8 border border-[#A8BFEE]">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#1A4FBF] inline-block animate-pulse" />
             AI Medical Workforce Platform
           </div>
 
           <h1 className="text-5xl md:text-6xl font-extrabold text-[#1C1C1C] leading-tight tracking-tight mb-6">
             Hire AI Medical Employees.
             <br />
-            <span className="text-[#C4622D]">Not Software.</span>
+            <span className="text-[#1A4FBF]">Not Software.</span>
           </h1>
 
-          <p className="text-xl text-[#5C4A3A] leading-relaxed mb-10">
-            Yeam deploys a full team of AI agents into your clinic — handling reception,
-            documentation, coding, and billing so your human staff can focus entirely on patients.
+          <p className="text-xl text-[#4A5A7A] leading-relaxed mb-10">
+            Yeam deploys a full team of AI agents into your clinic, handling reception,
+            documentation, coding, and billing, so your human staff can focus entirely on patients.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
             <a
               href="#contact"
-              className="px-8 py-3.5 bg-[#C4622D] text-white font-semibold rounded-xl hover:bg-[#A8522A] transition-colors shadow-sm text-base"
+              className="px-8 py-3.5 bg-[#1A4FBF] text-white font-semibold rounded-xl hover:bg-[#1540A0] transition-colors shadow-sm text-base"
             >
               Book a Demo
             </a>
@@ -152,7 +152,7 @@ export default function Hero() {
               href="https://yeamagentsystem.vercel.app/login?callbackUrl=%2F"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-8 py-3.5 bg-transparent text-[#C4622D] font-semibold rounded-xl hover:bg-[#FDF0E8] transition-colors border border-[#C4622D] text-base"
+              className="px-8 py-3.5 bg-transparent text-[#1A4FBF] font-semibold rounded-xl hover:bg-[#EBF0FA] transition-colors border border-[#1A4FBF] text-base"
             >
               See the Platform
             </a>
@@ -162,16 +162,16 @@ export default function Hero() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
               { value: "HIPAA",    label: "Compliant" },
-              { value: "SOC 2",    label: "Ready" },
+              { value: "$200",     label: "Flat Monthly" },
               { value: "HL7/FHIR", label: "Compatible" },
               { value: "24/7",     label: "AI Agents Active" },
             ].map((badge) => (
               <div
                 key={badge.label}
-                className="bg-[#FAF7F2]/80 backdrop-blur-sm rounded-xl p-3 shadow-sm border border-[#E8DDD4] text-center"
+                className="bg-[#FAF7F2]/80 backdrop-blur-sm rounded-xl p-3 shadow-sm border border-[#E0E6F5] text-center"
               >
-                <div className="text-lg font-bold text-[#C4622D]">{badge.value}</div>
-                <div className="text-xs text-[#8A7060] mt-0.5 leading-snug">{badge.label}</div>
+                <div className="text-lg font-bold text-[#1A4FBF]">{badge.value}</div>
+                <div className="text-xs text-[#5A6A8A] mt-0.5 leading-snug">{badge.label}</div>
               </div>
             ))}
           </div>
