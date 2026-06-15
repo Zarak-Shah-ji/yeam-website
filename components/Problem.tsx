@@ -7,23 +7,32 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const panels = [
+const introPanel = {
+  type: "intro" as const,
+};
+
+const statPanels = [
   {
+    type: "stat" as const,
     stat: "$800B",
     headline: "Spent on medical admin every year.",
     sub: "Most of it goes to repetitive tasks your AI staff can handle today.",
   },
   {
+    type: "stat" as const,
     stat: "4 hrs",
     headline: "Lost to paperwork, per provider, per day.",
     sub: "Less time for patients. More burnout. Nothing to show for it.",
   },
   {
+    type: "stat" as const,
     stat: "60%",
     headline: "Of denied claims are never appealed.",
     sub: "That's money left on the table on every single denial.",
   },
 ];
+
+const allPanels = [introPanel, ...statPanels];
 
 export default function Problem() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -42,11 +51,11 @@ export default function Problem() {
       scrollTrigger: {
         trigger: containerRef.current,
         start: "top top",
-        end: `+=${panels.length * 100}%`,
+        end: `+=${allPanels.length * 100}%`,
         pin: true,
         scrub: 0.8,
         onUpdate: (self) => {
-          const idx = Math.min(panels.length - 1, Math.floor(self.progress * panels.length));
+          const idx = Math.min(allPanels.length - 1, Math.floor(self.progress * allPanels.length));
           setActiveIndex(idx);
         },
       },
@@ -60,41 +69,47 @@ export default function Problem() {
   }, { scope: containerRef });
 
   return (
-    <div ref={containerRef} className="relative bg-[#1C1C1C] overflow-hidden" style={{ height: "100vh" }}>
-      <div className="absolute top-10 left-1/2 -translate-x-1/2 text-center z-10">
-        <p className="text-[#5A5A5A] text-sm font-semibold uppercase tracking-wider">
-          The Problem
-        </p>
-      </div>
+    <div ref={containerRef} className="relative bg-[#FFFFFF] overflow-hidden" style={{ height: "100vh" }}>
 
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex gap-2 z-10">
-        {panels.map((_, i) => (
+      <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+        {allPanels.map((_, i) => (
           <div
             key={i}
-            className="w-2 h-2 rounded-full transition-all duration-300"
+            className="w-1.5 h-1.5 rounded-full transition-all duration-300"
             style={{
-              backgroundColor: i === activeIndex ? "#6B9BF0" : "#3A3A3A",
+              backgroundColor: i === activeIndex ? "#1A4FBF" : "#D0D5E8",
               transform: i === activeIndex ? "scale(1.3)" : "scale(1)",
             }}
           />
         ))}
       </div>
 
-      {panels.map((p, i) => (
+      {allPanels.map((p, i) => (
         <div
           key={i}
           ref={(el) => { panelsRef.current[i] = el; }}
           className="absolute inset-0 flex items-center justify-center px-6"
         >
-          <div className="max-w-3xl mx-auto text-center">
-            <div className="text-6xl md:text-7xl font-extrabold text-[#6B9BF0] mb-4 tabular-nums leading-none">
-              {p.stat}
+          {p.type === "intro" ? (
+            <div className="text-center">
+              <h2
+                className="font-extrabold text-[#1C1C1C] leading-none tracking-tight"
+                style={{ fontSize: "6.75rem" }}
+              >
+                The Problem
+              </h2>
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-3 leading-tight">
-              {p.headline}
-            </h2>
-            <p className="text-lg text-[#6A6A6A] max-w-xl mx-auto">{p.sub}</p>
-          </div>
+          ) : (
+            <div className="max-w-4xl mx-auto text-center">
+              <div className="font-extrabold text-[#1A4FBF] mb-2 tabular-nums leading-none" style={{ fontSize: "6.75rem" }}>
+                {p.stat}
+              </div>
+              <h2 className="font-bold text-[#1C1C1C] mb-1.5 leading-tight" style={{ fontSize: "3.75rem" }}>
+                {p.headline}
+              </h2>
+              <p className="text-[#6A7A9A] max-w-2xl mx-auto" style={{ fontSize: "2.625rem" }}>{p.sub}</p>
+            </div>
+          )}
         </div>
       ))}
     </div>

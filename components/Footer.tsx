@@ -27,6 +27,7 @@ export default function Footer() {
                 width={32}
                 height={32}
                 className="rounded-lg"
+                style={{ filter: "brightness(0) saturate(100%) invert(27%) sepia(100%) saturate(400%) hue-rotate(184deg) brightness(142%)" }}
               />
               <span className="font-semibold text-white text-base">Yeam.ai</span>
             </div>

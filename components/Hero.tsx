@@ -18,7 +18,7 @@ const AGENTS = [
 
 export default function Hero() {
   return (
-    <section className="relative pt-28 pb-0 px-6 bg-[#FFFFFF] overflow-hidden min-h-[90vh]">
+    <section className="relative pt-28 pb-16 px-6 bg-[#FFFFFF] overflow-hidden min-h-[90vh]">
 
       {/* Warm grid */}
       <div
@@ -127,18 +127,17 @@ export default function Hero() {
         <div className="relative text-center max-w-3xl pt-4">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#EBF0FA] text-[#1A4FBF] rounded-full text-sm font-medium mb-8 border border-[#A8BFEE]">
             <span className="w-1.5 h-1.5 rounded-full bg-[#1A4FBF] inline-block animate-pulse" />
-            AI Medical Workforce Platform
+            5 AI roles. 1 clinic. $200/month.
           </div>
 
           <h1 className="text-5xl md:text-6xl font-extrabold text-[#1C1C1C] leading-tight tracking-tight mb-6">
-            Hire AI Medical Employees.
+            Your doctors spend 4 hours a day on paperwork.
             <br />
-            <span className="text-[#1A4FBF]">Not Software.</span>
+            <span className="text-[#1A4FBF]">Yeam gives it back.</span>
           </h1>
 
           <p className="text-xl text-[#4A5A7A] leading-relaxed mb-10">
-            Yeam deploys a full team of AI agents into your clinic, handling reception,
-            documentation, coding, and billing, so your human staff can focus entirely on patients.
+            A full AI team (receptionist, scribe, coder, biller, nurse) running inside your clinic 24/7. No new hires. No overtime. Integrated with your EHR and ready in days.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
@@ -146,7 +145,7 @@ export default function Hero() {
               href="#contact"
               className="px-8 py-3.5 bg-[#1A4FBF] text-white font-semibold rounded-xl hover:bg-[#1540A0] transition-colors shadow-sm text-base"
             >
-              Book a Demo
+              See It Work: Book a Demo
             </a>
             <a
               href="https://yeamagentsystem.vercel.app/login?callbackUrl=%2F"
@@ -161,10 +160,10 @@ export default function Hero() {
           {/* Trust badges */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
-              { value: "HIPAA",    label: "Compliant" },
-              { value: "$200",     label: "Flat Monthly" },
-              { value: "HL7/FHIR", label: "Compatible" },
-              { value: "24/7",     label: "AI Agents Active" },
+              { value: "4 hrs",          label: "Returned per doctor, daily" },
+              { value: "60%",            label: "Of denied claims, recovered" },
+              { value: "$200/mo",        label: "Flat. All 5 AI roles included." },
+              { value: "HIPAA + HL7",    label: "Certified & EHR-ready" },
             ].map((badge) => (
               <div
                 key={badge.label}
