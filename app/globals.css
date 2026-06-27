@@ -75,3 +75,163 @@ body {
   0%, 100% { opacity: 0.6; transform: scale(1); }
   50%       { opacity: 1; transform: scale(1.04); }
 }
+
+/* Lub-dub heartbeat for the Hero background grid (opacity only, no layout shift) */
+@keyframes gridHeartbeat {
+  0%   { opacity: 0.05; }
+  8%   { opacity: 0.16; }
+  16%  { opacity: 0.06; }
+  26%  { opacity: 0.18; }
+  40%  { opacity: 0.05; }
+  100% { opacity: 0.05; }
+}
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50%       { opacity: 0.9; transform: scale(1.05); }
+}
+
+@keyframes barFill {
+  from { width: 0%; }
+  to   { width: 100%; }
+}
+
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Backstop for users who prefer reduced motion. JS guards handle the
+   GSAP entrance and count-up; this stops the ambient CSS loops. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================ Dark theme ============================
+   Activated by the `dark` class on <html> (set by the no-flash script and
+   the footer toggle). Overrides are scoped to `.dark` so light mode is
+   untouched. Keyed on the exact color utilities used across the rendered
+   components, so the whole site flips from one place. */
+.dark {
+  --d-bg: #0A0F1E;
+  --d-surface: #121A2E;
+  --d-surface-2: #0E1526;
+  --d-surface-3: #1B2440;
+  --d-fg: #EDF1FB;
+  --d-fg-soft: #D7DEEF;
+  --d-muted: #AEB9D6;
+  --d-muted-2: #94A1C2;
+  --d-muted-3: #7C89AC;
+  --d-border: #232C45;
+  --d-border-strong: #34416B;
+  --d-primary: #2A60D0;
+  --d-primary-hover: #3D72E8;
+  --d-primary-subtle: #17224A;
+  --d-accent-text: #7CA7F5;
+  --d-green: #4ADE80;
+  --d-green-strong: #86EFAC;
+  --d-red: #F87171;
+}
+
+html.dark,
+.dark body { background: var(--d-bg); color: var(--d-fg); }
+
+/* Smooth the flip */
+.dark body,
+.dark body * { transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease; }
+
+/* Surfaces / backgrounds */
+.dark .bg-\[\#FFFFFF\],
+.dark .bg-\[\#EEF2FA\] { background-color: var(--d-bg); }
+.dark .bg-\[\#FFFFFF\]\/95 { background-color: rgba(14,21,38,0.88); }
+.dark .bg-\[\#FFFFFF\]\/80 { background-color: rgba(18,26,46,0.6); }
+.dark .bg-white { background-color: var(--d-surface); }
+.dark .bg-\[\#F7F9FE\],
+.dark .bg-\[\#F4F6FB\],
+.dark .bg-\[\#F0F4FC\],
+.dark .bg-slate-50,
+.dark .bg-slate-100 { background-color: var(--d-surface-2); }
+.dark .bg-\[\#EBF0FA\],
+.dark .bg-blue-50 { background-color: var(--d-primary-subtle); }
+.dark .bg-\[\#E0E6F5\] { background-color: var(--d-border); }
+.dark .bg-\[\#D0DAF5\] { background-color: var(--d-surface-3); }
+.dark .bg-\[\#1A4FBF\] { background-color: var(--d-primary); }
+.dark .bg-\[\#1540A0\] { background-color: var(--d-primary-hover); }
+.dark .hover\:bg-\[\#1540A0\]:hover { background-color: var(--d-primary-hover); }
+.dark .hover\:bg-\[\#EBF0FA\]:hover,
+.dark .hover\:bg-\[\#D0DAF5\]:hover,
+.dark .hover\:bg-\[\#F0F4FC\]:hover { background-color: var(--d-surface-3); }
+
+/* Text */
+.dark .text-\[\#1C1C1C\],
+.dark .text-slate-900 { color: var(--d-fg); }
+.dark .text-slate-700,
+.dark .text-slate-600 { color: var(--d-fg-soft); }
+.dark .text-\[\#4A5A7A\],
+.dark .text-\[\#5A6A8A\],
+.dark .text-\[\#3A3A3A\] { color: var(--d-muted); }
+.dark .text-\[\#6A7A9A\],
+.dark .text-\[\#5A5A5A\],
+.dark .text-\[\#8A8A8A\],
+.dark .text-slate-500 { color: var(--d-muted-2); }
+.dark .text-\[\#8A9BBF\],
+.dark .text-\[\#9AA8BF\],
+.dark .text-\[\#7A8AAF\],
+.dark .text-slate-400 { color: var(--d-muted-3); }
+.dark .text-\[\#1A4FBF\],
+.dark .text-blue-700,
+.dark .text-blue-600,
+.dark .text-blue-500 { color: var(--d-accent-text); }
+.dark .hover\:text-\[\#1C1C1C\]:hover { color: var(--d-fg); }
+
+/* Borders */
+.dark .border-\[\#E0E6F5\],
+.dark .border-slate-100,
+.dark .border-slate-200 { border-color: var(--d-border); }
+.dark .border-\[\#A8BFEE\],
+.dark .border-blue-100,
+.dark .border-blue-200 { border-color: var(--d-border-strong); }
+.dark .border-\[\#1A4FBF\] { border-color: var(--d-primary); }
+
+/* Status: green (success) / red (denial) tints */
+.dark .bg-green-50 { background-color: rgba(74,222,128,0.10); }
+.dark .bg-green-100 { background-color: rgba(74,222,128,0.16); }
+.dark .text-green-600 { color: var(--d-green); }
+.dark .text-green-800 { color: var(--d-green-strong); }
+.dark .border-green-100,
+.dark .border-green-200 { border-color: rgba(74,222,128,0.30); }
+.dark .bg-red-50 { background-color: rgba(248,113,113,0.10); }
+.dark .bg-red-100 { background-color: rgba(248,113,113,0.16); }
+.dark .text-red-600,
+.dark .text-red-500 { color: var(--d-red); }
+.dark .border-red-100,
+.dark .border-red-200 { border-color: rgba(248,113,113,0.30); }
+
+/* Role chips (green / purple tints) */
+.dark .bg-\[\#F0F7E8\] { background-color: rgba(124,184,90,0.16); }
+.dark .text-\[\#5C8A3A\] { color: #9CCB72; }
+.dark .border-\[\#C8DDB4\] { border-color: rgba(124,184,90,0.30); }
+.dark .bg-\[\#F5F0FA\] { background-color: rgba(160,120,200,0.18); }
+.dark .text-\[\#6B4A8A\] { color: #C3A6E0; }
+.dark .border-\[\#D4C0E8\] { border-color: rgba(160,120,200,0.30); }
+
+/* Form controls keep readable text on dark surfaces */
+.dark input,
+.dark textarea,
+.dark select { color: var(--d-fg); }
+.dark input::placeholder,
+.dark textarea::placeholder { color: var(--d-muted-3); }
+
+/* Recorder card (BenefitsPin) gets its own surface so it does not vanish on navy */
+.dark .recorder-surface { background-color: var(--d-surface-3); border: 1px solid var(--d-border-strong); }
+.dark .bg-\[\#2A2A2A\] { background-color: #2E3A5C; }
+
+/* Tone the bright-blue CTA bands down to a calm deep blue in dark mode */
+.dark .cta-band { background-color: #14264C; }

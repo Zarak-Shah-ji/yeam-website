@@ -62,7 +62,7 @@ function WaveformVisual() {
   const bars = [3, 6, 9, 5, 12, 8, 4, 11, 7, 3, 9, 6, 10, 5, 8, 4, 12, 7, 3, 9, 6, 11, 4, 8];
   return (
     <div className="flex items-center justify-center w-full h-full">
-      <div className="bg-[#1C1C1C] rounded-2xl p-8 w-72">
+      <div className="bg-[#1C1C1C] recorder-surface rounded-2xl p-8 w-72">
         <div className="flex items-center gap-2 mb-4">
           <div className="w-2 h-2 rounded-full bg-[#6B9BF0] animate-pulse" />
           <span className="text-xs text-[#8A8A8A] font-medium">Recording encounter…</span>

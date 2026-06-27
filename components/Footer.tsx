@@ -1,4 +1,5 @@
 import Image from "next/image";
+import ThemeToggle from "./ThemeToggle";
 
 export default function Footer() {
   return (
@@ -78,9 +79,12 @@ export default function Footer() {
           <p className="text-xs text-[#5A5A5A]">
             © {new Date().getFullYear()} Yeam.ai. All rights reserved.
           </p>
-          <p className="text-xs text-[#3A3A3A]">
-            HIPAA Compliant · SOC 2 Ready · HL7/FHIR Compatible
-          </p>
+          <div className="flex items-center gap-4">
+            <p className="text-xs text-[#3A3A3A]">
+              HIPAA Compliant · SOC 2 Ready · HL7/FHIR Compatible
+            </p>
+            <ThemeToggle />
+          </div>
         </div>
       </div>
     </footer>
