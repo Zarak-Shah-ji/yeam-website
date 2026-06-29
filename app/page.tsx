@@ -1,6 +1,6 @@
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
-import Problem from "@/components/Problem";
+import Integrations from "@/components/Integrations";
 import AnimatedWorkflow from "@/components/AnimatedWorkflow";
 import BenefitsPin from "@/components/BenefitsPin";
 import AISection from "@/components/AISection";
@@ -13,7 +13,7 @@ export default function Home() {
       <Nav />
       <main>
         <Hero />
-        <Problem />
+        <Integrations />
         <AnimatedWorkflow />
         <BenefitsPin />
         <AISection />
