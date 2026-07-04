@@ -201,18 +201,18 @@ export default function BenefitsPin() {
         <div
           key={i}
           ref={(el) => { panelsRef.current[i] = el; }}
-          className="absolute inset-0 flex items-center justify-center px-6"
+          className="absolute inset-0 flex items-start md:items-center justify-center px-6 pt-24 pb-10 md:pt-0 md:pb-0"
         >
-          <div className="max-w-5xl mx-auto w-full grid md:grid-cols-2 gap-16 items-center">
+          <div className="max-w-5xl mx-auto w-full grid md:grid-cols-2 gap-8 md:gap-16 items-center">
             {/* Left: text */}
             <div>
-              <div className="text-5xl md:text-6xl font-extrabold text-[#1C1C1C] leading-tight whitespace-pre-line mb-6">
+              <div className="text-3xl md:text-6xl font-extrabold text-[#1C1C1C] leading-tight whitespace-pre-line mb-4 md:mb-6">
                 {b.headline}
               </div>
-              <p className="text-xl text-[#4A5A7A] leading-relaxed">{b.sub}</p>
+              <p className="text-base md:text-xl text-[#4A5A7A] leading-relaxed">{b.sub}</p>
             </div>
             {/* Right: visual */}
-            <div className="h-64 md:h-80">
+            <div className="h-48 md:h-80">
               {b.visual}
             </div>
           </div>
