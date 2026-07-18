@@ -123,7 +123,7 @@ export default function Hero() {
               Book a Demo
             </a>
             <a
-              href="https://yeamagentsystem.vercel.app/login?callbackUrl=%2F"
+              href="https://app.yeam.ai/login?callbackUrl=%2F"
               target="_blank"
               rel="noopener noreferrer"
               className="px-7 py-3.5 bg-transparent text-[#1A4FBF] font-semibold rounded-xl hover:bg-[#EBF0FA] transition-colors border border-[#1A4FBF] text-base text-center"

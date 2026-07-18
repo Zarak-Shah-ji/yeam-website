@@ -44,7 +44,7 @@ export default function Footer() {
                 {["Dashboard", "Patients", "Claims", "Billing & Appeals", "Analytics"].map((item) => (
                   <li key={item}>
                     <a
-                      href="https://yeamagentsystem.vercel.app/login"
+                      href="https://app.yeam.ai/login"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-sm text-[#8A8A8A] hover:text-[#6B9BF0] transition-colors"

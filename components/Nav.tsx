@@ -41,7 +41,7 @@ export default function Nav() {
 
         <div className="flex items-center gap-2">
           <a
-            href="https://yeamagentsystem.vercel.app/login"
+            href="https://app.yeam.ai/login"
             target="_blank"
             rel="noopener noreferrer"
             className="px-4 py-2 text-[#4A5A7A] text-sm font-medium rounded-lg border border-[#E0E6F5] hover:bg-[#EBF0FA] transition-colors"
