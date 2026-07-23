@@ -76,24 +76,13 @@ export default function Hero() {
         }}
       />
 
-      {/* Contained gradient glow (replaces the oversized orbit rings) */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute top-[-10%] right-[-5%] w-[680px] max-w-full h-[680px] rounded-full"
-        style={{
-          background:
-            "radial-gradient(circle at 50% 50%, rgba(26,79,191,0.18) 0%, rgba(107,155,240,0.10) 40%, transparent 70%)",
-          animation: "glowPulse 9s ease-in-out infinite",
-        }}
-      />
+      <div className="relative max-w-6xl mx-auto">
 
-      <div className="relative max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 lg:gap-10 items-center">
-
-        {/* Left: copy */}
-        <div className="max-w-xl">
+        {/* Headline: badge + single-line H1, spanning the full width */}
+        <div>
           <div
             data-hero-anim
-            className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#EBF0FA] text-[#1A4FBF] rounded-full text-sm font-medium mb-6 border border-[#A8BFEE]"
+            className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#EBF0FA] text-[#1A4FBF] rounded-full text-sm font-medium border border-[#A8BFEE]"
           >
             <span className="w-1.5 h-1.5 rounded-full bg-[#1A4FBF] inline-block animate-pulse" />
             5 AI roles. 1 clinic. $200/month.
@@ -101,118 +90,136 @@ export default function Hero() {
 
           <h1
             data-hero-anim
-            className="text-4xl sm:text-5xl font-extrabold text-[#1C1C1C] leading-[1.08] tracking-tight mb-5"
+            className="mt-5 text-[clamp(1.75rem,3.4vw,2.85rem)] font-extrabold text-[#1C1C1C] leading-[1.1] tracking-tight"
           >
-            Your doctors lose 4 hours a day to paperwork.
-            <br />
-            <span className="text-[#1A4FBF]">Yeam gives it back.</span>
+            Yeam recovers the revenue{" "}
+            <span className="text-[#1A4FBF]">your insurers denied.</span>
           </h1>
+        </div>
 
-          <p
-            data-hero-anim
-            className="text-lg text-[#4A5A7A] leading-relaxed mb-8"
-          >
-            A full AI workforce that runs inside your clinic, around the clock.
-          </p>
+        {/* Under the headline: supporting copy (left) + product mock (right) */}
+        <div className="mt-8 lg:mt-6 grid lg:grid-cols-2 gap-12 lg:gap-10 items-start">
 
-          <div data-hero-anim className="flex flex-col sm:flex-row gap-3 mb-9">
-            <a
-              href="#contact"
-              className="px-7 py-3.5 bg-[#1A4FBF] text-white font-semibold rounded-xl hover:bg-[#1540A0] transition-colors shadow-sm text-base text-center"
+          {/* Left: copy */}
+          <div className="max-w-xl">
+            <p
+              data-hero-anim
+              className="text-lg text-[#4A5A7A] leading-relaxed mb-8"
             >
-              Book a Demo
-            </a>
-            <a
-              href="https://yeamagentsystem.vercel.app/login?callbackUrl=%2F"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-7 py-3.5 bg-transparent text-[#1A4FBF] font-semibold rounded-xl hover:bg-[#EBF0FA] transition-colors border border-[#1A4FBF] text-base text-center"
-            >
-              See the Platform
-            </a>
-          </div>
+              Our AI drafts each appeal, you approve every one before it&apos;s sent.
+            </p>
 
-          {/* Compact trust row */}
-          <div data-hero-anim className="grid grid-cols-2 gap-3">
-            {STATS.map((badge) => (
-              <div
-                key={badge.label}
-                className="bg-[#FFFFFF]/80 backdrop-blur-sm rounded-xl p-3 shadow-sm border border-[#E0E6F5]"
+            <div data-hero-anim className="flex flex-col sm:flex-row gap-3 mb-9">
+              <a
+                href="#contact"
+                className="px-7 py-3.5 bg-[#1A4FBF] text-white font-semibold rounded-xl hover:bg-[#1540A0] transition-colors shadow-sm text-base text-center"
               >
-                <div className="text-base font-bold text-[#1A4FBF]">{badge.value}</div>
-                <div className="text-xs text-[#5A6A8A] mt-0.5 leading-snug">{badge.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
+                Book a Demo
+              </a>
+              <a
+                href="https://yeamagentsystem.vercel.app/login?callbackUrl=%2F"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-7 py-3.5 bg-transparent text-[#1A4FBF] font-semibold rounded-xl hover:bg-[#EBF0FA] transition-colors border border-[#1A4FBF] text-base text-center"
+              >
+                See the Platform
+              </a>
+            </div>
 
-        {/* Right: animated product mock */}
-        <div data-hero-anim className="relative">
-          <div
-            className="relative bg-white rounded-2xl border border-[#E0E6F5] shadow-xl shadow-[#1A4FBF]/5 overflow-hidden"
-            style={{ animation: "heroFloat 6s ease-in-out infinite" }}
-          >
-            {/* Card header */}
-            <div className="flex items-center justify-between px-5 py-4 border-b border-[#E0E6F5]">
-              <div className="flex items-center gap-2.5">
-                <span className="w-7 h-7 rounded-lg bg-[#1A4FBF] flex items-center justify-center">
-                  <span className="w-2.5 h-2.5 rounded-sm bg-white" />
+            {/* Compact trust row */}
+            <div data-hero-anim className="grid grid-cols-2 gap-3">
+              {STATS.map((badge) => (
+                <div
+                  key={badge.label}
+                  className="bg-[#FFFFFF]/80 backdrop-blur-sm rounded-xl p-3 shadow-sm border border-[#E0E6F5]"
+                >
+                  <div className="text-base font-bold text-[#1A4FBF]">{badge.value}</div>
+                  <div className="text-xs text-[#5A6A8A] mt-0.5 leading-snug">{badge.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Right: animated product mock, lit by a glow biased to the right.
+              Capped to match the copy width while stacked, fills its column at lg. */}
+          <div data-hero-anim className="relative max-w-xl lg:max-w-none">
+            {/* Soft glow behind the card, pushed toward the right edge */}
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute -top-12 -bottom-12 -left-4 -right-16"
+              style={{
+                background:
+                  "radial-gradient(circle at 72% 45%, rgba(26,79,191,0.22) 0%, rgba(107,155,240,0.12) 42%, transparent 72%)",
+                animation: "glowPulse 9s ease-in-out infinite",
+              }}
+            />
+
+            <div
+              className="relative z-10 bg-white rounded-2xl border border-[#E0E6F5] shadow-xl shadow-[#1A4FBF]/10 overflow-hidden"
+              style={{ animation: "heroFloat 6s ease-in-out infinite" }}
+            >
+              {/* Card header */}
+              <div className="flex items-center justify-between px-5 py-4 border-b border-[#E0E6F5]">
+                <div className="flex items-center gap-2.5">
+                  <span className="w-7 h-7 rounded-lg bg-[#1A4FBF] flex items-center justify-center">
+                    <span className="w-2.5 h-2.5 rounded-sm bg-white" />
+                  </span>
+                  <span className="text-sm font-bold text-[#1C1C1C]">Yeam AI Team</span>
+                </div>
+                <span className="flex items-center gap-1.5 text-xs font-semibold text-green-600 bg-green-50 border border-green-200 px-2 py-0.5 rounded-full">
+                  <span className="w-1.5 h-1.5 rounded-full bg-green-500 inline-block animate-pulse" />
+                  Live
                 </span>
-                <span className="text-sm font-bold text-[#1C1C1C]">Yeam AI Team</span>
               </div>
-              <span className="flex items-center gap-1.5 text-xs font-semibold text-green-600 bg-green-50 border border-green-200 px-2 py-0.5 rounded-full">
-                <span className="w-1.5 h-1.5 rounded-full bg-green-500 inline-block animate-pulse" />
-                Live
-              </span>
-            </div>
 
-            {/* Agent rows */}
-            <div className="p-3 space-y-1">
-              {ROLES.map((role, i) => {
-                const isActive = i === activeRole;
-                return (
-                  <div
-                    key={role.label}
-                    className={`relative flex items-center justify-between gap-3 px-3 py-2.5 rounded-xl transition-colors duration-300 ${
-                      isActive ? "bg-[#EBF0FA]" : "bg-transparent"
-                    }`}
-                  >
-                    <div className="flex items-center gap-2.5 min-w-0">
-                      <span
-                        className={`w-2 h-2 rounded-full flex-shrink-0 ${isActive ? "animate-pulse" : ""}`}
-                        style={{ backgroundColor: role.dot }}
-                      />
-                      <span className="text-sm font-medium text-[#1C1C1C] truncate">
-                        {role.label}
+              {/* Agent rows */}
+              <div className="p-3 space-y-1">
+                {ROLES.map((role, i) => {
+                  const isActive = i === activeRole;
+                  return (
+                    <div
+                      key={role.label}
+                      className={`relative flex items-center justify-between gap-3 px-3 py-2.5 rounded-xl transition-colors duration-300 ${
+                        isActive ? "bg-[#EBF0FA]" : "bg-transparent"
+                      }`}
+                    >
+                      <div className="flex items-center gap-2.5 min-w-0">
+                        <span
+                          className={`w-2 h-2 rounded-full flex-shrink-0 ${isActive ? "animate-pulse" : ""}`}
+                          style={{ backgroundColor: role.dot }}
+                        />
+                        <span className="text-sm font-medium text-[#1C1C1C] truncate">
+                          {role.label}
+                        </span>
+                      </div>
+                      <span className={`text-xs whitespace-nowrap ${isActive ? "text-[#1A4FBF] font-semibold" : "text-[#8A9BBF]"}`}>
+                        {role.status}
                       </span>
+                      {isActive && (
+                        <span
+                          key={activeRole}
+                          aria-hidden="true"
+                          className="absolute bottom-0 left-3 right-3 h-0.5 rounded-full bg-[#1A4FBF]/60"
+                          style={{ animation: `barFill ${ROLE_CYCLE_MS}ms linear` }}
+                        />
+                      )}
                     </div>
-                    <span className={`text-xs whitespace-nowrap ${isActive ? "text-[#1A4FBF] font-semibold" : "text-[#8A9BBF]"}`}>
-                      {role.status}
-                    </span>
-                    {isActive && (
-                      <span
-                        key={activeRole}
-                        aria-hidden="true"
-                        className="absolute bottom-0 left-3 right-3 h-0.5 rounded-full bg-[#1A4FBF]/60"
-                        style={{ animation: `barFill ${ROLE_CYCLE_MS}ms linear` }}
-                      />
-                    )}
-                  </div>
-                );
-              })}
-            </div>
+                  );
+                })}
+              </div>
 
-            {/* Card footer */}
-            <div className="flex items-center justify-between px-5 py-3 border-t border-[#E0E6F5] bg-[#F7F9FE]">
-              <span className="text-xs text-[#5A6A8A]">Integrated with your EHR</span>
-              <div className="flex items-center gap-1.5">
-                <span className="text-[10px] font-semibold text-[#1A4FBF] bg-white border border-[#A8BFEE] px-1.5 py-0.5 rounded">HIPAA</span>
-                <span className="text-[10px] font-semibold text-[#1A4FBF] bg-white border border-[#A8BFEE] px-1.5 py-0.5 rounded">HL7</span>
+              {/* Card footer */}
+              <div className="flex items-center justify-between px-5 py-3 border-t border-[#E0E6F5] bg-[#F7F9FE]">
+                <span className="text-xs text-[#5A6A8A]">Integrated with your EHR</span>
+                <div className="flex items-center gap-1.5">
+                  <span className="text-[10px] font-semibold text-[#1A4FBF] bg-white border border-[#A8BFEE] px-1.5 py-0.5 rounded">HIPAA</span>
+                  <span className="text-[10px] font-semibold text-[#1A4FBF] bg-white border border-[#A8BFEE] px-1.5 py-0.5 rounded">HL7</span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
+        </div>
       </div>
     </section>
   );
