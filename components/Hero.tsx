@@ -114,8 +114,9 @@ export default function Hero() {
                 href="#contact"
                 className="px-7 py-3.5 bg-[#1A4FBF] text-white font-semibold rounded-xl hover:bg-[#1540A0] transition-colors shadow-sm text-base text-center"
               >
-                Book a Demo
+                Request a Demo
               </a>
+              {/* See the Platform temporarily hidden until the platform link is fixed
               <a
                 href="https://yeamagentsystem.vercel.app/login?callbackUrl=%2F"
                 target="_blank"
@@ -124,6 +125,7 @@ export default function Hero() {
               >
                 See the Platform
               </a>
+              */}
             </div>
 
             {/* Compact trust row */}

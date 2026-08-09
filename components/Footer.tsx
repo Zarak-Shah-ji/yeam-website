@@ -38,6 +38,7 @@ export default function Footer() {
           </div>
 
           <div className="flex gap-16">
+            {/* Platform links temporarily hidden until the platform link is fixed
             <div>
               <h4 className="text-xs font-semibold text-[#5A5A5A] uppercase tracking-wider mb-3">Platform</h4>
               <ul className="space-y-2">
@@ -55,6 +56,7 @@ export default function Footer() {
                 ))}
               </ul>
             </div>
+            */}
             <div>
               <h4 className="text-xs font-semibold text-[#5A5A5A] uppercase tracking-wider mb-3">Company</h4>
               <ul className="space-y-2">

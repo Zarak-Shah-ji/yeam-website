@@ -40,6 +40,7 @@ export default function Nav() {
         </nav>
 
         <div className="flex items-center gap-2">
+          {/* Log In temporarily hidden until the platform link is fixed
           <a
             href="https://yeamagentsystem.vercel.app/login"
             target="_blank"
@@ -48,11 +49,12 @@ export default function Nav() {
           >
             Log In
           </a>
+          */}
           <a
             href="#contact"
             className="px-4 py-2 bg-[#1A4FBF] text-white text-sm font-medium rounded-lg hover:bg-[#1540A0] transition-colors"
           >
-            Book a Demo
+            Request a Demo
           </a>
         </div>
       </div>
