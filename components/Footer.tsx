@@ -61,7 +61,8 @@ export default function Footer() {
               <h4 className="text-xs font-semibold text-[#5A5A5A] uppercase tracking-wider mb-3">Company</h4>
               <ul className="space-y-2">
                 {[
-                  { label: "Book a Demo", href: "#contact" },
+                  { label: "Book a Demo",  href: "#contact" },
+                  { label: "Architecture", href: "/architecture" },
                   { label: "Contact",     href: "#contact" },
                   { label: "info@yeam.ai", href: "mailto:info@yeam.ai" },
                   { label: "747-388-6386", href: "tel:7473886386" },
@@ -83,7 +84,7 @@ export default function Footer() {
           </p>
           <div className="flex items-center gap-4">
             <p className="text-xs text-[#3A3A3A]">
-              HIPAA Compliant · SOC 2 Ready · HL7/FHIR Compatible
+              Built for HIPAA workflows · SOC 2 Ready · FHIR R4 on the roadmap
             </p>
             <ThemeToggle />
           </div>

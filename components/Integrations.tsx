@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
@@ -133,6 +134,14 @@ export default function Integrations() {
           </h2>
           <p data-reveal className="text-base md:text-lg text-[#4A5A7A] leading-relaxed mt-4 max-w-xl mx-auto">
             Yeam connects to the EHRs and practice systems your team uses every day, so it fits into your workflow instead of replacing it.
+          </p>
+          <p data-reveal className="mt-4">
+            <Link
+              href="/architecture"
+              className="text-sm font-medium text-[#1A4FBF] hover:text-[#1540A0] transition-colors"
+            >
+              See exactly how it connects →
+            </Link>
           </p>
         </div>
       </div>

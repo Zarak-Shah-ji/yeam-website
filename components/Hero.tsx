@@ -17,7 +17,7 @@ const ROLES = [
 
 const STATS = [
   { value: "Live in days",        label: "Not a months-long rollout" },
-  { value: "HIPAA + HL7",         label: "Certified and secure" },
+  { value: "Reads your denials",  label: "EOB, ERA, or a claims export" },
   { value: "Works with your EHR", label: "No rip and replace" },
   { value: "No new hires",        label: "No overtime, no backfill" },
 ];
