@@ -32,8 +32,11 @@ const UPSTREAM =
  * It slows down casual abuse; it is not a quota. Turnstile below is the part
  * that actually stops scripted traffic, once its keys are set.
  */
-const RATE_LIMIT = 6;
+const RATE_LIMIT = 20;
 const RATE_WINDOW_MS = 60 * 60 * 1000;
+
+/** Local development is not rate limited — it only ever gets in the way there. */
+const RATE_LIMIT_ENABLED = process.env.NODE_ENV === "production";
 const hits = new Map<string, number[]>();
 
 function recentHits(ip: string): number[] {
@@ -42,6 +45,7 @@ function recentHits(ip: string): number[] {
 }
 
 function rateLimited(ip: string): boolean {
+  if (!RATE_LIMIT_ENABLED) return false;
   const recent = recentHits(ip);
   hits.set(ip, recent);
   return recent.length >= RATE_LIMIT;
@@ -99,7 +103,10 @@ export async function POST(req: Request) {
     req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
   if (rateLimited(ip)) {
     return NextResponse.json(
-      { error: "You've reached the demo limit for this hour. Try again shortly." },
+      {
+        error:
+          "That's the demo limit for this hour. Book a walkthrough and we'll run it on your own denials.",
+      },
       { status: 429 },
     );
   }

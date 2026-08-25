@@ -1,19 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-
-const ROLE_CYCLE_MS = 2200;
-
-// On-brand blue shades so each role reads distinctly while the palette stays blue.
-const ROLES = [
-  { label: "AI Receptionist", dot: "#1A4FBF", status: "4 calls answered", metric: "live" },
-  { label: "AI Scribe",       dot: "#1540A0", status: "SOAP note drafted", metric: "done" },
-  { label: "AI Coder",        dot: "#6B9BF0", status: "9 charts coded", metric: "+9" },
-  { label: "AI Biller",       dot: "#0F2E6B", status: "2 denials appealed", metric: "+2" },
-  { label: "AI Nurse",        dot: "#3B6FD4", status: "5 follow-ups sent", metric: "+5" },
-];
+import HeroAppealTool from "./HeroAppealTool";
 
 const STATS = [
   { value: "Live in days",        label: "Not a months-long rollout" },
@@ -29,16 +19,6 @@ function prefersReducedMotion() {
 
 export default function Hero() {
   const rootRef = useRef<HTMLDivElement>(null);
-  const [activeRole, setActiveRole] = useState(0);
-
-  // Cycle the highlighted agent row, unless the user prefers reduced motion.
-  useEffect(() => {
-    if (prefersReducedMotion()) return;
-    const timer = setInterval(() => {
-      setActiveRole((r) => (r + 1) % ROLES.length);
-    }, ROLE_CYCLE_MS);
-    return () => clearInterval(timer);
-  }, []);
 
   // Staggered entrance. useGSAP runs in a layout effect, so there is no flash.
   useGSAP(() => {
@@ -142,8 +122,10 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Right: animated product mock, lit by a glow biased to the right.
-              Capped to match the copy width while stacked, fills its column at lg. */}
+          {/* Right: the live appeal drafter. This replaced an animated mock that
+              cycled five fake agent statuses on a timer — decoration that proved
+              nothing. Same slot, same chrome, real work. The glow stays; the
+              float does not, because a card you click should hold still. */}
           <div data-hero-anim className="relative max-w-xl lg:max-w-none">
             {/* Soft glow behind the card, pushed toward the right edge */}
             <div
@@ -156,69 +138,7 @@ export default function Hero() {
               }}
             />
 
-            <div
-              className="relative z-10 bg-white rounded-2xl border border-[#E0E6F5] shadow-xl shadow-[#1A4FBF]/10 overflow-hidden"
-              style={{ animation: "heroFloat 6s ease-in-out infinite" }}
-            >
-              {/* Card header */}
-              <div className="flex items-center justify-between px-5 py-4 border-b border-[#E0E6F5]">
-                <div className="flex items-center gap-2.5">
-                  <span className="w-7 h-7 rounded-lg bg-[#1A4FBF] flex items-center justify-center">
-                    <span className="w-2.5 h-2.5 rounded-sm bg-white" />
-                  </span>
-                  <span className="text-sm font-bold text-[#1C1C1C]">Yeam AI Team</span>
-                </div>
-                <span className="flex items-center gap-1.5 text-xs font-semibold text-green-600 bg-green-50 border border-green-200 px-2 py-0.5 rounded-full">
-                  <span className="w-1.5 h-1.5 rounded-full bg-green-500 inline-block animate-pulse" />
-                  Live
-                </span>
-              </div>
-
-              {/* Agent rows */}
-              <div className="p-3 space-y-1">
-                {ROLES.map((role, i) => {
-                  const isActive = i === activeRole;
-                  return (
-                    <div
-                      key={role.label}
-                      className={`relative flex items-center justify-between gap-3 px-3 py-2.5 rounded-xl transition-colors duration-300 ${
-                        isActive ? "bg-[#EBF0FA]" : "bg-transparent"
-                      }`}
-                    >
-                      <div className="flex items-center gap-2.5 min-w-0">
-                        <span
-                          className={`w-2 h-2 rounded-full flex-shrink-0 ${isActive ? "animate-pulse" : ""}`}
-                          style={{ backgroundColor: role.dot }}
-                        />
-                        <span className="text-sm font-medium text-[#1C1C1C] truncate">
-                          {role.label}
-                        </span>
-                      </div>
-                      <span className={`text-xs whitespace-nowrap ${isActive ? "text-[#1A4FBF] font-semibold" : "text-[#8A9BBF]"}`}>
-                        {role.status}
-                      </span>
-                      {isActive && (
-                        <span
-                          key={activeRole}
-                          aria-hidden="true"
-                          className="absolute bottom-0 left-3 right-3 h-0.5 rounded-full bg-[#1A4FBF]/60"
-                          style={{ animation: `barFill ${ROLE_CYCLE_MS}ms linear` }}
-                        />
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-
-              {/* Card footer */}
-              <div className="flex items-center justify-between px-5 py-3 border-t border-[#E0E6F5] bg-[#F7F9FE]">
-                <span className="text-xs text-[#5A6A8A]">Integrated with your EHR</span>
-                <div className="flex items-center gap-1.5">
-                  <span className="text-[10px] font-semibold text-[#1A4FBF] bg-white border border-[#A8BFEE] px-1.5 py-0.5 rounded">HIPAA</span>
-                  <span className="text-[10px] font-semibold text-[#1A4FBF] bg-white border border-[#A8BFEE] px-1.5 py-0.5 rounded">HL7</span>
-                </div>
-              </div>
-            </div>
+            <HeroAppealTool />
           </div>
 
         </div>

@@ -191,10 +191,10 @@ export default function ArchitecturePage() {
           <p className="mt-10 text-sm text-[#4A5A7A]">
             The output routing above is live —{" "}
             <Link
-              href="/#try-it"
+              href="/"
               className="font-medium text-[#1A4FBF] hover:text-[#1540A0] transition-colors"
             >
-              run it on a sample denial
+              run it on a sample denial in the hero
             </Link>
             .
           </p>
