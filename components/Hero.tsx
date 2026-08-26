@@ -4,18 +4,14 @@ import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import HeroAppealTool from "./HeroAppealTool";
+import { prefersReducedMotion } from "@/lib/motion";
 
 const STATS = [
-  { value: "Live in days",        label: "Not a months-long rollout" },
-  { value: "Reads your denials",  label: "EOB, ERA, or a claims export" },
+  { value: "Free to try",         label: "Your export never leaves your browser" },
+  { value: "Reads your denials",  label: "EOB, denial letter, or a claims export" },
   { value: "Works with your EHR", label: "No rip and replace" },
-  { value: "No new hires",        label: "No overtime, no backfill" },
+  { value: "Deadlines tracked",   label: "Filing windows, per payer" },
 ];
-
-function prefersReducedMotion() {
-  return typeof window !== "undefined" &&
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-}
 
 export default function Hero() {
   const rootRef = useRef<HTMLDivElement>(null);
@@ -65,7 +61,9 @@ export default function Hero() {
             className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#EBF0FA] text-[#1A4FBF] rounded-full text-sm font-medium border border-[#A8BFEE]"
           >
             <span className="w-1.5 h-1.5 rounded-full bg-[#1A4FBF] inline-block animate-pulse" />
-            5 AI roles. 1 clinic. $200/month.
+            <a href="/pricing" className="hover:text-[#1540A0] transition-colors">
+              Free denial worklist · paid plans from $200/month
+            </a>
           </div>
 
           <h1
@@ -86,13 +84,21 @@ export default function Hero() {
               data-hero-anim
               className="text-lg text-[#4A5A7A] leading-relaxed mb-8"
             >
-              Our AI drafts each appeal, you approve every one before it&apos;s sent.
+              Yeam reads your denial export, tells you which claims are still worth
+              working and how long you have left, then drafts each response. You approve
+              every one before it&apos;s sent.
             </p>
 
             <div data-hero-anim className="flex flex-col sm:flex-row gap-3 mb-9">
               <a
-                href="#contact"
+                href="#triage"
                 className="px-7 py-3.5 bg-[#1A4FBF] text-white font-semibold rounded-xl hover:bg-[#1540A0] transition-colors shadow-sm text-base text-center"
+              >
+                Run your denial export
+              </a>
+              <a
+                href="#contact"
+                className="px-7 py-3.5 bg-transparent text-[#1A4FBF] font-semibold rounded-xl hover:bg-[#EBF0FA] transition-colors border border-[#1A4FBF] text-base text-center"
               >
                 Request a Demo
               </a>

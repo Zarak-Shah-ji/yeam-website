@@ -1,45 +1,54 @@
+/**
+ * Who this is for.
+ *
+ * Written for billing companies rather than clinic roles. A billing company
+ * already does denial work by hand, carries several practices' volume, needs no
+ * EHR from us, and improves its own margin by working more denials per head —
+ * so one sale reaches many practices. The clinic-role version this replaced
+ * pitched an AI workforce the product does not ship.
+ */
+
 const audiences = [
   {
-    role: "Clinic Owner / Physician",
+    role: "Billing company owner",
+    icon: (
+      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+      </svg>
+    ),
+    headline: "Work more denials per biller, not more billers.",
+    points: [
+      "Triage arrives sorted — nobody reads 400 remits to find the live ones",
+      "Margin improves without adding headcount",
+      "One workspace across every practice you serve",
+    ],
+  },
+  {
+    role: "Denial management lead",
+    icon: (
+      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+      </svg>
+    ),
+    headline: "Nothing dies in the queue on a filing deadline.",
+    points: [
+      "Every denial carries its remaining days, by payer",
+      "Corrected claims separated from appeals before anyone starts writing",
+      "Dead denials marked dead, so nobody works them twice",
+    ],
+  },
+  {
+    role: "Practice you bill for",
     icon: (
       <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" />
       </svg>
     ),
-    headline: "Reduce staffing costs, not care quality.",
+    headline: "Keep your EHR. Recover the revenue anyway.",
     points: [
-      "Replace repetitive admin roles with always-on AI agents",
-      "Cut documentation time per provider from hours to minutes",
-      "Scale patient volume without scaling your headcount",
-    ],
-  },
-  {
-    role: "Practice Manager",
-    icon: (
-      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6a7.5 7.5 0 1 0 7.5 7.5h-7.5V6Z" />
-        <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 10.5H21A7.5 7.5 0 0 0 13.5 3v7.5Z" />
-      </svg>
-    ),
-    headline: "One AI workforce replaces three full-time hires.",
-    points: [
-      "AI Receptionist, Scribe, and Coder running 24/7 with no turnover",
-      "One dashboard showing every agent's activity across the day",
-      "AI flags issues before they become costly problems",
-    ],
-  },
-  {
-    role: "Provider / Physician",
-    icon: (
-      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
-      </svg>
-    ),
-    headline: "Practice medicine. Let AI handle the paperwork.",
-    points: [
-      "AI Scribe writes your notes while you focus on the patient",
-      "Review and sign in seconds, no manual documentation",
-      "AI Nurse handles follow-ups so your inbox stays clear",
+      "No rip and replace — denials come from the clearinghouse, not the chart",
+      "Every response reviewed and approved before it is sent",
+      "Repeat denials surfaced so the same mistake stops recurring",
     ],
   },
 ];
@@ -50,10 +59,10 @@ export default function Audiences() {
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-14">
           <p className="text-blue-600 text-sm font-semibold uppercase tracking-wider mb-3">
-            Built for Everyone in Your Clinic
+            Built for the people who work denials
           </p>
           <h2 className="text-4xl font-bold text-slate-900">
-            The Right AI Agent for Every Role
+            Most denials are never worked at all
           </h2>
         </div>
 

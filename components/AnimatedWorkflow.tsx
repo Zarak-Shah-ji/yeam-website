@@ -8,87 +8,10 @@ const APPEAL_TEXT =
   "Dear Appeals Department,\n\nWe are writing to formally appeal the denial of claim ENC-CMNAPYNX for services rendered to patient Mohamed Erdman on December 28, 2024.\n\nThe wellness visit (Z00.00) is a covered benefit under Texas Medicaid for patients 65+. Clinical documentation confirms medical necessity.";
 
 
+// Starts at claim submission on purpose. The front-desk and scribe steps this
+// array used to open with sold an AI-workforce story the site no longer tells —
+// denial recovery sits alongside whatever EHR a practice already runs.
 const steps = [
-  {
-    id: 1,
-    label: "Patient checks in",
-    role: "Front Desk",
-    roleColor: "text-[#5C8A3A] bg-[#F0F7E8] border-[#C8DDB4]",
-    panel: (
-      <div className="space-y-3">
-        <div className="flex items-center justify-between">
-          <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Patient Record</span>
-          <span className="flex items-center gap-1.5 text-xs font-medium text-green-600">
-            <span className="w-1.5 h-1.5 rounded-full bg-green-500 inline-block animate-pulse" />
-            Checked In
-          </span>
-        </div>
-        <div className="bg-slate-50 rounded-xl p-4 border border-slate-100">
-          <div className="text-base font-bold text-slate-900 mb-0.5">Mohamed Erdman</div>
-          <div className="text-sm text-slate-500 mb-3">90y · MRN-TX-001671</div>
-          <div className="grid grid-cols-2 gap-2 text-sm">
-            <div>
-              <div className="text-xs text-slate-400">Appointment</div>
-              <div className="font-medium text-slate-700">2:59 PM today</div>
-            </div>
-            <div>
-              <div className="text-xs text-slate-400">Insurance</div>
-              <div className="font-medium text-slate-700">Texas Medicaid</div>
-            </div>
-          </div>
-        </div>
-        <div className="flex items-center gap-2 text-xs text-slate-500 bg-blue-50 border border-blue-100 rounded-lg px-3 py-2">
-          <svg className="w-3.5 h-3.5 text-blue-500 shrink-0" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd"/>
-          </svg>
-          AI flagged: prior auth may be needed for Z00.00
-        </div>
-      </div>
-    ),
-  },
-  {
-    id: 2,
-    label: "Encounter documented",
-    role: "Provider",
-    roleColor: "text-[#6B4A8A] bg-[#F5F0FA] border-[#D4C0E8]",
-    panel: (
-      <div className="space-y-3">
-        <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Clinical Note</span>
-        <div className="bg-slate-50 rounded-xl p-4 border border-slate-100 space-y-3">
-          <div>
-            <div className="text-xs text-slate-400 mb-0.5">Chief Complaint</div>
-            <div className="text-sm text-slate-700 font-medium">Annual wellness visit</div>
-          </div>
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <div className="text-xs text-slate-400 mb-0.5">Diagnosis (ICD-10)</div>
-              <div className="inline-flex items-center gap-1.5 px-2 py-1 bg-blue-50 border border-blue-100 rounded-md text-xs font-mono text-blue-700 font-semibold">
-                Z00.00
-              </div>
-              <div className="text-xs text-slate-400 mt-1">General adult medical exam</div>
-            </div>
-            <div>
-              <div className="text-xs text-slate-400 mb-0.5">Procedure (CPT)</div>
-              <div className="inline-flex items-center gap-1.5 px-2 py-1 bg-blue-50 border border-blue-100 rounded-md text-xs font-mono text-blue-700 font-semibold">
-                99397
-              </div>
-              <div className="text-xs text-slate-400 mt-1">Preventive visit, 65+</div>
-            </div>
-          </div>
-          <div>
-            <div className="text-xs text-slate-400 mb-0.5">Provider</div>
-            <div className="text-sm text-slate-700 font-medium">Dr. Sarah Chen, MD</div>
-          </div>
-        </div>
-        <div className="flex items-center gap-2 text-xs text-slate-500 bg-blue-50 border border-blue-100 rounded-lg px-3 py-2">
-          <svg className="w-3.5 h-3.5 text-blue-500 shrink-0" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a.75.75 0 000 1.5h.253a.25.25 0 01.244.304l-.459 2.066A1.75 1.75 0 0010.747 15H11a.75.75 0 000-1.5h-.253a.25.25 0 01-.244-.304l.459-2.066A1.75 1.75 0 009.253 9H9z" clipRule="evenodd"/>
-          </svg>
-          Claim auto-generated from this encounter
-        </div>
-      </div>
-    ),
-  },
   {
     id: 3,
     label: "Claim submitted",

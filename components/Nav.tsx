@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
@@ -21,7 +22,7 @@ export default function Nav() {
       }`}
     >
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-        <a href="#" className="flex items-center gap-2">
+        <Link href="/" className="flex items-center gap-2">
           <Image
             src="/logo.png"
             alt="Yeam.ai"
@@ -31,12 +32,16 @@ export default function Nav() {
             style={{ filter: "brightness(0) saturate(100%) invert(27%) sepia(100%) saturate(400%) hue-rotate(184deg) brightness(142%)" }}
           />
           <span className="font-semibold text-[#1C1C1C] text-lg">Yeam.ai</span>
-        </a>
+        </Link>
 
+        {/* Root-relative hashes, not bare ones: these links also render on
+            /pricing and /architecture, where "#workflow" would resolve to
+            nothing on the current page. */}
         <nav className="hidden md:flex items-center gap-8">
-          <a href="#workflow" className="text-sm text-[#4A5A7A] hover:text-[#1C1C1C] transition-colors">How It Works</a>
-          <a href="#ai-workforce" className="text-sm text-[#4A5A7A] hover:text-[#1C1C1C] transition-colors">AI Workforce</a>
-          <a href="#contact" className="text-sm text-[#4A5A7A] hover:text-[#1C1C1C] transition-colors">Contact</a>
+          <Link href="/#triage" className="text-sm text-[#4A5A7A] hover:text-[#1C1C1C] transition-colors">Free worklist</Link>
+          <Link href="/#workflow" className="text-sm text-[#4A5A7A] hover:text-[#1C1C1C] transition-colors">How It Works</Link>
+          <Link href="/pricing" className="text-sm text-[#4A5A7A] hover:text-[#1C1C1C] transition-colors">Pricing</Link>
+          <Link href="/#contact" className="text-sm text-[#4A5A7A] hover:text-[#1C1C1C] transition-colors">Contact</Link>
         </nav>
 
         <div className="flex items-center gap-2">
@@ -50,12 +55,12 @@ export default function Nav() {
             Log In
           </a>
           */}
-          <a
-            href="#contact"
+          <Link
+            href="/#contact"
             className="px-4 py-2 bg-[#1A4FBF] text-white text-sm font-medium rounded-lg hover:bg-[#1540A0] transition-colors"
           >
             Request a Demo
-          </a>
+          </Link>
         </div>
       </div>
     </header>

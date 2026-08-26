@@ -22,58 +22,9 @@ body {
   color: #1C1C1C;
 }
 
-@keyframes heroFloat {
-  0%, 100% { transform: translateY(0px); }
-  50%       { transform: translateY(-14px); }
-}
-
-@keyframes heroOrb {
-  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.6; }
-  33%      { transform: translate(18px, -12px) scale(1.06); opacity: 0.8; }
-  66%      { transform: translate(-12px, 10px) scale(0.94); opacity: 0.4; }
-}
-
-@keyframes heroDashFlow {
-  from { stroke-dashoffset: 60; }
-  to   { stroke-dashoffset: 0; }
-}
-
-@keyframes feedScroll {
-  0%   { transform: translateY(0); }
-  100% { transform: translateY(-50%); }
-}
-
-@keyframes orbit {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
-}
-
-@keyframes bgRingsSpin {
-  from { transform: rotateX(55deg) rotateZ(0deg); }
-  to   { transform: rotateX(55deg) rotateZ(360deg); }
-}
-
-@keyframes bgRing1 {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
-}
-@keyframes bgRing2 {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(-360deg); }
-}
-@keyframes bgRing3 {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
-}
-
 @keyframes footerPulse {
   0%, 100% { opacity: 1; }
   50%       { opacity: 0.6; }
-}
-
-@keyframes ringPulse {
-  0%, 100% { opacity: 0.6; transform: scale(1); }
-  50%       { opacity: 1; transform: scale(1.04); }
 }
 
 /* Lub-dub heartbeat for the Hero background grid (opacity only, no layout shift) */
@@ -89,16 +40,6 @@ body {
 @keyframes glowPulse {
   0%, 100% { opacity: 0.55; transform: scale(1); }
   50%       { opacity: 0.9; transform: scale(1.05); }
-}
-
-@keyframes barFill {
-  from { width: 0%; }
-  to   { width: 100%; }
-}
-
-@keyframes glowDrift {
-  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.85; }
-  50%      { transform: translate(-50%, -53%) scale(1.08); opacity: 1; }
 }
 
 @keyframes fadeSlideIn {
@@ -237,8 +178,6 @@ html.dark,
 .dark input::placeholder,
 .dark textarea::placeholder { color: var(--d-muted-3); }
 
-/* Recorder card (BenefitsPin) gets its own surface so it does not vanish on navy */
-.dark .recorder-surface { background-color: var(--d-surface-3); border: 1px solid var(--d-border-strong); }
 .dark .bg-\[\#2A2A2A\] { background-color: #2E3A5C; }
 
 /* Tone the bright-blue CTA bands down to a calm deep blue in dark mode */
