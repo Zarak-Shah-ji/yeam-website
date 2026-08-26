@@ -1,9 +1,9 @@
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
+import DenialTriage from "@/components/DenialTriage";
 import Integrations from "@/components/Integrations";
 import AnimatedWorkflow from "@/components/AnimatedWorkflow";
-import BenefitsPin from "@/components/BenefitsPin";
-import AISection from "@/components/AISection";
+import Audiences from "@/components/Audiences";
 import ContactForm from "@/components/ContactForm";
 import Footer from "@/components/Footer";
 
@@ -13,10 +13,11 @@ export default function Home() {
       <Nav />
       <main>
         <Hero />
+        {/* The proof sits directly under the claim: run it on your own export. */}
+        <DenialTriage />
         <Integrations />
         <AnimatedWorkflow />
-        <BenefitsPin />
-        <AISection />
+        <Audiences />
         <ContactForm />
       </main>
       <Footer />

@@ -5,13 +5,9 @@ import { useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { prefersReducedMotion } from "@/lib/motion";
 
 gsap.registerPlugin(ScrollTrigger);
-
-function prefersReducedMotion() {
-  return typeof window !== "undefined" &&
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-}
 
 // EHR / health-IT vendor wordmarks. Each is a self-contained inline SVG so the
 // mark themes via `currentColor` (grayscale to brand blue on hover, light and
