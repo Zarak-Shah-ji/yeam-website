@@ -227,19 +227,25 @@ export default function DenialTriage() {
   return (
     <section id="triage" className="py-20 px-4 sm:px-6 bg-[#EEF2FA]">
       <div className="max-w-6xl mx-auto">
-        <p className="text-[#1A4FBF] text-sm font-semibold uppercase tracking-wider mb-3">
-          Free denial worklist
-        </p>
+        {/* The privacy fact used to sit mid-paragraph, which is no place for the
+            single objection this section exists to answer. It gets its own chip. */}
+        <div className="flex flex-wrap items-center gap-3 mb-3">
+          <p className="text-[#1A4FBF] text-sm font-semibold uppercase tracking-wider">
+            Free denial worklist
+          </p>
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-[#A8BFEE] bg-[#EBF0FA] px-2.5 py-1 text-xs font-semibold text-[#1A4FBF]">
+            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+            </svg>
+            Runs in your browser · nothing uploaded
+          </span>
+        </div>
         <h2 className="text-3xl md:text-4xl font-bold text-[#1C1C1C] tracking-tight mb-4">
           Your denials, sorted by what you&apos;re about to lose.
         </h2>
         <p className="text-lg text-[#4A5A7A] max-w-2xl">
-          Export denied claims from your billing system, drop the file here, and see which are
-          worth working, what each one actually needs, and how many days are left.{" "}
-          <span className="font-semibold text-[#1C1C1C]">
-            Your file is read in this browser and never uploaded.
-          </span>{" "}
-          No account, no BAA.
+          Drop in your denied-claims export and see which are worth working, what each one
+          needs, and how many days are left.
         </p>
 
         {/* Input */}
@@ -280,9 +286,8 @@ export default function DenialTriage() {
           </div>
 
           <p className="mt-3 text-xs leading-relaxed text-[#5A6A8A]">
-            CSV or XLSX. In most systems this is the &ldquo;denied claims&rdquo; or
-            &ldquo;denial detail&rdquo; report. Patient names, member IDs and dates of birth are
-            never read — delete those columns first if you prefer.
+            CSV or XLSX — usually your &ldquo;denied claims&rdquo; report. Patient names, member
+            IDs and dates of birth are never read.
           </p>
 
           {error && <p className="mt-3 text-sm text-red-600">{error}</p>}
@@ -352,8 +357,7 @@ export default function DenialTriage() {
                 {headers.some(isIgnorableColumn) && (
                   <p className="mt-4 text-xs leading-relaxed text-[#5A6A8A]">
                     <span className="font-semibold text-[#1C1C1C]">Ignored entirely:</span>{" "}
-                    {headers.filter(isIgnorableColumn).join(", ")}. These are never read and
-                    never leave this browser.
+                    {headers.filter(isIgnorableColumn).join(", ")}.
                   </p>
                 )}
 
@@ -503,9 +507,8 @@ export default function DenialTriage() {
                   {worklist.rows[openRow].claimNumber ?? "this claim"}
                 </p>
                 <p className="mt-1 text-xs leading-relaxed text-[#5A6A8A]">
-                  Unlike the triage above, this sends the codes, amount and dates for this one row
-                  to Yeam to write the response. No patient names, member IDs or dates of birth are
-                  included.
+                  This one sends the codes, amount and dates for this row to Yeam — no patient
+                  names, member IDs or dates of birth.
                 </p>
 
                 <button

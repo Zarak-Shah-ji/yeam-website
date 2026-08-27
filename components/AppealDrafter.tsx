@@ -3,11 +3,13 @@
 import { useRef, useState } from "react";
 
 /**
- * The live appeal drafter, sitting where the hero's product mock used to.
+ * The live appeal drafter.
  *
- * The mock it replaces cycled five fake agent statuses on a timer — decoration
- * that proved nothing. This does the real work in the same space: pick a denial
- * document, watch it come back as the response that denial actually calls for.
+ * It used to sit in the hero, competing for attention with the free worklist
+ * directly below it — two upload widgets stacked, each explaining itself. It
+ * reads better one step later, where the story has already earned it: you have
+ * a sorted worklist, and now here is the response one of those denials calls
+ * for. Pick a denial document, watch it come back written.
  *
  * Sample-first on purpose. An EOB carries most of the 18 HIPAA identifiers and
  * this deployment has no BAA, so the default path is synthetic documents that
@@ -65,7 +67,7 @@ function instrumentOf(letter: string): string {
   return "Appeal letter";
 }
 
-export default function HeroAppealTool() {
+function DrafterCard() {
   const [status, setStatus] = useState<Status>("idle");
   const [letter, setLetter] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
@@ -273,5 +275,34 @@ export default function HeroAppealTool() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function AppealDrafter() {
+  return (
+    <section id="drafter" className="relative py-20 px-6 bg-[#FFFFFF] overflow-hidden">
+      <div className="max-w-2xl mx-auto">
+        <p className="text-[#1A4FBF] text-sm font-semibold uppercase tracking-wider mb-3">
+          Appeal drafter
+        </p>
+        <h2 className="text-3xl md:text-4xl font-bold text-[#1C1C1C] tracking-tight mb-8">
+          Then it writes the response the denial actually calls for.
+        </h2>
+
+        <div className="relative">
+          {/* Soft glow behind the card, carried over from the hero. */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -inset-8"
+            style={{
+              background:
+                "radial-gradient(circle at 50% 45%, rgba(26,79,191,0.22) 0%, rgba(107,155,240,0.12) 42%, transparent 72%)",
+              animation: "glowPulse 9s ease-in-out infinite",
+            }}
+          />
+          <DrafterCard />
+        </div>
+      </div>
+    </section>
   );
 }

@@ -128,10 +128,7 @@ export default function Integrations() {
           <h2 data-reveal className="text-3xl md:text-4xl font-bold text-[#1C1C1C] tracking-tight">
             Works with the systems you already run on.
           </h2>
-          <p data-reveal className="text-base md:text-lg text-[#4A5A7A] leading-relaxed mt-4 max-w-xl mx-auto">
-            Yeam connects to the EHRs and practice systems your team uses every day, so it fits into your workflow instead of replacing it.
-          </p>
-          <p data-reveal className="mt-4">
+          <p data-reveal className="mt-5">
             <Link
               href="/architecture"
               className="text-sm font-medium text-[#1A4FBF] hover:text-[#1540A0] transition-colors"
@@ -173,8 +170,9 @@ export default function Integrations() {
         )}
       </div>
 
-      <p className="text-center text-xs text-[#6A7A9A] mt-12 max-w-xl mx-auto">
-        Logos are trademarks of their respective owners and are shown to indicate integration support, not partnership or endorsement.
+      <p className="text-center text-[11px] text-[#6A7A9A] mt-12 max-w-xl mx-auto">
+        Logos are trademarks of their respective owners; shown to indicate integration support,
+        not endorsement.
       </p>
     </section>
   );

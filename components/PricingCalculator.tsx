@@ -15,6 +15,11 @@ import {
   tierById,
   DENIAL_RATE_DEFAULT,
   VOLUME_PRESETS,
+  MANUAL_COST_DEFAULT,
+  manualMonthlyCost,
+  monthlySavings,
+  savingsPerDenial,
+  suggestsCustom,
 } from "@/lib/pricing";
 
 /**
@@ -28,6 +33,11 @@ import {
  *
  * The count-up writes through a ref rather than React state: sixty renders a
  * second to animate one number would be a poor trade.
+ *
+ * The savings panel compares Yeam's blended rate to what working a denial by
+ * hand costs — a cost-to-cost comparison, not a claim about recovered dollars.
+ * The site refuses to quote recovery until the 835 feed can measure it, and
+ * this number has to hold to the same standard.
  */
 
 const money = new Intl.NumberFormat("en-US", {
@@ -48,14 +58,24 @@ const CLAIMS_MAX = 20_000;
 export default function PricingCalculator() {
   const [claims, setClaims] = useState(2_000);
   const [denialRate, setDenialRate] = useState(DENIAL_RATE_DEFAULT);
+  const [manualCost, setManualCost] = useState(MANUAL_COST_DEFAULT);
 
   const rootRef = useRef<HTMLDivElement>(null);
   const totalRef = useRef<HTMLSpanElement>(null);
+  const savedRef = useRef<HTMLSpanElement>(null);
   const shownTotal = useRef(0);
+  const shownSaved = useRef(0);
 
   const denials = deniedFromClaims(claims, denialRate);
   const pick = recommendedTier(denials);
-  const total = monthlyCost(tierById(pick), denials);
+  const picked = tierById(pick);
+  const total = monthlyCost(picked, denials);
+
+  const blended = effectiveRate(picked, denials);
+  const manualTotal = manualMonthlyCost(denials, manualCost);
+  const saved = monthlySavings(picked, denials, manualCost);
+  const savedEach = savingsPerDenial(picked, denials, manualCost);
+  const yeamCostsMore = saved < 0;
 
   const marks = useMemo(
     () =>
@@ -65,33 +85,41 @@ export default function PricingCalculator() {
     [denialRate],
   );
 
-  // Count the headline figure to its new value. Skipped entirely under reduced
-  // motion, where the number simply lands.
+  // Count the two headline figures to their new values. Skipped entirely under
+  // reduced motion, where the numbers simply land.
   useGSAP(
     () => {
-      const node = totalRef.current;
-      if (!node) return;
+      const countTo = (
+        node: HTMLSpanElement | null,
+        from: { current: number },
+        to: number,
+      ) => {
+        if (!node) return;
+        if (prefersReducedMotion()) {
+          node.textContent = money.format(to);
+          from.current = to;
+          return;
+        }
+        const proxy = { v: from.current };
+        gsap.to(proxy, {
+          v: to,
+          duration: 0.5,
+          ease: "power2.out",
+          onUpdate: () => {
+            node.textContent = money.format(proxy.v);
+          },
+          onComplete: () => {
+            from.current = to;
+          },
+        });
+      };
 
-      if (prefersReducedMotion()) {
-        node.textContent = money.format(total);
-        shownTotal.current = total;
-        return;
-      }
-
-      const proxy = { v: shownTotal.current };
-      gsap.to(proxy, {
-        v: total,
-        duration: 0.5,
-        ease: "power2.out",
-        onUpdate: () => {
-          node.textContent = money.format(proxy.v);
-        },
-        onComplete: () => {
-          shownTotal.current = total;
-        },
-      });
+      countTo(totalRef.current, shownTotal, total);
+      // Only animate a positive figure; the "costs more" branch swaps the node
+      // out for a sentence, so there is nothing to count into.
+      if (!yeamCostsMore) countTo(savedRef.current, shownSaved, saved);
     },
-    { scope: rootRef, dependencies: [total] },
+    { scope: rootRef, dependencies: [total, saved, yeamCostsMore] },
   );
 
   // Lift the recommended card. Transform only, so nothing reflows.
@@ -146,14 +174,25 @@ export default function PricingCalculator() {
             {marks.map((m) => {
               const pct =
                 ((m.claims - CLAIMS_MIN) / (CLAIMS_MAX - CLAIMS_MIN)) * 100;
+              // Near either end a centred label hangs off the track, so the
+              // ones close to an edge align to it instead.
+              const near = pct < 12 ? "left" : pct > 88 ? "right" : "center";
               return (
                 <div
                   key={`${m.from}-${m.to}`}
-                  className="absolute top-0 -translate-x-1/2 text-center"
+                  className="absolute top-0"
                   style={{ left: `${pct}%` }}
                 >
-                  <div className="mx-auto h-2 w-px bg-[#A8BFEE]" />
-                  <div className="mt-0.5 whitespace-nowrap text-[10px] font-medium text-[#8A9BBF]">
+                  <div className="h-2 w-px bg-[#A8BFEE]" />
+                  <div
+                    className={`mt-0.5 whitespace-nowrap text-[10px] font-medium text-[#8A9BBF] ${
+                      near === "left"
+                        ? ""
+                        : near === "right"
+                          ? "-translate-x-full"
+                          : "-translate-x-1/2"
+                    }`}
+                  >
                     {tierById(m.to).name} wins
                   </div>
                 </div>
@@ -199,6 +238,28 @@ export default function PricingCalculator() {
             Most practices land between 5% and 15%. Your denial report has the real number — the
             free worklist above will total it for you.
           </p>
+
+          <label htmlFor="manual" className="mt-8 block text-sm font-semibold text-[#1C1C1C]">
+            What it costs you to work one denial by hand
+          </label>
+          <div className="mt-2 flex items-baseline gap-2">
+            <span className="text-2xl font-bold text-[#1A4FBF]">{money.format(manualCost)}</span>
+            <span className="text-sm text-[#5A6A8A]">per denial</span>
+          </div>
+          <input
+            id="manual"
+            type="range"
+            min={1}
+            max={150}
+            step={1}
+            value={manualCost}
+            onChange={(e) => setManualCost(Number(e.target.value))}
+            className="mt-3 w-full accent-[#1A4FBF]"
+          />
+          <p className="mt-2 text-xs leading-relaxed text-[#5A6A8A]">
+            Industry estimates run about $25 to rework a claim and $118 to appeal one. Put your own
+            number in if you have it.
+          </p>
         </div>
 
         {/* Result */}
@@ -206,7 +267,7 @@ export default function PricingCalculator() {
           <p className="text-xs font-semibold uppercase tracking-wider text-[#1A4FBF]">
             Your plan
           </p>
-          <p className="mt-2 text-2xl font-bold text-[#1C1C1C]">{tierById(pick).name}</p>
+          <p className="mt-2 text-2xl font-bold text-[#1C1C1C]">{picked.name}</p>
 
           <div className="mt-4 flex items-baseline gap-1.5">
             <span ref={totalRef} className="text-4xl font-extrabold text-[#1A4FBF]">
@@ -219,31 +280,91 @@ export default function PricingCalculator() {
             <div className="flex justify-between gap-4">
               <dt className="text-[#5A6A8A]">Platform fee</dt>
               <dd className="font-medium text-[#1C1C1C]">
-                {money.format(tierById(pick).monthly)}
+                {money.format(picked.monthly)}
               </dd>
             </div>
             <div className="flex justify-between gap-4">
               <dt className="text-[#5A6A8A]">
-                {denials.toLocaleString("en-US")} denials × {rate.format(tierById(pick).perDenial)}
+                {denials.toLocaleString("en-US")} denials × {rate.format(picked.perDenial)}
               </dt>
               <dd className="font-medium text-[#1C1C1C]">
-                {money.format(tierById(pick).perDenial * denials)}
+                {money.format(picked.perDenial * denials)}
               </dd>
             </div>
             <div className="flex justify-between gap-4 border-t border-[#A8BFEE] pt-2">
               <dt className="text-[#5A6A8A]">Blended cost per denial</dt>
               <dd className="font-medium text-[#1C1C1C]">
-                {effectiveRate(tierById(pick), denials) === null
-                  ? "—"
-                  : rate.format(effectiveRate(tierById(pick), denials)!)}
+                {blended === null ? "—" : rate.format(blended)}
               </dd>
             </div>
           </dl>
 
-          <p className="mt-5 text-xs leading-relaxed text-[#5A6A8A]">
-            Triage stays free at any volume. This is what the drafting, tracking and submission
-            add on top.
-          </p>
+          {suggestsCustom(denials) && (
+            <p className="mt-4 rounded-lg border border-[#A8BFEE] bg-white px-3 py-2 text-xs leading-relaxed text-[#4A5A7A]">
+              At this volume, ask us about{" "}
+              <span className="font-semibold text-[#1C1C1C]">Network</span> — it is quoted rather
+              than published.
+            </p>
+          )}
+
+          {/* What the same work costs without us. */}
+          <div className="mt-5 border-t border-[#A8BFEE] pt-4">
+            <p className="text-xs font-semibold uppercase tracking-wider text-[#1A4FBF]">
+              Against working them by hand
+            </p>
+
+            <table className="mt-3 w-full text-sm">
+              <thead>
+                <tr className="text-[11px] uppercase tracking-wider text-[#5A6A8A]">
+                  <th scope="col" className="w-1/3" />
+                  <th scope="col" className="pb-1 text-right font-medium">Per denial</th>
+                  <th scope="col" className="pb-1 text-right font-medium">Per month</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row" className="py-1 text-left font-normal text-[#5A6A8A]">By hand</th>
+                  <td className="py-1 text-right text-[#1C1C1C]">{rate.format(manualCost)}</td>
+                  <td className="py-1 text-right text-[#1C1C1C]">{money.format(manualTotal)}</td>
+                </tr>
+                <tr>
+                  <th scope="row" className="py-1 text-left font-normal text-[#5A6A8A]">With Yeam</th>
+                  <td className="py-1 text-right text-[#1C1C1C]">
+                    {blended === null ? "—" : rate.format(blended)}
+                  </td>
+                  <td className="py-1 text-right text-[#1C1C1C]">{money.format(total)}</td>
+                </tr>
+                <tr className="border-t border-[#A8BFEE]">
+                  <th scope="row" className="pt-2 text-left font-semibold text-[#1C1C1C]">
+                    You keep
+                  </th>
+                  {yeamCostsMore || savedEach === null ? (
+                    <td colSpan={2} className="pt-2 text-right text-xs text-[#5A6A8A]">
+                      {denials <= 0
+                        ? "—"
+                        : "Yeam costs more than working them by hand at this volume."}
+                    </td>
+                  ) : (
+                    <>
+                      <td className="pt-2 text-right font-semibold text-[#1A4FBF]">
+                        {rate.format(savedEach)}
+                      </td>
+                      <td className="pt-2 text-right font-extrabold text-[#1A4FBF]">
+                        <span ref={savedRef}>{money.format(saved)}</span>
+                      </td>
+                    </>
+                  )}
+                </tr>
+              </tbody>
+            </table>
+
+            <p className="mt-4 text-xs leading-relaxed text-[#5A6A8A]">
+              This compares what it costs to <em>work</em>{" "}
+              a denial, not what you recover. We
+              don&apos;t quote recovered dollars until the 835 feed can prove them. Triage stays
+              free at any volume — this is what the drafting, tracking and submission add on top.
+            </p>
+          </div>
         </div>
       </div>
 
@@ -272,12 +393,18 @@ export default function PricingCalculator() {
 
               <div className="mt-3 flex items-baseline gap-1">
                 <span className="text-2xl font-extrabold text-[#1C1C1C]">
-                  {tier.free ? "Free" : money.format(tier.monthly)}
+                  {tier.free ? "Free" : tier.custom ? "Custom" : money.format(tier.monthly)}
                 </span>
-                {!tier.free && <span className="text-xs text-[#5A6A8A]">/month</span>}
+                {!tier.free && !tier.custom && (
+                  <span className="text-xs text-[#5A6A8A]">/month</span>
+                )}
               </div>
               <p className="mt-1 text-xs font-medium text-[#1A4FBF]">
-                {tier.free ? "Unlimited, in your browser" : `+ ${rate.format(tier.perDenial)} per denial worked`}
+                {tier.free
+                  ? "Unlimited, in your browser"
+                  : tier.custom
+                    ? "Priced on your volume"
+                    : `+ ${rate.format(tier.perDenial)} per denial worked`}
               </p>
 
               <p className="mt-3 text-xs leading-relaxed text-[#5A6A8A]">{tier.tagline}</p>
@@ -301,7 +428,7 @@ export default function PricingCalculator() {
                     : "bg-[#1A4FBF] text-white hover:bg-[#1540A0]"
                 }`}
               >
-                {tier.free ? "Run the worklist" : "Request a demo"}
+                {tier.free ? "Run the worklist" : tier.custom ? "Talk to us" : "Request a demo"}
               </a>
             </div>
           );

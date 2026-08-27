@@ -1,9 +1,9 @@
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
 import DenialTriage from "@/components/DenialTriage";
+import AppealDrafter from "@/components/AppealDrafter";
 import Integrations from "@/components/Integrations";
-import AnimatedWorkflow from "@/components/AnimatedWorkflow";
-import Audiences from "@/components/Audiences";
+import WhyDenialsDie from "@/components/WhyDenialsDie";
 import ContactForm from "@/components/ContactForm";
 import Footer from "@/components/Footer";
 
@@ -13,11 +13,12 @@ export default function Home() {
       <Nav />
       <main>
         <Hero />
-        {/* The proof sits directly under the claim: run it on your own export. */}
+        {/* One story, in order: run your own export, see it sorted, see the
+            response it writes. The proof sits directly under the claim. */}
         <DenialTriage />
+        <AppealDrafter />
         <Integrations />
-        <AnimatedWorkflow />
-        <Audiences />
+        <WhyDenialsDie />
         <ContactForm />
       </main>
       <Footer />

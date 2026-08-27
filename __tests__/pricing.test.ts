@@ -8,12 +8,28 @@ import {
   crossovers,
   effectiveRate,
   deniedFromClaims,
+  manualMonthlyCost,
+  monthlySavings,
+  savingsPerDenial,
+  suggestsCustom,
+  MANUAL_COST_DEFAULT,
+  CUSTOM_FROM_DENIALS,
 } from "@/lib/pricing";
 
 describe("tier table", () => {
   it("keeps exactly one free tier", () => {
     expect(TIERS.filter((t) => t.free)).toHaveLength(1);
-    expect(PAID_TIERS).toHaveLength(TIERS.length - 1);
+  });
+
+  it("keeps quoted tiers out of the priced set", () => {
+    // A custom tier has no usable monthly or perDenial, so letting it into
+    // PAID_TIERS would hand recommendedTier and crossovers a free plan to
+    // recommend to everybody.
+    expect(TIERS.some((t) => t.custom)).toBe(true);
+    expect(PAID_TIERS.some((t) => t.custom || t.free)).toBe(false);
+    expect(PAID_TIERS).toHaveLength(
+      TIERS.filter((t) => !t.free && !t.custom).length,
+    );
   });
 
   it("raises the fee and lowers the rate at every step — the whole mechanic", () => {
@@ -32,21 +48,21 @@ describe("tier table", () => {
 
 describe("monthlyCost", () => {
   it("is the fee plus the marginal rate", () => {
-    expect(monthlyCost(tierById("practice"), 100)).toBe(200 + 400);
-    expect(monthlyCost(tierById("network"), 1000)).toBe(1200 + 600);
+    expect(monthlyCost(tierById("practice"), 100)).toBe(15 + 200);
+    expect(monthlyCost(tierById("group"), 1000)).toBe(99 + 750);
   });
 
   it("is the bare fee at zero volume", () => {
-    expect(monthlyCost(tierById("group"), 0)).toBe(600);
+    expect(monthlyCost(tierById("group"), 0)).toBe(99);
   });
 
   it("treats negative volume as zero rather than crediting the customer", () => {
-    expect(monthlyCost(tierById("practice"), -50)).toBe(200);
+    expect(monthlyCost(tierById("practice"), -50)).toBe(15);
   });
 });
 
 describe("recommendedTier", () => {
-  const [first, second] = crossovers();
+  const [first] = crossovers();
 
   it("recommends the entry tier below the first break-even", () => {
     expect(recommendedTier(0)).toBe("practice");
@@ -62,13 +78,12 @@ describe("recommendedTier", () => {
     expect(recommendedTier(first.denials)).toBe("practice");
   });
 
-  it("flips one denial past each break-even", () => {
+  it("flips one denial past the break-even", () => {
     expect(recommendedTier(Math.floor(first.denials) + 1)).toBe("group");
-    expect(recommendedTier(Math.floor(second.denials) + 1)).toBe("network");
   });
 
   it("never recommends a tier that is not the cheapest available", () => {
-    for (const n of [1, 50, 160, 161, 400, 666, 667, 2000]) {
+    for (const n of [1, 25, 67, 68, 200, 1_000, 2_000]) {
       const picked = monthlyCost(tierById(recommendedTier(n)), n);
       const cheapest = Math.min(...PAID_TIERS.map((t) => monthlyCost(t, n)));
       expect(picked).toBe(cheapest);
@@ -111,5 +126,51 @@ describe("deniedFromClaims", () => {
   it("applies the denial rate and rounds to whole claims", () => {
     expect(deniedFromClaims(1_000, 0.1)).toBe(100);
     expect(deniedFromClaims(1_005, 0.1)).toBe(101);
+  });
+});
+
+describe("savings against working by hand", () => {
+  const practice = tierById("practice");
+
+  it("clamps negative inputs rather than inventing a credit", () => {
+    expect(manualMonthlyCost(-10, 25)).toBe(0);
+    expect(manualMonthlyCost(10, -25)).toBe(0);
+  });
+
+  it("is null per denial at zero volume instead of dividing by zero", () => {
+    expect(savingsPerDenial(practice, 0, MANUAL_COST_DEFAULT)).toBeNull();
+  });
+
+  it("is positive at the default manual cost", () => {
+    expect(monthlySavings(practice, 100, MANUAL_COST_DEFAULT)).toBeGreaterThan(0);
+    expect(savingsPerDenial(practice, 100, MANUAL_COST_DEFAULT)!).toBeGreaterThan(0);
+  });
+
+  it("goes negative when Yeam costs more than the manual baseline", () => {
+    // The calculator has to say so rather than render a negative "saving".
+    const manual = 1;
+    expect(monthlySavings(practice, 25, manual)).toBeLessThan(0);
+    expect(savingsPerDenial(practice, 25, manual)!).toBeLessThan(0);
+  });
+
+  it("agrees with the blended rate it is drawn against", () => {
+    const denials = 200;
+    const perDenial = savingsPerDenial(practice, denials, MANUAL_COST_DEFAULT)!;
+    expect(perDenial).toBeCloseTo(
+      MANUAL_COST_DEFAULT - effectiveRate(practice, denials)!,
+      6,
+    );
+  });
+});
+
+describe("suggestsCustom", () => {
+  it("holds off below the threshold and fires at it", () => {
+    expect(suggestsCustom(CUSTOM_FROM_DENIALS - 1)).toBe(false);
+    expect(suggestsCustom(CUSTOM_FROM_DENIALS)).toBe(true);
+  });
+
+  it("never displaces the priced recommendation", () => {
+    // recommendedTier must keep returning something the calculator can price.
+    expect(PAID_TIERS.map((t) => t.id)).toContain(recommendedTier(5_000));
   });
 });

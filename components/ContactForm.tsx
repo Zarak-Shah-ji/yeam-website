@@ -2,19 +2,26 @@
 
 import { useState } from "react";
 
+/**
+ * The next step after the worklist.
+ *
+ * This was a full-bleed blue band selling an "AI Medical Workforce" that
+ * handles "reception, documentation, coding, and billing" — a product this
+ * site stopped describing several commits ago. It now picks up where the free
+ * worklist left off and asks for the three things worth asking for. Clinic name
+ * and a free-text message were dropped: neither changed what happened next.
+ */
 export default function ContactForm() {
   const [form, setForm] = useState({
     fullName: "",
-    clinicName: "",
     email: "",
     claimVolume: "",
-    message: "",
   });
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
@@ -39,117 +46,74 @@ export default function ContactForm() {
     }
   };
 
-  if (status === "success") {
-    return (
-      <section id="contact" className="py-20 px-6 bg-[#1A4FBF] cta-band">
-        <div className="max-w-xl mx-auto text-center">
-          <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6">
-            <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
-            </svg>
-          </div>
-          <h2 className="text-3xl font-bold text-white mb-3">We&apos;ll be in touch soon.</h2>
-          <p className="text-[#BDD0F5] text-lg">
-            Thanks for reaching out. Someone from the Yeam team will follow up within one
-            business day.
-          </p>
-        </div>
-      </section>
-    );
-  }
-
   return (
-    <section id="contact" className="py-20 px-6 bg-[#1A4FBF] cta-band">
-      <div className="max-w-5xl mx-auto">
-        <div className="grid lg:grid-cols-2 gap-12 items-start">
-          {/* Left: copy */}
-          <div className="text-white">
-            <p className="text-[#BDD0F5] text-sm font-semibold uppercase tracking-wider mb-4">
-              Book a Demo
-            </p>
-            <h2 className="text-4xl font-bold mb-5 leading-tight">
-              See Your AI Medical Workforce in Action.
-            </h2>
-            <p className="text-[#EBF0FA] text-lg leading-relaxed mb-8">
-              We&apos;ll walk you through a live demo showing how Yeam&apos;s AI agents handle
-              reception, documentation, coding, and billing, so you can see exactly what
-              replacing manual work with AI looks like for your clinic.
-            </p>
-            <ul className="space-y-3">
-              {[
-                "30-minute live walkthrough",
-                "Personalized to your clinic size & payer mix",
-                "No commitment required",
-              ].map((item) => (
-                <li key={item} className="flex items-center gap-3 text-[#EBF0FA]">
-                  <svg className="w-5 h-5 text-[#BDD0F5] shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                    <path
-                      fillRule="evenodd"
-                      d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
+    <section id="contact" className="py-20 px-6 bg-[#EEF2FA]">
+      <div className="max-w-2xl mx-auto">
+        <p className="text-[#1A4FBF] text-sm font-semibold uppercase tracking-wider mb-3">
+          Next step
+        </p>
+        <h2 className="text-3xl md:text-4xl font-bold text-[#1C1C1C] tracking-tight mb-4">
+          You&apos;ve seen the worklist. The paid version keeps it running.
+        </h2>
+        <p className="text-lg text-[#4A5A7A] mb-8">
+          Real claim data, deadlines tracked, responses drafted — under a signed BAA.
+        </p>
 
-          {/* Right: form */}
-          <div className="bg-white rounded-2xl p-8 shadow-xl">
-            <h3 className="text-xl font-bold text-[#1C1C1C] mb-6">Request a Demo</h3>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-[#3A3A3A] mb-1.5">
-                    Full Name <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    name="fullName"
-                    value={form.fullName}
-                    onChange={handleChange}
-                    required
-                    placeholder="Jane Smith"
-                    className="w-full px-3 py-2.5 rounded-lg border border-[#E0E6F5] text-sm focus:outline-none focus:ring-2 focus:ring-[#1A4FBF] focus:border-transparent"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-[#3A3A3A] mb-1.5">
-                    Clinic Name <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    name="clinicName"
-                    value={form.clinicName}
-                    onChange={handleChange}
-                    required
-                    placeholder="Riverside Family Clinic"
-                    className="w-full px-3 py-2.5 rounded-lg border border-[#E0E6F5] text-sm focus:outline-none focus:ring-2 focus:ring-[#1A4FBF] focus:border-transparent"
-                  />
-                </div>
+        <div className="rounded-2xl border border-[#E0E6F5] bg-white shadow-sm p-6 sm:p-8">
+          {status === "success" ? (
+            <div className="py-6 text-center">
+              <div className="w-14 h-14 bg-[#EBF0FA] rounded-full flex items-center justify-center mx-auto mb-5">
+                <svg className="w-7 h-7 text-[#1A4FBF]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                </svg>
               </div>
-
+              <h3 className="text-xl font-bold text-[#1C1C1C] mb-2">We&apos;ll be in touch.</h3>
+              <p className="text-sm text-[#5A6A8A]">
+                Someone from the Yeam team will follow up within one business day.
+              </p>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-[#3A3A3A] mb-1.5">
-                  Clinic Email <span className="text-red-500">*</span>
+                <label htmlFor="fullName" className="block text-sm font-medium text-[#3A3A3A] mb-1.5">
+                  Full name <span className="text-red-500">*</span>
                 </label>
                 <input
-                  type="email"
-                  name="email"
-                  value={form.email}
+                  id="fullName"
+                  type="text"
+                  name="fullName"
+                  value={form.fullName}
                   onChange={handleChange}
                   required
-                  placeholder="jane@rivesideclinic.com"
+                  placeholder="Jane Smith"
                   className="w-full px-3 py-2.5 rounded-lg border border-[#E0E6F5] text-sm focus:outline-none focus:ring-2 focus:ring-[#1A4FBF] focus:border-transparent"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-[#3A3A3A] mb-1.5">
-                  Monthly Claim Volume
+                <label htmlFor="email" className="block text-sm font-medium text-[#3A3A3A] mb-1.5">
+                  Work email <span className="text-red-500">*</span>
                 </label>
+                <input
+                  id="email"
+                  type="email"
+                  name="email"
+                  value={form.email}
+                  onChange={handleChange}
+                  required
+                  placeholder="jane@riversidebilling.com"
+                  className="w-full px-3 py-2.5 rounded-lg border border-[#E0E6F5] text-sm focus:outline-none focus:ring-2 focus:ring-[#1A4FBF] focus:border-transparent"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="claimVolume" className="block text-sm font-medium text-[#3A3A3A] mb-1.5">
+                  Monthly claim volume
+                </label>
+                {/* These options mirror VOLUME_PRESETS in lib/pricing.ts — the
+                    pricing calculator offers the same three buckets. */}
                 <select
+                  id="claimVolume"
                   name="claimVolume"
                   value={form.claimVolume}
                   onChange={handleChange}
@@ -162,37 +126,25 @@ export default function ContactForm() {
                 </select>
               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-[#3A3A3A] mb-1.5">
-                  Message <span className="text-[#5A6A8A] font-normal">(optional)</span>
-                </label>
-                <textarea
-                  name="message"
-                  value={form.message}
-                  onChange={handleChange}
-                  rows={3}
-                  placeholder="Tell us about your current billing challenges..."
-                  className="w-full px-3 py-2.5 rounded-lg border border-[#E0E6F5] text-sm focus:outline-none focus:ring-2 focus:ring-[#1A4FBF] focus:border-transparent resize-none"
-                />
-              </div>
-
-              {status === "error" && (
-                <p className="text-red-600 text-sm">{errorMsg}</p>
-              )}
+              {status === "error" && <p className="text-red-600 text-sm">{errorMsg}</p>}
 
               <button
                 type="submit"
                 disabled={status === "loading"}
                 className="w-full py-3 bg-[#1A4FBF] text-white font-semibold rounded-lg hover:bg-[#1540A0] transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                {status === "loading" ? "Sending..." : "Request Demo"}
+                {status === "loading" ? "Sending..." : "Request a demo"}
               </button>
 
               <p className="text-xs text-[#5A6A8A] text-center">
-                We&apos;ll follow up within one business day at the email provided.
+                Or just email{" "}
+                <a href="mailto:info@yeam.ai" className="font-medium text-[#1A4FBF] hover:text-[#1540A0] transition-colors">
+                  info@yeam.ai
+                </a>
+                .
               </p>
             </form>
-          </div>
+          )}
         </div>
       </div>
     </section>

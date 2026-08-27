@@ -8,20 +8,18 @@ const plusJakartaSans = Plus_Jakarta_Sans({
   weight: ["400", "500", "600", "700", "800"],
 });
 
+const TITLE = "Yeam — denial recovery for medical billing";
+const DESCRIPTION =
+  "Yeam sorts your denied-claims export into what is still worth working, tracks the filing deadline on each one, and drafts the response. The worklist is free and runs in your browser.";
+
+// The `icons` block used to point at /icon.png and /apple-icon.png, neither of
+// which exists in public/. Dropped so Next falls back to app/favicon.ico.
 export const metadata: Metadata = {
-  title: "Yeam.ai - AI Medical Workforce for Clinics",
-  description:
-    "Yeam deploys a full team of AI agents into your clinic, handling reception, documentation, coding, and billing, so your human staff can focus entirely on patients.",
-  icons: {
-    icon: [
-      { url: "/icon.png", type: "image/png" },
-    ],
-    apple: "/apple-icon.png",
-  },
+  title: TITLE,
+  description: DESCRIPTION,
   openGraph: {
-    title: "Yeam.ai - AI Medical Workforce for Clinics",
-    description:
-      "Hire AI medical employees, not software. Yeam deploys AI Receptionist, Scribe, Coder, and Billing agents that work 24/7 in your clinic.",
+    title: TITLE,
+    description: DESCRIPTION,
     url: "https://yeam.ai",
     siteName: "Yeam.ai",
     type: "website",
@@ -34,7 +32,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${plusJakartaSans.variable} h-full antialiased`} suppressHydrationWarning>
+    <html lang="en" data-scroll-behavior="smooth" className={`${plusJakartaSans.variable} h-full antialiased`} suppressHydrationWarning>
       <body className="min-h-full">
         <script
           dangerouslySetInnerHTML={{

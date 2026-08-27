@@ -11,8 +11,8 @@
  * dollars would be the better alignment still, but it is unmeasurable until the
  * 835 remittance feed lands — see /architecture. Revisit this then.
  *
- * NOTE: these numbers are placeholders pending real unit economics. They live
- * here and only here so changing them is a one-line edit.
+ * Network is quoted rather than published — see the `custom` flag. Everything
+ * else lives here and only here, so changing a price is a one-line edit.
  */
 
 export type TierId = "triage" | "practice" | "group" | "network";
@@ -28,6 +28,12 @@ export type Tier = {
   features: string[];
   /** Free tier is priced at zero but doesn't do the paid job — see PAID_TIERS. */
   free?: boolean;
+  /**
+   * Quoted rather than published. A custom tier carries no usable monthly or
+   * perDenial, so it is excluded from PAID_TIERS and never enters the
+   * recommendation, crossover or savings arithmetic.
+   */
+  custom?: boolean;
 };
 
 export const TIERS: Tier[] = [
@@ -49,8 +55,8 @@ export const TIERS: Tier[] = [
   {
     id: "practice",
     name: "Practice",
-    monthly: 200,
-    perDenial: 4,
+    monthly: 15,
+    perDenial: 2,
     tagline: "One practice, working denials on real claim data.",
     features: [
       "Everything in Triage",
@@ -63,8 +69,8 @@ export const TIERS: Tier[] = [
   {
     id: "group",
     name: "Group",
-    monthly: 600,
-    perDenial: 1.5,
+    monthly: 99,
+    perDenial: 0.75,
     tagline: "Several practices from one workspace.",
     features: [
       "Everything in Practice",
@@ -77,8 +83,11 @@ export const TIERS: Tier[] = [
   {
     id: "network",
     name: "Network",
-    monthly: 1200,
-    perDenial: 0.6,
+    // Quoted, not published: at this volume the payer mix and the feed work
+    // move the number more than the denial count does.
+    monthly: 0,
+    perDenial: 0,
+    custom: true,
     tagline: "Billing companies running denials at volume.",
     features: [
       "Everything in Group",
@@ -91,7 +100,18 @@ export const TIERS: Tier[] = [
 ];
 
 /** The tiers that actually compete on price. Triage is free but does less. */
-export const PAID_TIERS: Tier[] = TIERS.filter((t) => !t.free);
+export const PAID_TIERS: Tier[] = TIERS.filter((t) => !t.free && !t.custom);
+
+/**
+ * Volume past which the published rate stops being the right conversation.
+ * recommendedTier keeps returning a tier it can actually price; this is the
+ * separate signal that a quote would beat it.
+ */
+export const CUSTOM_FROM_DENIALS = 1_000;
+
+export function suggestsCustom(denials: number): boolean {
+  return denials >= CUSTOM_FROM_DENIALS;
+}
 
 export function tierById(id: TierId): Tier {
   const tier = TIERS.find((t) => t.id === id);
@@ -142,6 +162,43 @@ export function crossovers(): Crossover[] {
 export function effectiveRate(tier: Tier, denials: number): number | null {
   if (denials <= 0) return null;
   return monthlyCost(tier, denials) / denials;
+}
+
+/**
+ * What working one denial costs without Yeam.
+ *
+ * The comparison is deliberately cost-to-work, not dollars-recovered. Recovery
+ * needs the 835 feed to be measurable at all (see the note at the top of this
+ * file), and a recovery figure we cannot show the working for is exactly the
+ * kind of number this pricing page exists to avoid.
+ *
+ * $25 is the commonly cited cost to rework a claim; appealing one runs closer
+ * to $118. The default sits at the low end on purpose — the conservative
+ * number is the one worth arguing from.
+ */
+export const MANUAL_COST_DEFAULT = 25;
+
+export function manualMonthlyCost(denials: number, manualPerDenial: number): number {
+  return Math.max(0, denials) * Math.max(0, manualPerDenial);
+}
+
+/** Monthly difference. Negative when Yeam costs more than working by hand. */
+export function monthlySavings(
+  tier: Tier,
+  denials: number,
+  manualPerDenial: number
+): number {
+  return manualMonthlyCost(denials, manualPerDenial) - monthlyCost(tier, denials);
+}
+
+/** The same difference per denial. Null at zero volume, where it is undefined. */
+export function savingsPerDenial(
+  tier: Tier,
+  denials: number,
+  manualPerDenial: number
+): number | null {
+  if (denials <= 0) return null;
+  return monthlySavings(tier, denials, manualPerDenial) / denials;
 }
 
 /**

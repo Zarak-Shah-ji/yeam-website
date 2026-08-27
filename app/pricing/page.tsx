@@ -16,7 +16,7 @@ import PricingCalculator from "@/components/PricingCalculator";
 export const metadata: Metadata = {
   title: "Pricing — Yeam.ai",
   description:
-    "The worklist is free and runs in your browser. Paid plans add drafting, deadline tracking and real claim data — the monthly fee buys a lower rate per denial worked.",
+    "The worklist is free and runs in your browser. Paid plans add drafting, deadline tracking and real claim data — the monthly fee buys a lower rate per denial worked, and the calculator shows it against what working a denial by hand costs you.",
 };
 
 const HONEST: [string, string][] = [
@@ -50,6 +50,14 @@ const FAQ: [string, string][] = [
   [
     "Can we switch tiers?",
     "Every paid tier is the same product at a different rate, so switching changes only the arithmetic. Move whenever your volume says to.",
+  ],
+  [
+    "Where does the $25 come from?",
+    "It's the commonly cited cost of reworking a single claim; appealing one runs closer to $118. The slider defaults to the low end because the conservative number is the one worth arguing from — put your own in, it's your figure that matters.",
+  ],
+  [
+    "Why is Network priced on request?",
+    "At that volume the payer mix and the feed work move the number more than the denial count does. Publishing a rate we'd renegotiate in the first call is worse than saying so.",
   ],
 ];
 
