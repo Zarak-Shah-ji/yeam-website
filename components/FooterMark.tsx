@@ -19,6 +19,10 @@ gsap.registerPlugin(ScrollTrigger);
  * The spread offsets are a share of the container width rather than fixed
  * pixels: at 375px a 120px offset would push the M off-screen and add a
  * horizontal scrollbar to every page on the site.
+ *
+ * Colour is #1C1C1C rather than white because the footer now shares the page
+ * background instead of sitting on a dark slab; that token has a dark-mode
+ * entry, so the mark inverts with the theme.
  */
 
 const LETTERS = ["Y", "E", "A", "M"];
@@ -65,10 +69,10 @@ export default function FooterMark() {
         <span
           key={letter}
           data-letter
-          className="font-black text-white"
+          className="font-black text-[#1C1C1C]"
           style={{
             fontSize: "clamp(6rem, 20vw, 16rem)",
-            opacity: 0.05,
+            opacity: 0.06,
             letterSpacing: "0.15em",
             lineHeight: 1,
           }}

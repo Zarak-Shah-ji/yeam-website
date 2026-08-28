@@ -16,7 +16,7 @@ import PricingCalculator from "@/components/PricingCalculator";
 export const metadata: Metadata = {
   title: "Pricing — Yeam.ai",
   description:
-    "The worklist is free and runs in your browser. Paid plans add drafting, deadline tracking and real claim data — the monthly fee buys a lower rate per denial worked, and the calculator shows it against what working a denial by hand costs you.",
+    "The worklist is free and runs in your browser. Paid plans add drafting, deadline tracking and real claim data — the monthly fee buys a lower rate per denial worked, and the calculator shows it against what working a denial manually costs you.",
 };
 
 const HONEST: [string, string][] = [

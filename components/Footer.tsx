@@ -4,7 +4,6 @@ import FooterMark from "./FooterMark";
 
 const LINKS = [
   { label: "Free worklist", href: "/#triage" },
-  { label: "Appeal drafter", href: "/#drafter" },
   { label: "Pricing",       href: "/pricing" },
   { label: "Architecture",  href: "/architecture" },
   { label: "Contact",       href: "/#contact" },
@@ -14,7 +13,7 @@ const LINKS = [
 
 export default function Footer() {
   return (
-    <footer className="relative bg-[#1C1C1C] py-16 px-6 overflow-hidden">
+    <footer className="relative bg-[#FFFFFF] border-t border-[#E0E6F5] py-20 px-6 overflow-hidden">
       <FooterMark />
 
       <div className="relative max-w-6xl mx-auto">
@@ -32,7 +31,7 @@ export default function Footer() {
             <ul className="grid grid-cols-2 sm:grid-cols-3 gap-x-10 gap-y-2">
               {LINKS.map((item) => (
                 <li key={item.label}>
-                  <a href={item.href} className="text-sm text-[#8A8A8A] hover:text-[#6B9BF0] transition-colors">
+                  <a href={item.href} className="text-sm text-[#4A5A7A] hover:text-[#1A4FBF] transition-colors">
                     {item.label}
                   </a>
                 </li>
@@ -41,12 +40,12 @@ export default function Footer() {
           </nav>
         </div>
 
-        <div className="border-t border-[#2A2A2A] pt-6 flex flex-col md:flex-row justify-between items-center gap-3">
-          <p className="text-xs text-[#5A5A5A]">
+        <div className="border-t border-[#E0E6F5] pt-6 flex flex-col md:flex-row justify-between items-center gap-3">
+          <p className="text-xs text-[#5A6A8A]">
             © {new Date().getFullYear()} Yeam.ai. All rights reserved.
           </p>
           <div className="flex items-center gap-4">
-            <p className="text-xs text-[#3A3A3A]">
+            <p className="text-xs text-[#8A9BBF]">
               Built for HIPAA workflows · SOC 2 Ready · FHIR R4 on the roadmap
             </p>
             <ThemeToggle />

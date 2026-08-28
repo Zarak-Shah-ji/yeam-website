@@ -182,7 +182,7 @@ export function manualMonthlyCost(denials: number, manualPerDenial: number): num
   return Math.max(0, denials) * Math.max(0, manualPerDenial);
 }
 
-/** Monthly difference. Negative when Yeam costs more than working by hand. */
+/** Monthly difference. Negative when Yeam costs more than working them manually. */
 export function monthlySavings(
   tier: Tier,
   denials: number,

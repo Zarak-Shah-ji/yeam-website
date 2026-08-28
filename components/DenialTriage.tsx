@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   readClaimsFile,
   detectMapping,
@@ -43,6 +43,16 @@ const REMEDY_CHIP: Record<Remedy, string> = {
   not_recoverable: "bg-slate-50 text-slate-500 border-slate-200",
   unknown: "bg-red-50 text-red-600 border-red-200",
 };
+
+type ChatTurn = { role: "user" | "assistant"; text: string };
+
+/** Openers, so the first message costs a click rather than a blank page. */
+const SUGGESTED_EDITS = [
+  "Make it shorter",
+  "Cite the payer's policy",
+  "Add the medical-necessity argument",
+  "More formal tone",
+];
 
 const MAPPABLE: FieldId[] = [
   "carc",
@@ -115,6 +125,19 @@ export default function DenialTriage() {
   const [draft, setDraft] = useState<{ row: number; text: string } | null>(null);
   const [draftError, setDraftError] = useState("");
   const [drafting, setDrafting] = useState(false);
+
+  // The revision thread. Cleared whenever a new draft lands, because a
+  // conversation about the previous letter means nothing against this one.
+  const [chat, setChat] = useState<ChatTurn[]>([]);
+  const [chatInput, setChatInput] = useState("");
+  const [revising, setRevising] = useState(false);
+  const [chatError, setChatError] = useState("");
+  const threadRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const node = threadRef.current;
+    if (node) node.scrollTop = node.scrollHeight;
+  }, [chat, revising]);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const [today] = useState(() => new Date());
@@ -217,10 +240,49 @@ export default function DenialTriage() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Could not draft the response.");
       setDraft({ row: index, text: data.letter });
+      setChat([]);
+      setChatError("");
     } catch (err) {
       setDraftError(err instanceof Error ? err.message : "Could not draft the response.");
     } finally {
       setDrafting(false);
+    }
+  }
+
+  /**
+   * Revise the current draft from an instruction, keeping the thread as
+   * context. The letter is replaced wholesale rather than patched — the
+   * upstream returns the next full version, and a half-applied edit in a
+   * document someone is about to file would be worse than none.
+   */
+  async function revise(instruction: string) {
+    const text = instruction.trim();
+    if (!text || !draft || revising) return;
+
+    const history = chat;
+    setChat([...history, { role: "user", text }]);
+    setChatInput("");
+    setChatError("");
+    setRevising(true);
+
+    try {
+      const res = await fetch("/api/appeal-demo/revise", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ letter: draft.text, instruction: text, history }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Could not revise the response.");
+
+      setDraft({ row: draft.row, text: data.letter });
+      setChat((prev) => [
+        ...prev,
+        { role: "assistant", text: data.reply || "Updated the draft above." },
+      ]);
+    } catch (err) {
+      setChatError(err instanceof Error ? err.message : "Could not revise the response.");
+    } finally {
+      setRevising(false);
     }
   }
 
@@ -237,11 +299,12 @@ export default function DenialTriage() {
             <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
             </svg>
-            Runs in your browser · nothing uploaded
+            Runs in your browser · zero data retention
           </span>
         </div>
         <h2 className="text-3xl md:text-4xl font-bold text-[#1C1C1C] tracking-tight mb-4">
-          Your denials, sorted by what you&apos;re about to lose.
+          Your <span className="text-[#1A4FBF]">denials</span>, sorted by what you&apos;re
+          about to lose.
         </h2>
         <p className="text-lg text-[#4A5A7A] max-w-2xl">
           Drop in your denied-claims export and see which are worth working, what each one
@@ -523,9 +586,94 @@ export default function DenialTriage() {
                 {draftError && <p className="mt-3 text-sm text-red-600">{draftError}</p>}
 
                 {draft?.row === openRow && (
-                  <pre className="mt-4 max-h-80 overflow-y-auto rounded-xl border border-[#E0E6F5] bg-[#F7F9FE] p-4 text-[12px] leading-relaxed text-[#1C1C1C] font-mono whitespace-pre-wrap break-words">
-                    {draft.text}
-                  </pre>
+                  <>
+                    <pre className="mt-4 max-h-80 overflow-y-auto rounded-xl border border-[#E0E6F5] bg-[#F7F9FE] p-4 text-[12px] leading-relaxed text-[#1C1C1C] font-mono whitespace-pre-wrap break-words">
+                      {draft.text}
+                    </pre>
+
+                    {/* Revision chat. A first draft is rarely the one that goes
+                        out — this is where a biller says what the payer wants
+                        and watches the letter above change. */}
+                    <div className="mt-4 rounded-xl border border-[#E0E6F5] bg-white overflow-hidden">
+                      <p className="px-4 py-2.5 border-b border-[#E0E6F5] text-xs font-semibold text-[#1C1C1C]">
+                        Not quite right? Tell it what to change.
+                      </p>
+
+                      {(chat.length > 0 || revising) && (
+                        <div
+                          ref={threadRef}
+                          className="max-h-56 overflow-y-auto px-4 py-3 space-y-2.5"
+                        >
+                          {chat.map((turn, i) => (
+                            <div
+                              key={i}
+                              className={`flex ${turn.role === "user" ? "justify-end" : "justify-start"}`}
+                            >
+                              <p
+                                className={`max-w-[85%] rounded-xl px-3 py-2 text-xs leading-relaxed ${
+                                  turn.role === "user"
+                                    ? "bg-[#1A4FBF] text-white"
+                                    : "bg-[#EEF2FA] text-[#1C1C1C]"
+                                }`}
+                              >
+                                {turn.text}
+                              </p>
+                            </div>
+                          ))}
+                          {revising && (
+                            <p className="text-xs text-[#8A9BBF]">Revising the draft…</p>
+                          )}
+                        </div>
+                      )}
+
+                      {chat.length === 0 && !revising && (
+                        <div className="px-4 pt-3 flex flex-wrap gap-2">
+                          {SUGGESTED_EDITS.map((hint) => (
+                            <button
+                              key={hint}
+                              type="button"
+                              onClick={() => void revise(hint)}
+                              className="rounded-lg border border-[#A8BFEE] bg-[#EBF0FA] px-2.5 py-1 text-[11px] font-medium text-[#1A4FBF] transition-colors hover:bg-[#D0DAF5]"
+                            >
+                              {hint}
+                            </button>
+                          ))}
+                        </div>
+                      )}
+
+                      <form
+                        onSubmit={(e) => {
+                          e.preventDefault();
+                          void revise(chatInput);
+                        }}
+                        className="flex items-center gap-2 px-4 py-3"
+                      >
+                        <label htmlFor="revise" className="sr-only">
+                          What should change in this draft?
+                        </label>
+                        <input
+                          id="revise"
+                          type="text"
+                          value={chatInput}
+                          onChange={(e) => setChatInput(e.target.value)}
+                          disabled={revising}
+                          placeholder="Cite the payer's own policy…"
+                          className="flex-1 min-w-0 rounded-lg border border-[#E0E6F5] px-3 py-2 text-xs text-[#1C1C1C] focus:outline-none focus:ring-2 focus:ring-[#1A4FBF] focus:border-transparent disabled:opacity-60"
+                        />
+                        <button
+                          type="submit"
+                          disabled={revising || !chatInput.trim()}
+                          className="shrink-0 rounded-lg bg-[#1A4FBF] px-4 py-2 text-xs font-semibold text-white transition-colors hover:bg-[#1540A0] disabled:opacity-60 disabled:cursor-not-allowed"
+                        >
+                          Send
+                        </button>
+                      </form>
+
+                      {chatError && (
+                        <p className="px-4 pb-3 text-xs text-red-600">{chatError}</p>
+                      )}
+                    </div>
+                  </>
                 )}
               </div>
             )}

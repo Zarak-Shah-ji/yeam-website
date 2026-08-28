@@ -3,34 +3,29 @@
 import { useState } from "react";
 
 /**
- * The next step after the worklist.
+ * Getting started, and the way out for people who need a conversation.
  *
- * This was a full-bleed blue band selling an "AI Medical Workforce" that
- * handles "reception, documentation, coding, and billing" — a product this
- * site stopped describing several commits ago. It now picks up where the free
- * worklist left off and asks for the three things worth asking for. Clinic name
- * and a free-text message were dropped: neither changed what happened next.
+ * This was a five-field demo form on a blue band, then a three-field one. Both
+ * put a form between a visitor and a product they can already use for free.
+ * The worklist above is the lead magnet, so the primary action is to go use it;
+ * anyone who needs a contract, a BAA or a pilot takes the second door, and the
+ * direct email address stays visible for people who would rather not fill in
+ * anything at all.
  */
 export default function ContactForm() {
-  const [form, setForm] = useState({
-    fullName: "",
-    email: "",
-    claimVolume: "",
-  });
+  const [open, setOpen] = useState(false);
+  const [form, setForm] = useState({ fullName: "", email: "", claimVolume: "" });
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
+  ) => setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus("loading");
     setErrorMsg("");
-
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
@@ -47,33 +42,63 @@ export default function ContactForm() {
   };
 
   return (
-    <section id="contact" className="py-20 px-6 bg-[#EEF2FA]">
-      <div className="max-w-2xl mx-auto">
-        <p className="text-[#1A4FBF] text-sm font-semibold uppercase tracking-wider mb-3">
-          Next step
-        </p>
-        <h2 className="text-3xl md:text-4xl font-bold text-[#1C1C1C] tracking-tight mb-4">
-          You&apos;ve seen the worklist. The paid version keeps it running.
+    <section id="contact" className="py-24 md:py-32 px-6 bg-[#EEF2FA]">
+      <div className="max-w-2xl mx-auto text-center">
+        <h2 className="text-3xl md:text-4xl font-bold text-[#1C1C1C] tracking-tight">
+          Start with your own denials.
         </h2>
-        <p className="text-lg text-[#4A5A7A] mb-8">
-          Real claim data, deadlines tracked, responses drafted — under a signed BAA.
+        <p className="mt-4 text-lg text-[#4A5A7A]">
+          The worklist is free, needs no account, and runs in your browser. Paid plans add
+          real claim data, tracked deadlines and drafted responses under a signed BAA.
         </p>
 
-        <div className="rounded-2xl border border-[#E0E6F5] bg-white shadow-sm p-6 sm:p-8">
-          {status === "success" ? (
-            <div className="py-6 text-center">
-              <div className="w-14 h-14 bg-[#EBF0FA] rounded-full flex items-center justify-center mx-auto mb-5">
-                <svg className="w-7 h-7 text-[#1A4FBF]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold text-[#1C1C1C] mb-2">We&apos;ll be in touch.</h3>
-              <p className="text-sm text-[#5A6A8A]">
-                Someone from the Yeam team will follow up within one business day.
-              </p>
+        <div className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-3">
+          <a
+            href="#triage"
+            className="w-full sm:w-auto px-8 py-3.5 bg-[#1A4FBF] text-white font-semibold rounded-xl hover:bg-[#1540A0] transition-colors shadow-sm text-base text-center"
+          >
+            Get started
+          </a>
+          {!open && status !== "success" && (
+            <button
+              type="button"
+              onClick={() => setOpen(true)}
+              className="w-full sm:w-auto px-6 py-3.5 text-[#1A4FBF] font-semibold rounded-xl hover:bg-[#E0E6F5] transition-colors text-base"
+            >
+              Talk to sales →
+            </button>
+          )}
+        </div>
+
+        <p className="mt-5 text-sm text-[#5A6A8A]">
+          Or email{" "}
+          <a
+            href="mailto:info@yeam.ai"
+            className="font-medium text-[#1A4FBF] hover:text-[#1540A0] transition-colors"
+          >
+            info@yeam.ai
+          </a>{" "}
+          directly.
+        </p>
+
+        {status === "success" ? (
+          <div className="mt-9 rounded-2xl border border-[#E0E6F5] bg-white shadow-sm p-8 text-left">
+            <div className="w-12 h-12 bg-[#EBF0FA] rounded-full flex items-center justify-center mb-4">
+              <svg className="w-6 h-6 text-[#1A4FBF]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+              </svg>
             </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <h3 className="text-lg font-bold text-[#1C1C1C] mb-1">We&apos;ll be in touch.</h3>
+            <p className="text-sm text-[#5A6A8A]">
+              Someone from the Yeam team will follow up within one business day.
+            </p>
+          </div>
+        ) : (
+          open && (
+            <form
+              onSubmit={handleSubmit}
+              className="mt-9 rounded-2xl border border-[#E0E6F5] bg-white shadow-sm p-6 sm:p-8 space-y-4 text-left"
+            >
               <div>
                 <label htmlFor="fullName" className="block text-sm font-medium text-[#3A3A3A] mb-1.5">
                   Full name <span className="text-red-500">*</span>
@@ -133,19 +158,11 @@ export default function ContactForm() {
                 disabled={status === "loading"}
                 className="w-full py-3 bg-[#1A4FBF] text-white font-semibold rounded-lg hover:bg-[#1540A0] transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                {status === "loading" ? "Sending..." : "Request a demo"}
+                {status === "loading" ? "Sending..." : "Request a walkthrough"}
               </button>
-
-              <p className="text-xs text-[#5A6A8A] text-center">
-                Or just email{" "}
-                <a href="mailto:info@yeam.ai" className="font-medium text-[#1A4FBF] hover:text-[#1540A0] transition-colors">
-                  info@yeam.ai
-                </a>
-                .
-              </p>
             </form>
-          )}
-        </div>
+          )
+        )}
       </div>
     </section>
   );

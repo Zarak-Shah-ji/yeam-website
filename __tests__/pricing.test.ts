@@ -129,7 +129,7 @@ describe("deniedFromClaims", () => {
   });
 });
 
-describe("savings against working by hand", () => {
+describe("savings against working manually", () => {
   const practice = tierById("practice");
 
   it("clamps negative inputs rather than inventing a credit", () => {

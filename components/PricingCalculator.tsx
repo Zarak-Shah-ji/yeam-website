@@ -240,7 +240,7 @@ export default function PricingCalculator() {
           </p>
 
           <label htmlFor="manual" className="mt-8 block text-sm font-semibold text-[#1C1C1C]">
-            What it costs you to work one denial by hand
+            What it costs you to work one denial manually
           </label>
           <div className="mt-2 flex items-baseline gap-2">
             <span className="text-2xl font-bold text-[#1A4FBF]">{money.format(manualCost)}</span>
@@ -310,7 +310,7 @@ export default function PricingCalculator() {
           {/* What the same work costs without us. */}
           <div className="mt-5 border-t border-[#A8BFEE] pt-4">
             <p className="text-xs font-semibold uppercase tracking-wider text-[#1A4FBF]">
-              Against working them by hand
+              Against working them manually
             </p>
 
             <table className="mt-3 w-full text-sm">
@@ -323,7 +323,7 @@ export default function PricingCalculator() {
               </thead>
               <tbody>
                 <tr>
-                  <th scope="row" className="py-1 text-left font-normal text-[#5A6A8A]">By hand</th>
+                  <th scope="row" className="py-1 text-left font-normal text-[#5A6A8A]">Manually</th>
                   <td className="py-1 text-right text-[#1C1C1C]">{rate.format(manualCost)}</td>
                   <td className="py-1 text-right text-[#1C1C1C]">{money.format(manualTotal)}</td>
                 </tr>
@@ -342,7 +342,7 @@ export default function PricingCalculator() {
                     <td colSpan={2} className="pt-2 text-right text-xs text-[#5A6A8A]">
                       {denials <= 0
                         ? "—"
-                        : "Yeam costs more than working them by hand at this volume."}
+                        : "Yeam costs more than working them manually at this volume."}
                     </td>
                   ) : (
                     <>

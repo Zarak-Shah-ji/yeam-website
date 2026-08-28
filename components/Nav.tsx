@@ -91,10 +91,10 @@ export default function Nav() {
 
         <div className="flex items-center gap-2">
           <Link
-            href="/#contact"
+            href="/#triage"
             className="hidden sm:inline-flex px-4 py-2 bg-[#1A4FBF] text-white text-sm font-medium rounded-lg hover:bg-[#1540A0] transition-colors"
           >
-            Request a Demo
+            Get started
           </Link>
 
           <button
@@ -135,11 +135,11 @@ export default function Nav() {
             ))}
           </ul>
           <Link
-            href="/#contact"
+            href="/#triage"
             onClick={() => setOpen(false)}
             className="mt-3 block w-full px-4 py-3 bg-[#1A4FBF] text-white text-center text-sm font-semibold rounded-lg hover:bg-[#1540A0] transition-colors"
           >
-            Request a Demo
+            Get started
           </Link>
         </nav>
       )}

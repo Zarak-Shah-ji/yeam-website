@@ -16,10 +16,10 @@ import { prefersReducedMotion } from "@/lib/motion";
  */
 
 const PROOF = [
+  "Zero data retention",
   "Runs in your browser",
-  "Nothing uploaded",
   "No account",
-  "Works alongside your EHR",
+  "Augments your EHR",
 ];
 
 export default function Hero() {
@@ -67,8 +67,8 @@ export default function Hero() {
             data-hero-anim
             className="text-[clamp(2.25rem,5.5vw,4rem)] font-extrabold text-[#1C1C1C] leading-[1.05] tracking-tight"
           >
-            A <span className="text-[#1A4FBF]">denial recovery</span> platform
-            for medical billing.
+            <span className="text-[#1A4FBF]">Denial recovery</span> platform for
+            medical billing.
           </h1>
 
           <div data-hero-anim className="mt-9">
