@@ -111,6 +111,147 @@ function DaysCell({ row }: { row: TriagedRow }) {
   );
 }
 
+/** Length of the preview shown before the reader expands the full letter. */
+const PREVIEW_CHARS = 420;
+
+/** Cut at the last full line so the preview never ends mid-word. */
+function preview(letter: string): string {
+  if (letter.length <= PREVIEW_CHARS) return letter;
+  const slice = letter.slice(0, PREVIEW_CHARS);
+  const lastBreak = slice.lastIndexOf("\n");
+  return `${(lastBreak > PREVIEW_CHARS * 0.5 ? slice.slice(0, lastBreak) : slice).trimEnd()}…`;
+}
+
+/**
+ * A drafted response, presented the way the reviewer portal at /appeals
+ * presents one: the claim it belongs to and the codes above it, the letter
+ * collapsed to a preview until asked for, and copy/download beneath. A raw
+ * <pre> in a scroll box gave none of that context, and the letter is the thing
+ * a biller is about to file — it should read like a document, not like output.
+ */
+function DraftedLetter({
+  row,
+  letter,
+  expanded,
+  onToggle,
+}: {
+  row: TriagedRow;
+  letter: string;
+  expanded: boolean;
+  onToggle: () => void;
+}) {
+  const [copied, setCopied] = useState(false);
+
+  const fields: [string, string][] = (
+    [
+      ["Payer", row.payer],
+      ["Denial code", `${row.carc} · ${row.carcLabel}`],
+      ["Procedure", row.cpt],
+      ["Diagnosis", row.icd10],
+      ["Amount in dispute", money.format(row.billed)],
+      [
+        "Filing deadline",
+        row.daysLeft !== null && row.daysLeft > 0
+          ? `${row.daysLeft} days left · ${row.windowDays}-day window${
+              row.windowSource === "payer" ? " (this payer)" : " (default)"
+            }`
+          : null,
+      ],
+    ] as [string, string | null | undefined][]
+  ).filter((f): f is [string, string] => !!f[1]);
+
+  async function copy() {
+    try {
+      await navigator.clipboard.writeText(letter);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // Clipboard is blocked over plain http and in some embedded views. The
+      // letter is selectable on the page, so this degrades quietly.
+    }
+  }
+
+  function download() {
+    const name = `${row.remedyLabel.toLowerCase().replace(/\s+/g, "-")}-${(
+      row.claimNumber ?? "draft"
+    ).replace(/[^a-z0-9-]/gi, "")}.txt`;
+    const url = URL.createObjectURL(
+      new Blob([letter], { type: "text/plain;charset=utf-8" }),
+    );
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = name;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  return (
+    <article className="mt-4 overflow-hidden rounded-xl border border-[#E0E6F5] bg-white">
+      <div className="border-b border-[#E0E6F5] px-5 py-4">
+        <div className="flex flex-wrap items-center gap-2">
+          <h4 className="font-semibold text-[#1C1C1C]">
+            {row.claimNumber ?? row.remedyLabel}
+          </h4>
+          <span className="rounded-full border border-red-200 bg-red-50 px-2 py-0.5 text-[11px] font-semibold text-red-600">
+            {row.carc}
+          </span>
+          <span
+            className={`rounded-full border px-2 py-0.5 text-[11px] font-semibold ${REMEDY_CHIP[row.remedy]}`}
+          >
+            {row.remedyLabel}
+          </span>
+        </div>
+
+        {fields.length > 0 && (
+          <dl className="mt-3 grid grid-cols-1 gap-x-6 gap-y-2 text-sm sm:grid-cols-3">
+            {fields.map(([label, value]) => (
+              <div key={label}>
+                <dt className="text-[11px] uppercase tracking-wide text-[#8A9BBF]">
+                  {label}
+                </dt>
+                <dd className="text-[#1C1C1C]">{value}</dd>
+              </div>
+            ))}
+          </dl>
+        )}
+      </div>
+
+      <div className="px-5 py-4">
+        <pre className="whitespace-pre-wrap break-words font-mono text-[13px] leading-relaxed text-[#1C1C1C]">
+          {expanded ? letter : preview(letter)}
+        </pre>
+
+        <div className="mt-4 flex flex-wrap items-center gap-3">
+          <button
+            type="button"
+            onClick={onToggle}
+            className="text-sm font-medium text-[#1A4FBF] hover:text-[#1540A0] transition-colors"
+          >
+            {expanded ? "Show less" : `Read full ${row.remedyLabel.toLowerCase()}`}
+          </button>
+          <span className="text-[#E0E6F5]">·</span>
+          <button
+            type="button"
+            onClick={() => void copy()}
+            className="rounded-lg border border-[#A8BFEE] px-3 py-1.5 text-xs font-semibold text-[#1A4FBF] transition-colors hover:bg-[#EBF0FA]"
+          >
+            {copied ? "Copied" : "Copy"}
+          </button>
+          <button
+            type="button"
+            onClick={download}
+            className="rounded-lg border border-[#A8BFEE] px-3 py-1.5 text-xs font-semibold text-[#1A4FBF] transition-colors hover:bg-[#EBF0FA]"
+          >
+            Download .txt
+          </button>
+        </div>
+      </div>
+    </article>
+  );
+}
+
 export default function DenialTriage() {
   const [stage, setStage] = useState<Stage>("idle");
   const [fileName, setFileName] = useState("");
@@ -132,6 +273,7 @@ export default function DenialTriage() {
   const [chatInput, setChatInput] = useState("");
   const [revising, setRevising] = useState(false);
   const [chatError, setChatError] = useState("");
+  const [letterOpen, setLetterOpen] = useState(true);
   const threadRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -242,6 +384,7 @@ export default function DenialTriage() {
       setDraft({ row: index, text: data.letter });
       setChat([]);
       setChatError("");
+      setLetterOpen(true);
     } catch (err) {
       setDraftError(err instanceof Error ? err.message : "Could not draft the response.");
     } finally {
@@ -587,9 +730,12 @@ export default function DenialTriage() {
 
                 {draft?.row === openRow && (
                   <>
-                    <pre className="mt-4 max-h-80 overflow-y-auto rounded-xl border border-[#E0E6F5] bg-[#F7F9FE] p-4 text-[12px] leading-relaxed text-[#1C1C1C] font-mono whitespace-pre-wrap break-words">
-                      {draft.text}
-                    </pre>
+                    <DraftedLetter
+                      row={worklist.rows[openRow]}
+                      letter={draft.text}
+                      expanded={letterOpen}
+                      onToggle={() => setLetterOpen((v) => !v)}
+                    />
 
                     {/* Revision chat. A first draft is rarely the one that goes
                         out — this is where a biller says what the payer wants
