@@ -57,6 +57,14 @@ function cleanHistory(value: unknown): Turn[] {
 export async function POST(req: Request) {
   const secret = process.env.PUBLIC_DEMO_SECRET;
   if (!secret) {
+  // Say so in the runtime log, not just to the caller. This 503 is reachable
+  // by exactly one route — the variable being absent from THIS deployment's
+  // environment — and a preview that 503s while production returns 200 means
+  // the variable is scoped to Production only. Without this line the logs show
+  // a bare 503 and the cause has to be re-derived every time.
+    console.error(
+      "PUBLIC_DEMO_SECRET is not set in this environment — drafting is disabled here.",
+    );
     return NextResponse.json(
       { error: "The demo is not configured yet. Please try again later." },
       { status: 503 },
