@@ -13,6 +13,7 @@ const LINKS = [
   { label: "Free worklist", href: "/#triage" },
   { label: "Pricing",       href: "/pricing" },
   { label: "Architecture",  href: "/architecture" },
+  { label: "Blog",          href: "/blog" },
   { label: "Contact",       href: "/#contact" },
 ];
 

@@ -29,7 +29,11 @@ export default function Footer() {
 
           <nav>
             <ul className="grid grid-cols-2 sm:grid-cols-3 gap-x-10 gap-y-2">
-              {LINKS.map((item) => (
+              {[
+                ...LINKS.slice(0, 3),
+                { label: "Blog", href: "/blog" },
+                ...LINKS.slice(3),
+              ].map((item) => (
                 <li key={item.label}>
                   <a href={item.href} className="text-sm text-[#4A5A7A] hover:text-[#1A4FBF] transition-colors">
                     {item.label}
