@@ -141,7 +141,30 @@ export async function POST(req: Request) {
         history: cleanHistory(body.history),
       }),
     });
-    const data = (await res.json()) as { letter?: string; reply?: string; error?: string };
+    // Parse defensively rather than assuming JSON. Until the upstream endpoint
+    // is deployed this returns a 404 HTML page, and calling res.json() on it
+    // throws — which the catch below would report as "could not reach the
+    // drafting service", the one thing that is not true. Read the body once,
+    // then decide.
+    const raw = await res.text();
+    let data: { letter?: string; reply?: string; error?: string } = {};
+    try {
+      data = JSON.parse(raw);
+    } catch {
+      console.error(
+        `appeal revise: upstream returned ${res.status} and a non-JSON body ` +
+          `(${UPSTREAM}/api/public/appeal-revise). Is the endpoint deployed?`,
+      );
+      return NextResponse.json(
+        {
+          error:
+            res.status === 404
+              ? "Revising isn't available yet. Drafting still works."
+              : "Could not revise the response. Please try again.",
+        },
+        { status: res.status === 404 ? 501 : 502 },
+      );
+    }
 
     if (!res.ok) {
       return NextResponse.json(
