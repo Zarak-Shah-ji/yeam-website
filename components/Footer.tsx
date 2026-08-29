@@ -24,13 +24,13 @@ export default function Footer() {
             <div className="flex items-center gap-2.5 mb-3">
               <Image
                 src="/logo.png"
-                alt="Yeam.ai"
+                alt="Yeam"
                 width={32}
                 height={32}
                 className="rounded-lg"
                 style={{ filter: "brightness(0) saturate(100%) invert(27%) sepia(100%) saturate(400%) hue-rotate(184deg) brightness(142%)" }}
               />
-              <span className="font-semibold text-white text-base">Yeam.ai</span>
+              <span className="font-semibold text-white text-base">Yeam</span>
             </div>
             <p className="text-sm text-[#8A8A8A] max-w-xs leading-relaxed">
               AI medical workforce for clinics. Receptionist, Scribe, Coder, Nurse, and Billing agents working 24/7.
@@ -81,7 +81,7 @@ export default function Footer() {
 
         <div className="border-t border-[#2A2A2A] pt-6 flex flex-col md:flex-row justify-between items-center gap-3">
           <p className="text-xs text-[#5A5A5A]">
-            © {new Date().getFullYear()} Yeam.ai. All rights reserved.
+            © {new Date().getFullYear()} Yeam. All rights reserved.
           </p>
           <div className="flex items-center gap-4">
             <p className="text-xs text-[#3A3A3A]">

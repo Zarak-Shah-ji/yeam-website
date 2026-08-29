@@ -13,7 +13,7 @@ import Footer from "@/components/Footer";
  */
 
 export const metadata: Metadata = {
-  title: "How Yeam Connects — Yeam.ai",
+  title: "How Yeam Connects",
   description:
     "Denials arrive as 835s from the clearinghouse, not from the EHR. How Yeam gets claim data out of the systems your practices already run.",
 };
