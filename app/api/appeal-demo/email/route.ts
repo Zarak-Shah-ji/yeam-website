@@ -54,7 +54,7 @@ export async function POST(request: NextRequest) {
   try {
     // Always tell the team — this is the lead, and it works on the sandbox sender.
     await resend.emails.send({
-      from: "Yeam.ai Website <onboarding@resend.dev>",
+      from: "Yeam Website <onboarding@resend.dev>",
       to: [TEAM_INBOX],
       replyTo: email,
       subject: `Appeal demo used by ${email}`,
@@ -69,7 +69,7 @@ export async function POST(request: NextRequest) {
     }
 
     await resend.emails.send({
-      from: `Yeam.ai <${verifiedSender}>`,
+      from: `Yeam <${verifiedSender}>`,
       to: [email],
       subject: "Your Yeam appeal draft",
       html: `<p>Here's the draft Yeam produced from the document you sent.</p>${letterHtml}<p style="color:#5A6A8A;font-size:12px;">Drafted from a demonstration document. Yeam did not retain the file or the draft.</p>`,

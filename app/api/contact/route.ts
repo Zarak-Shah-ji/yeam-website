@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
     }
 
     const emailHtml = `
-      <h2>New Demo Request from Yeam.ai</h2>
+      <h2>New Demo Request from Yeam</h2>
       <table style="border-collapse: collapse; width: 100%; max-width: 600px;">${row("Name", fullName)}${
         clinicName ? row("Clinic", clinicName) : ""
       }${row("Email", email)}${row("Monthly Claims", claimVolume || "Not specified")}${
@@ -49,7 +49,7 @@ export async function POST(request: NextRequest) {
     `;
 
     await resend.emails.send({
-      from: "Yeam.ai Website <onboarding@resend.dev>",
+      from: "Yeam Website <onboarding@resend.dev>",
       to: ["zarak.shahjee1@gmail.com"],
       replyTo: email,
       subject: `Demo Request: ${fullName}${clinicName ? ` — ${clinicName}` : ""}`,

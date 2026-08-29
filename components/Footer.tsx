@@ -20,7 +20,7 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-start gap-10 mb-12">
           <Image
             src="/logo.png"
-            alt="Yeam.ai"
+            alt="Yeam"
             width={36}
             height={36}
             className="rounded-lg"
@@ -46,7 +46,7 @@ export default function Footer() {
 
         <div className="border-t border-[#E0E6F5] pt-6 flex flex-col md:flex-row justify-between items-center gap-3">
           <p className="text-xs text-[#5A6A8A]">
-            © {new Date().getFullYear()} Yeam.ai. All rights reserved.
+            © {new Date().getFullYear()} Yeam. All rights reserved.
           </p>
           <div className="flex items-center gap-4">
             <p className="text-xs text-[#8A9BBF]">

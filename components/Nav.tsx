@@ -69,13 +69,13 @@ export default function Nav() {
         <Link href="/" className="flex items-center gap-2" onClick={() => setOpen(false)}>
           <Image
             src="/logo.png"
-            alt="Yeam.ai"
+            alt="Yeam"
             width={36}
             height={36}
             className="rounded-lg"
             style={{ filter: "brightness(0) saturate(100%) invert(27%) sepia(100%) saturate(400%) hue-rotate(184deg) brightness(142%)" }}
           />
-          <span className="font-semibold text-[#1C1C1C] text-lg">Yeam.ai</span>
+          <span className="font-semibold text-[#1C1C1C] text-lg">Yeam</span>
         </Link>
 
         <nav className="hidden md:flex items-center gap-8">

@@ -17,11 +17,17 @@ const DESCRIPTION =
 export const metadata: Metadata = {
   title: TITLE,
   description: DESCRIPTION,
+  icons: {
+    icon: [
+      { url: "/icon.png", type: "image/png" },
+    ],
+    apple: "/apple-icon.png",
+  },
   openGraph: {
     title: TITLE,
     description: DESCRIPTION,
     url: "https://yeam.ai",
-    siteName: "Yeam.ai",
+    siteName: "Yeam",
     type: "website",
   },
 };
