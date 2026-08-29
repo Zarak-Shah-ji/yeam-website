@@ -64,6 +64,7 @@ export default function Footer() {
                   { label: "Free worklist", href: "/#triage" },
                   { label: "Pricing",      href: "/pricing" },
                   { label: "Architecture", href: "/architecture" },
+                  { label: "Blog",         href: "/blog" },
                   { label: "Contact",      href: "/#contact" },
                   { label: "info@yeam.ai", href: "mailto:info@yeam.ai" },
                   { label: "747-388-6386", href: "tel:7473886386" },

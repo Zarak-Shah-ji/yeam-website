@@ -41,6 +41,7 @@ export default function Nav() {
           <Link href="/#triage" className="text-sm text-[#4A5A7A] hover:text-[#1C1C1C] transition-colors">Free worklist</Link>
           <Link href="/#workflow" className="text-sm text-[#4A5A7A] hover:text-[#1C1C1C] transition-colors">How It Works</Link>
           <Link href="/pricing" className="text-sm text-[#4A5A7A] hover:text-[#1C1C1C] transition-colors">Pricing</Link>
+          <Link href="/blog" className="text-sm text-[#4A5A7A] hover:text-[#1C1C1C] transition-colors">Blog</Link>
           <Link href="/#contact" className="text-sm text-[#4A5A7A] hover:text-[#1C1C1C] transition-colors">Contact</Link>
         </nav>
 
