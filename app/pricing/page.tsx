@@ -66,16 +66,16 @@ export default function PricingPage() {
     <>
       <Nav />
       <main className="pt-28 pb-20 px-6 bg-[#FFFFFF]">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-[1600px] mx-auto">
           <p className="text-[#1A4FBF] text-sm font-semibold uppercase tracking-wider mb-3">
             Pricing
           </p>
-          <h1 className="text-3xl md:text-4xl font-bold text-[#1C1C1C] tracking-tight mb-4">
+          <h1 className="text-3xl md:text-5xl font-light text-[#1C1C1C] tracking-tight mb-4">
             Pay for denials worked, not seats
           </h1>
           <p className="text-lg text-[#4A5A7A] max-w-2xl">
             The worklist is free forever and runs in your browser. Paid plans add the drafting,
-            the deadline tracking and the real claim data — and the monthly fee buys a lower rate
+            the deadline tracking and the real claim data, and the monthly fee buys a lower rate
             per denial, not a longer feature list.
           </p>
 
@@ -115,12 +115,12 @@ export default function PricingPage() {
           <p className="mt-10 text-sm text-[#4A5A7A]">
             Not sure what your denial volume actually is?{" "}
             <Link
-              href="/#triage"
+              href="/worklist"
               className="font-medium text-[#1A4FBF] hover:text-[#1540A0] transition-colors"
             >
               Run your export through the free worklist
-            </Link>{" "}
-            — it totals it for you, and nothing is uploaded. Or see{" "}
+            </Link>
+            . It totals it for you, and nothing is uploaded. Or see{" "}
             <Link
               href="/architecture"
               className="font-medium text-[#1A4FBF] hover:text-[#1540A0] transition-colors"

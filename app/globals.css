@@ -15,21 +15,14 @@
 
 html {
   scroll-behavior: smooth;
+  /* The nav is fixed and 4rem tall; keep hash targets (#triage, #contact) from
+     landing underneath it on both native jumps and manual scrollIntoView. */
+  scroll-padding-top: 5rem;
 }
 
 body {
   background: #FFFFFF;
   color: #1C1C1C;
-}
-
-/* Lub-dub heartbeat for the Hero background grid (opacity only, no layout shift) */
-@keyframes gridHeartbeat {
-  0%   { opacity: 0.05; }
-  8%   { opacity: 0.16; }
-  16%  { opacity: 0.06; }
-  26%  { opacity: 0.18; }
-  40%  { opacity: 0.05; }
-  100% { opacity: 0.05; }
 }
 
 @keyframes glowPulse {

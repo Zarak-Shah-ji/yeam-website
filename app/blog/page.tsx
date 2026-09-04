@@ -2,12 +2,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
+import CategoryMotif from "@/components/blog/CategoryMotif";
+import FeaturedPost from "@/components/blog/FeaturedPost";
 import { formatPostDate, publishedPosts, type Post } from "./posts";
 
 export const metadata: Metadata = {
   title: "Yeam Blog",
   description:
-    "Research and notes from Yeam: what the public claims data shows about denials, how our agent-driven EHR is built, and how clinic billing actually works.",
+    "Research and notes from Yeam: what the public claims data shows about denials, how the agent-driven system behind Yeam is built, and how clinic billing actually works.",
 };
 
 function Meta({ post }: { post: Post }) {
@@ -30,40 +32,32 @@ function Tag({ children }: { children: React.ReactNode }) {
   );
 }
 
-function FeaturedCard({ post }: { post: Post }) {
-  return (
-    <Link
-      href={`/blog/${post.slug}`}
-      className="group mt-10 block rounded-2xl border border-[#E0E6F5] bg-white px-6 py-7 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md sm:px-8 sm:py-8"
-    >
-      <div className="flex items-center gap-3">
-        <Tag>{post.tag}</Tag>
-        <span className="text-xs font-semibold uppercase tracking-wider text-[#8A9BBF]">Featured</span>
-      </div>
-      <h2 className="mt-4 text-2xl font-bold tracking-tight text-[#1C1C1C] sm:text-3xl">
-        {post.title}
-      </h2>
-      <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-[#4A5A7A]">{post.excerpt}</p>
-      <div className="mt-5">
-        <Meta post={post} />
-      </div>
-    </Link>
-  );
-}
-
+/**
+ * One card shape for every post. Equal size is enforced by the grid (each cell
+ * stretches) plus `h-full` and a `mt-auto` on the meta row, so a short excerpt
+ * and a long one still line up. The featured post is lifted out of this grid
+ * into the `FeaturedPost` hero above, so cards here are the non-featured ones.
+ * A per-category motif bleeds from the corner behind the content (which sits on
+ * its own `z-10` layer so the text stays crisp).
+ */
 function PostCard({ post }: { post: Post }) {
   return (
     <Link
       href={`/blog/${post.slug}`}
-      className="group flex flex-col rounded-2xl border border-[#E0E6F5] bg-white px-5 py-5 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
+      className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-[#E0E6F5] bg-white px-6 py-6 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
     >
-      <Tag>{post.tag}</Tag>
-      <h3 className="mt-3 text-lg font-semibold leading-snug text-[#1C1C1C]">
-        {post.title}
-      </h3>
-      <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-[#4A5A7A]">{post.excerpt}</p>
-      <div className="mt-4 pt-1">
-        <Meta post={post} />
+      <CategoryMotif tag={post.tag} />
+      <div className="relative z-10 flex flex-1 flex-col">
+        <div className="flex items-center gap-2.5">
+          <Tag>{post.tag}</Tag>
+        </div>
+        <h2 className="mt-4 text-xl font-bold leading-snug tracking-tight text-[#1C1C1C]">
+          {post.title}
+        </h2>
+        <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-[#4A5A7A]">{post.excerpt}</p>
+        <div className="mt-auto pt-5">
+          <Meta post={post} />
+        </div>
       </div>
     </Link>
   );
@@ -72,7 +66,7 @@ function PostCard({ post }: { post: Post }) {
 export default function BlogIndex() {
   const posts = publishedPosts();
   const featured = posts.find((p) => p.featured);
-  const rest = posts.filter((p) => p !== featured);
+  const rest = featured ? posts.filter((p) => p !== featured) : posts;
 
   return (
     <>
@@ -80,15 +74,15 @@ export default function BlogIndex() {
       <main className="bg-[#FFFFFF] px-6 pt-28 pb-20">
         <div className="mx-auto max-w-6xl">
           <p className="mb-3 text-sm font-semibold uppercase tracking-wider text-[#1A4FBF]">Blog</p>
-          <h1 className="mb-4 text-3xl font-bold tracking-tight text-[#1C1C1C] md:text-4xl">
+          <h1 className="mb-4 text-3xl font-light tracking-tight text-[#1C1C1C] md:text-5xl">
             Research &amp; notes
           </h1>
           <p className="max-w-2xl text-lg text-[#4A5A7A]">
-            What we are researching and building: the public data behind medical-claim denials, how our
-            agent-driven EHR works, and how clinic billing actually plays out.
+            What we are researching and building: the public data behind medical-claim denials, how the
+            agent-driven system behind Yeam works, and how clinic billing actually plays out.
           </p>
 
-          {featured && <FeaturedCard post={featured} />}
+          {featured && <FeaturedPost post={featured} />}
 
           <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {rest.map((post) => (

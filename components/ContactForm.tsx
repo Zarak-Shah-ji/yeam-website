@@ -44,7 +44,7 @@ export default function ContactForm() {
   return (
     <section id="contact" className="py-24 md:py-32 px-6 bg-[#EEF2FA]">
       <div className="max-w-2xl mx-auto text-center">
-        <h2 className="text-3xl md:text-4xl font-bold text-[#1C1C1C] tracking-tight">
+        <h2 className="text-3xl md:text-5xl font-light text-[#1C1C1C] tracking-tight">
           Start with your own denials.
         </h2>
         <p className="mt-4 text-lg text-[#4A5A7A]">
@@ -54,7 +54,7 @@ export default function ContactForm() {
 
         <div className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-3">
           <a
-            href="#triage"
+            href="https://app.yeam.ai"
             className="w-full sm:w-auto px-8 py-3.5 bg-[#1A4FBF] text-white font-semibold rounded-xl hover:bg-[#1540A0] transition-colors shadow-sm text-base text-center"
           >
             Get started

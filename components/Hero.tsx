@@ -1,99 +1,57 @@
-"use client";
-
-import { useRef } from "react";
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import { prefersReducedMotion } from "@/lib/motion";
+import Link from "next/link";
+import HeroPipeline from "./HeroPipeline";
 
 /**
- * One line, one button.
+ * The hero: one light, large line, two buttons, and one large pipeline scene.
  *
- * What this replaced: a price pill, a two-tone headline, a four-line paragraph,
- * two competing buttons, four stat cards and a live appeal drafter — all above
- * the fold, all at once. The drafter was the only part doing real work, and it
- * now has its own section under the worklist where the story reaches it in
- * order. What's left here has to say what Yeam is and get out of the way.
+ * Deliberately calm. The old hero carried a 3D recovery pipeline, a pulsing cell
+ * network and cursor parallax; it read as busy, so it is gone. What is left is
+ * the Polar move: a calm, oversized headline set light and left-aligned, the two
+ * actions, and a single wide picture of the product's story (HeroPipeline): one
+ * export in, a worked queue out. That one scene replaced the four separate proof
+ * cells the eye used to have to decode individually.
  */
 
-const PROOF = [
-  "Zero data retention",
-  "Runs in your browser",
-  "No account",
-  "Augments your EHR",
-];
-
 export default function Hero() {
-  const rootRef = useRef<HTMLDivElement>(null);
-
-  // Staggered entrance. useGSAP runs in a layout effect, so there is no flash.
-  useGSAP(() => {
-    const items = gsap.utils.toArray<HTMLElement>("[data-hero-anim]");
-    if (prefersReducedMotion()) {
-      gsap.set(items, { opacity: 1, y: 0 });
-      return;
-    }
-    gsap.set(items, { opacity: 0, y: 24 });
-    gsap.to(items, {
-      opacity: 1,
-      y: 0,
-      duration: 0.7,
-      ease: "power3.out",
-      stagger: 0.12,
-      delay: 0.05,
-    });
-  }, { scope: rootRef });
-
   return (
-    <section
-      ref={rootRef}
-      className="relative pt-36 pb-24 md:pt-44 md:pb-32 px-6 bg-[#FFFFFF] overflow-hidden"
-    >
-      {/* Faint grid with a human-heartbeat pulse (background only) */}
+    <section className="relative overflow-hidden bg-[#FFFFFF] px-6 pt-36 pb-24 md:pt-44 md:pb-32">
+      {/* Faint, static brand wash. No motion, just depth behind the type. */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 pointer-events-none"
+        className="pointer-events-none absolute inset-0"
         style={{
-          backgroundImage:
-            "linear-gradient(#1A4FBF 1px, transparent 1px), linear-gradient(to right, #1A4FBF 1px, transparent 1px)",
-          backgroundSize: "48px 48px",
-          opacity: 0.05,
-          animation: "gridHeartbeat 2.8s ease-in-out infinite",
+          background:
+            "radial-gradient(50% 60% at 15% 30%, rgba(26,79,191,0.06), transparent 70%)",
         }}
       />
 
-      <div className="relative max-w-6xl mx-auto">
-        <div className="max-w-3xl">
-          <h1
-            data-hero-anim
-            className="text-[clamp(2.25rem,5.5vw,4rem)] font-extrabold text-[#1C1C1C] leading-[1.05] tracking-tight"
-          >
-            <span className="text-[#1A4FBF]">Denial recovery</span> platform for
-            medical billing.
+      <div className="relative z-10 mx-auto max-w-[1600px]">
+        <div className="max-w-4xl">
+          <h1 className="text-[clamp(2.5rem,6vw,4.75rem)] font-light leading-[1.05] tracking-tight text-[#1C1C1C]">
+            Meet Yeam, the medical billing stack
+            <br className="hidden sm:block" /> for the{" "}
+            <span className="text-[#1A4FBF]">intelligence era</span>.
           </h1>
 
-          <div data-hero-anim className="mt-9">
+          <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
             <a
-              href="#triage"
-              className="inline-block px-7 py-3.5 bg-[#1A4FBF] text-white font-semibold rounded-xl hover:bg-[#1540A0] transition-colors shadow-sm text-base"
+              href="https://app.yeam.ai"
+              className="inline-flex items-center justify-center rounded-xl bg-[#1A4FBF] px-7 py-3.5 text-base font-semibold text-white shadow-sm transition-colors hover:bg-[#1540A0]"
             >
-              Run your denial export
+              Get started
             </a>
+            <Link
+              href="/worklist"
+              className="inline-flex items-center justify-center rounded-xl border border-[#E0E6F5] bg-white px-7 py-3.5 text-base font-medium text-[#1C1C1C] transition-colors hover:bg-[#F0F4FC]"
+            >
+              See the free worklist
+            </Link>
           </div>
-
-          {/* One thin line where four cards used to sit. Same claims, a tenth
-              of the weight. */}
-          <ul
-            data-hero-anim
-            className="mt-8 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-[#5A6A8A]"
-          >
-            {PROOF.map((item, i) => (
-              <li key={item} className="flex items-center gap-2">
-                {i > 0 && <span aria-hidden="true" className="text-[#8A9BBF]">·</span>}
-                {item}
-              </li>
-            ))}
-          </ul>
         </div>
+
+        {/* The pipeline spans wider than the headline column, so it sits outside
+            the max-w-4xl block: one export in, a worked queue out. */}
+        <HeroPipeline />
       </div>
     </section>
   );

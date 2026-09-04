@@ -9,16 +9,17 @@ const post = getPost("inside-yeams-agent-ehr");
 export const metadata: Metadata = {
   title: post.title,
   description:
-    "How a conversational, agent-first EHR is put together: an intent orchestrator, five specialized agents, live-database tool calls, and streaming responses.",
+    "How the conversational, agent-first platform behind Yeam is put together: an intent orchestrator, five specialized agents, live-database tool calls, and streaming responses.",
 };
 
 export default function Page() {
   return (
     <ArticleShell post={post}>
       <Lead>
-        Most electronic health records make you click. Ours lets you ask. Here is how the
-        agent-driven EHR behind Yeam is put together, and why we shaped it around a small set of
-        specialized agents instead of one large model doing everything.
+        Yeam&apos;s denial-recovery product works alongside the EHR a practice already runs. Behind
+        it sits a full agent-driven system we built ourselves: instead of burying every task behind a
+        menu tree, it lets you ask. Here is how that system is put together, and why we shaped it
+        around a small set of specialized agents instead of one large model doing everything.
       </Lead>
 
       <H2 id="problem">The click-heavy problem</H2>

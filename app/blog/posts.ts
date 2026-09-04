@@ -19,7 +19,8 @@ export type Post = {
   readingTime: string;
   /** Only published posts render on the index and in metadata. */
   published: boolean;
-  /** At most one featured post, rendered as the wide hero card on the index. */
+  /** At most one featured post. It is lifted out of the date-sorted grid into
+   *  the wide animated hero (FeaturedPost) at the top of the index. */
   featured?: boolean;
 };
 
@@ -49,9 +50,9 @@ export const POSTS: Post[] = [
   },
   {
     slug: "inside-yeams-agent-ehr",
-    title: "Inside Yeam's agent-driven EHR",
+    title: "Inside the agent-driven platform behind Yeam",
     excerpt:
-      "How a conversational, agent-first EHR is put together: an intent orchestrator, five specialized agents, live-database tool calls, and streaming responses.",
+      "How the conversational, agent-first platform behind Yeam is put together: an intent orchestrator, five specialized agents, live-database tool calls, and streaming responses.",
     tag: "Engineering",
     author: "Zarak Shah",
     date: "2026-08-26",

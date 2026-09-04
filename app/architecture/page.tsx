@@ -2,53 +2,43 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
+import ArchitectureFlow from "@/components/ArchitectureFlow";
 
 /**
  * How Yeam gets data out of the systems a practice already runs.
  *
- * Ported from the app's internal /how-we-connect page. The status palette had
- * to change: the original used emerald/amber/slate, and amber has no entry in
- * the dark-theme block in globals.css, so it would render light-on-light for
- * the default visitor. Building is the blue tint here instead.
+ * Ported from the app's internal /how-we-connect page. The flow diagram itself
+ * lives in components/ArchitectureFlow (a client component that assembles on
+ * scroll and animates the data path); this page keeps the copy and the
+ * "where we are" gaps around it.
  */
 
 export const metadata: Metadata = {
-  title: "How Yeam Connects",
+  title: "How Yeam Works",
   description:
-    "Denials arrive as 835s from the clearinghouse, not from the EHR. How Yeam gets claim data out of the systems your practices already run.",
+    "Denials arrive as 835s from the clearinghouse, not the EHR. Yeam ranks each denial by what is recoverable and how long is left, maps even vague codes to a specific fix, and drafts the response for a biller to review.",
 };
 
-type Status = "live" | "building" | "roadmap";
-
-/** Every class here appears in the dark-theme block of globals.css. */
-const TONE: Record<Status, string> = {
-  live: "bg-green-50 border-green-200",
-  building: "bg-[#EBF0FA] border-[#A8BFEE]",
-  roadmap: "bg-slate-50 border-slate-200",
-};
-
-const LEGEND: { status: Status; label: string; pill: string }[] = [
-  { status: "live", label: "Live today", pill: "bg-green-50 text-green-600 border-green-200" },
-  { status: "building", label: "Building", pill: "bg-[#EBF0FA] text-[#1A4FBF] border-[#A8BFEE]" },
-  { status: "roadmap", label: "Roadmap", pill: "bg-slate-50 text-slate-500 border-slate-200" },
-];
-
-const SOURCES: { label: string; sub: string; status: Status }[] = [
-  { label: "Denial letter / EOB", sub: "PDF · image · Word", status: "live" },
-  { label: "Claims export", sub: "CSV · XLSX", status: "live" },
-  { label: "835 ERA", sub: "clearinghouse", status: "building" },
-  { label: "Chart notes", sub: "EHR · FHIR R4", status: "roadmap" },
-];
-
-const ENGINE: { label: string; sub: string; status: Status }[] = [
-  { label: "Denial playbook", sub: "picks the remedy", status: "live" },
-  { label: "Payer profile", sub: "window · channel · form", status: "live" },
-];
-
-const OUTPUTS: { label: string; sub: string; status: Status }[] = [
-  { label: "Corrected claim", sub: "CO-11 · CO-16 · CO-18", status: "live" },
-  { label: "Appeal letter", sub: "CO-50 · CO-97 · CO-151 · CO-197", status: "live" },
-  { label: "Reprocessing request", sub: "CO-45 · PR-204", status: "live" },
+/** Direct answers to what billers say goes wrong with denial-automation tools:
+ *  it is slow, it does not prioritize, it files on its own, and the data is not
+ *  safe. Each card names the objection and how Yeam is built against it. */
+const ANSWERS: [string, string][] = [
+  [
+    "Sorted the moment the export lands",
+    "No ten-minute wait per claim. The whole remit is screened at once, so a biller starts on the workable denials right away instead of reading 400 lines to find them.",
+  ],
+  [
+    "Ranked, not dumped",
+    "Every denial is scored by dollars recoverable and days left to the filing deadline, so the queue leads with what pays and what is about to expire.",
+  ],
+  [
+    "Nothing is sent without a person",
+    "Yeam drafts the corrected claim or appeal for a biller to read, edit and approve. It prepares the work; it does not file behind your back.",
+  ],
+  [
+    "Your data does not stick around",
+    "The public demo runs on synthetic documents only. Live claims run under a signed BAA with zero data retention, in your browser.",
+  ],
 ];
 
 const GAPS: [string, string][] = [
@@ -66,111 +56,69 @@ const GAPS: [string, string][] = [
   ],
 ];
 
-function Node({ label, sub, status }: { label: string; sub: string; status: Status }) {
-  return (
-    <div className={`rounded-lg border px-4 py-3 ${TONE[status]}`}>
-      <p className="text-[15px] font-semibold leading-snug text-[#1C1C1C]">{label}</p>
-      <p className="mt-1 text-xs leading-relaxed text-[#5A6A8A]">{sub}</p>
-    </div>
-  );
-}
-
-function Arrow() {
-  return (
-    <div
-      aria-hidden
-      className="flex shrink-0 items-center justify-center py-1 text-2xl leading-none text-[#8A9BBF] md:py-0"
-    >
-      <span className="md:hidden">↓</span>
-      <span className="hidden md:inline">→</span>
-    </div>
-  );
-}
-
-function Stage({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <div className="min-w-0 flex-1">
-      <p className="mb-3 text-[11px] font-semibold uppercase tracking-wider text-[#8A9BBF]">
-        {title}
-      </p>
-      <div className="space-y-2.5">{children}</div>
-    </div>
-  );
-}
-
 export default function ArchitecturePage() {
   return (
     <>
       <Nav />
       <main className="pt-28 pb-20 px-6 bg-[#FFFFFF]">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-[1600px] mx-auto">
           <p className="text-[#1A4FBF] text-sm font-semibold uppercase tracking-wider mb-3">
             Architecture
           </p>
-          <h1 className="text-3xl md:text-4xl font-bold text-[#1C1C1C] tracking-tight mb-4">
-            How Yeam connects
+          <h1 className="text-3xl md:text-5xl font-light text-[#1C1C1C] tracking-tight mb-4">
+            How Yeam works, end to end
           </h1>
           <p className="text-lg text-[#4A5A7A] max-w-2xl">
-            Denials arrive as 835s from the clearinghouse, not from the EHR. One connection
-            there covers every practice, whatever each one runs.
+            Denials arrive as 835s from the clearinghouse, not the EHR. Yeam reads that
+            export, ranks each denial by what is still recoverable and how many days are
+            left to file, and drafts the specific fix, all before a biller opens the first
+            claim.
           </p>
 
-          {/* Flow */}
-          <div className="mt-10 overflow-x-auto rounded-2xl border border-[#E0E6F5] bg-white shadow-sm px-6 py-8 sm:px-8">
-            <div className="flex min-w-[280px] flex-col gap-3 md:flex-row md:items-center md:gap-5">
-              <Stage title="Source">
-                {SOURCES.map((s) => (
-                  <Node key={s.label} {...s} />
-                ))}
-              </Stage>
+          <ArchitectureFlow />
 
-              <Arrow />
-
-              <Stage title="Adapter">
-                <Node
-                  label="Field mapping"
-                  sub="one config per source — a new EHR is a mapping file, not a new integration"
-                  status="building"
-                />
-              </Stage>
-
-              <Arrow />
-
-              <Stage title="Normalized claim">
-                <Node
-                  label="Claim record"
-                  sub="payer · CARC · amounts · dates — everything downstream reads this shape only"
-                  status="building"
-                />
-              </Stage>
-
-              <Arrow />
-
-              <Stage title="Engine">
-                {ENGINE.map((e) => (
-                  <Node key={e.label} {...e} />
-                ))}
-              </Stage>
-
-              <Arrow />
-
-              <Stage title="Output">
-                {OUTPUTS.map((o) => (
-                  <Node key={o.label} {...o} />
-                ))}
-              </Stage>
+          {/* Vague-code worked example: the loudest complaint about denial-automation
+              tools is that a code like CO-16 leads nowhere. Show the opposite. */}
+          <div className="mt-10 rounded-2xl border border-[#A8BFEE] bg-[#EBF0FA] px-6 py-6 sm:px-8">
+            <p className="text-[11px] font-semibold uppercase tracking-wider text-[#1A4FBF]">
+              A vague code still gets a specific next step
+            </p>
+            <p className="mt-2 max-w-3xl text-sm leading-relaxed text-[#4A5A7A]">
+              CO-16 on its own only says &ldquo;missing information,&rdquo; which can mean a
+              dozen different things. Yeam reads the remark codes riding with it, matches the
+              payer&rsquo;s rule, and returns the one correction that clears the claim, not a
+              generic &ldquo;resubmit with more info.&rdquo;
+            </p>
+            <div className="mt-5 flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
+              <span className="inline-flex w-fit items-center rounded-lg border border-red-200 bg-red-50 px-3 py-1.5 font-mono text-xs font-semibold text-red-600">
+                CO-16 + N290
+              </span>
+              <svg className="hidden h-4 w-4 shrink-0 text-[#8A9BBF] sm:block" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+              </svg>
+              <span className="inline-flex w-fit items-center rounded-lg border border-[#E0E6F5] bg-white px-3 py-1.5 text-xs font-medium text-[#4A5A7A]">
+                Missing rendering-provider NPI
+              </span>
+              <svg className="hidden h-4 w-4 shrink-0 text-[#8A9BBF] sm:block" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+              </svg>
+              <span className="inline-flex w-fit items-center rounded-lg border border-green-200 bg-green-50 px-3 py-1.5 text-xs font-semibold text-green-600">
+                Add NPI, resubmit as corrected claim
+              </span>
             </div>
+          </div>
 
-            <div className="mt-8 flex flex-wrap items-center gap-3 border-t border-[#E0E6F5] pt-5">
-              {LEGEND.map((l) => (
-                <span
-                  key={l.status}
-                  className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold ${l.pill}`}
-                >
-                  {l.label}
-                </span>
-              ))}
-            </div>
+          {/* Answers to the objections billers raise about denial automation. */}
+          <div className="mt-12 grid gap-4 sm:grid-cols-2">
+            {ANSWERS.map(([title, body]) => (
+              <div
+                key={title}
+                className="rounded-2xl border border-[#E0E6F5] bg-white px-5 py-5 shadow-sm"
+              >
+                <p className="text-sm font-semibold text-[#1C1C1C]">{title}</p>
+                <p className="mt-1.5 text-sm leading-relaxed text-[#4A5A7A]">{body}</p>
+              </div>
+            ))}
           </div>
 
           {/* Gaps */}
@@ -189,12 +137,12 @@ export default function ArchitecturePage() {
           </div>
 
           <p className="mt-10 text-sm text-[#4A5A7A]">
-            The output routing above is live —{" "}
+            The output routing above is live:{" "}
             <Link
-              href="/"
+              href="/worklist"
               className="font-medium text-[#1A4FBF] hover:text-[#1540A0] transition-colors"
             >
-              run it on a sample denial in the hero
+              run it on a sample denial in the worklist
             </Link>
             .
           </p>

@@ -77,7 +77,7 @@ export default function Integrations() {
     if (reduced) setReduce(true);
 
     // Header reveal on first scroll into view, matching the rest of the page.
-    const headerItems = gsap.utils.toArray<HTMLElement>("[data-reveal]");
+    const headerItems = gsap.utils.toArray<HTMLElement>("[data-reveal]", containerRef.current);
     if (reduced) {
       gsap.set(headerItems, { opacity: 1, y: 0 });
     } else {
@@ -120,12 +120,12 @@ export default function Integrations() {
 
   return (
     <section ref={containerRef} className="relative bg-[#FFFFFF] overflow-hidden py-20 md:py-28 px-6">
-      <div className="relative max-w-5xl mx-auto">
-        <div className="text-center mb-12 md:mb-16">
+      <div className="relative max-w-[1600px] mx-auto">
+        <div className="mb-12 md:mb-16 max-w-3xl">
           <p data-reveal className="text-[#1A4FBF] text-sm font-semibold uppercase tracking-wider mb-3">
             Integrations
           </p>
-          <h2 data-reveal className="text-3xl md:text-4xl font-bold text-[#1C1C1C] tracking-tight">
+          <h2 data-reveal className="text-3xl md:text-5xl font-light text-[#1C1C1C] tracking-tight">
             Works with the systems you already run on.
           </h2>
           <p data-reveal className="mt-5">

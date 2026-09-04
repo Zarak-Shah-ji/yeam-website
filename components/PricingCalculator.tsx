@@ -421,7 +421,7 @@ export default function PricingCalculator() {
               </ul>
 
               <a
-                href={tier.free ? "/#triage" : "#contact"}
+                href={tier.free ? "/worklist" : "#contact"}
                 className={`mt-5 block rounded-lg px-4 py-2 text-center text-xs font-semibold transition-colors ${
                   tier.free
                     ? "border border-[#1A4FBF] text-[#1A4FBF] hover:bg-[#EBF0FA]"

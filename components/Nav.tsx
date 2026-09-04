@@ -1,16 +1,17 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Image from "next/image";
 import Link from "next/link";
+import LogoMark from "./LogoMark";
+import { usePathname } from "next/navigation";
 
 /* One list, rendered twice. The desktop row and the mobile panel drifted apart
    the last time these were written out separately — "How It Works" outlived the
    section it pointed at. Root-relative hashes, not bare ones: these links also
-   render on /pricing and /architecture, where "#triage" would resolve to
+   render on /pricing and /architecture, where "#contact" would resolve to
    nothing on the current page. */
 const LINKS = [
-  { label: "Free worklist", href: "/#triage" },
+  { label: "Free worklist", href: "/worklist" },
   { label: "Pricing",       href: "/pricing" },
   { label: "Architecture",  href: "/architecture" },
   { label: "Blog",          href: "/blog" },
@@ -20,6 +21,22 @@ const LINKS = [
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+
+  // Same-page anchor links (Free worklist, Contact) are scrolled by hand when we
+  // are already on the home page. Doing it here, rather than leaning on the
+  // browser hash jump, means a second click on the link that is already active
+  // still scrolls, and the landing sits below the fixed nav (scroll-padding-top
+  // in globals.css supplies the offset). Cross-page links fall through to Link.
+  function handleNavClick(e: React.MouseEvent<HTMLAnchorElement>, href: string) {
+    setOpen(false);
+    if (pathname !== "/" || !href.startsWith("/#")) return;
+    const el = document.getElementById(href.slice(2));
+    if (!el) return;
+    e.preventDefault();
+    el.scrollIntoView({ behavior: "smooth" });
+    window.history.replaceState(null, "", href);
+  }
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 20);
@@ -65,17 +82,10 @@ export default function Nav() {
           : "bg-transparent"
       }`}
     >
-      <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div className="max-w-[1600px] mx-auto px-6 h-16 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2" onClick={() => setOpen(false)}>
-          <Image
-            src="/logo.png"
-            alt="Yeam"
-            width={36}
-            height={36}
-            className="rounded-lg"
-            style={{ filter: "brightness(0) saturate(100%) invert(27%) sepia(100%) saturate(400%) hue-rotate(184deg) brightness(142%)" }}
-          />
-          <span className="font-semibold text-[#1C1C1C] text-lg">Yeam</span>
+          <LogoMark size={34} priority />
+          <span className="font-semibold text-[#1C1C1C] text-lg">yeam</span>
         </Link>
 
         <nav className="hidden md:flex items-center gap-8">
@@ -83,6 +93,7 @@ export default function Nav() {
             <Link
               key={link.href}
               href={link.href}
+              onClick={(e) => handleNavClick(e, link.href)}
               className="text-sm text-[#4A5A7A] hover:text-[#1C1C1C] transition-colors"
             >
               {link.label}
@@ -91,12 +102,12 @@ export default function Nav() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <Link
-            href="/#triage"
+          <a
+            href="https://app.yeam.ai"
             className="hidden sm:inline-flex px-4 py-2 bg-[#1A4FBF] text-white text-sm font-medium rounded-lg hover:bg-[#1540A0] transition-colors"
           >
             Get started
-          </Link>
+          </a>
 
           <button
             type="button"
@@ -127,7 +138,7 @@ export default function Nav() {
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  onClick={() => setOpen(false)}
+                  onClick={(e) => handleNavClick(e, link.href)}
                   className="block py-3 text-base font-medium text-[#4A5A7A] hover:text-[#1C1C1C] transition-colors"
                 >
                   {link.label}
@@ -135,13 +146,13 @@ export default function Nav() {
               </li>
             ))}
           </ul>
-          <Link
-            href="/#triage"
+          <a
+            href="https://app.yeam.ai"
             onClick={() => setOpen(false)}
             className="mt-3 block w-full px-4 py-3 bg-[#1A4FBF] text-white text-center text-sm font-semibold rounded-lg hover:bg-[#1540A0] transition-colors"
           >
             Get started
-          </Link>
+          </a>
         </nav>
       )}
     </header>

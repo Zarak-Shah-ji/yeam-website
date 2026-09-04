@@ -1,9 +1,9 @@
-import Image from "next/image";
 import ThemeToggle from "./ThemeToggle";
 import FooterMark from "./FooterMark";
+import LogoMark from "./LogoMark";
 
 const LINKS = [
-  { label: "Free worklist", href: "/#triage" },
+  { label: "Free worklist", href: "/worklist" },
   { label: "Pricing",       href: "/pricing" },
   { label: "Architecture",  href: "/architecture" },
   { label: "Contact",       href: "/#contact" },
@@ -16,16 +16,9 @@ export default function Footer() {
     <footer className="relative bg-[#FFFFFF] border-t border-[#E0E6F5] py-20 px-6 overflow-hidden">
       <FooterMark />
 
-      <div className="relative max-w-6xl mx-auto">
+      <div className="relative max-w-[1600px] mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-start gap-10 mb-12">
-          <Image
-            src="/logo.png"
-            alt="Yeam"
-            width={36}
-            height={36}
-            className="rounded-lg"
-            style={{ filter: "brightness(0) saturate(100%) invert(27%) sepia(100%) saturate(400%) hue-rotate(184deg) brightness(142%)" }}
-          />
+          <LogoMark size={34} />
 
           <nav>
             <ul className="grid grid-cols-2 sm:grid-cols-3 gap-x-10 gap-y-2">
