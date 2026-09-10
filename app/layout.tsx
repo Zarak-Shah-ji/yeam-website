@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   variable: "--font-sans",
@@ -50,6 +51,14 @@ export default function RootLayout({
           }}
         />
         {children}
+        {/*
+          Vercel Web Analytics. Pageviews only: it sets no cookie and builds no
+          cross-site profile, which is what lets the worklist keep its "nothing
+          leaves your browser" promise while still being countable. The custom
+          events in DenialTriage record the shape of a run (sample vs upload,
+          size bucket, outcome), never a file name and never its contents.
+        */}
+        <Analytics />
       </body>
     </html>
   );

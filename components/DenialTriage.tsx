@@ -18,6 +18,7 @@ import {
   type TriagedRow,
   type Worklist,
 } from "@/lib/triage";
+import { track } from "@vercel/analytics";
 
 /**
  * The free denial worklist.
@@ -35,6 +36,22 @@ import {
  * actually overrides. Amber in particular has no entry there and would render
  * unreadably in dark mode, so urgency is carried by the red tints instead.
  */
+
+/**
+ * Row counts are reported in buckets, never exact.
+ *
+ * An exact count is a high-cardinality value: Vercel would list "37 rows" and
+ * "38 rows" as two separate lines and the dashboard would become a list of
+ * one-off numbers. Buckets answer the question actually being asked, which is
+ * whether anyone is running a real export through this or only the sample.
+ */
+function sizeBucket(rows: number): string {
+  if (rows <= 10) return "1-10";
+  if (rows <= 50) return "11-50";
+  if (rows <= 200) return "51-200";
+  if (rows <= 1000) return "201-1000";
+  return "1000+";
+}
 
 const REMEDY_CHIP: Record<Remedy, string> = {
   corrected_claim: "bg-[#F5F0FA] text-[#6B4A8A] border-[#D4C0E8]",
@@ -311,7 +328,7 @@ export default function DenialTriage() {
     if (inputRef.current) inputRef.current.value = "";
   }
 
-  async function ingest(file: File) {
+  async function ingest(file: File, source: "upload" | "sample" = "upload") {
     setBusy(true);
     setError("");
     setOpenRow(null);
@@ -328,9 +345,22 @@ export default function DenialTriage() {
       const stillMissing = missingRequired(detected);
       setStage(stillMissing.length > 0 ? "mapping" : "results");
       setShowColumns(stillMissing.length > 0);
+      // Counts the run and its shape. Deliberately not the file name: exports
+      // are routinely called something like "Northside_denials_Aug.xlsx", and
+      // the clinic name is exactly what this tool promises not to collect.
+      track("worklist run", {
+        source,
+        rows: sizeBucket(d.length),
+        outcome: stillMissing.length > 0 ? "needs mapping" : "results",
+      });
     } catch (err) {
       setError(err instanceof Error ? err.message : "Could not read that file.");
       setStage("idle");
+      // Worth its own event: a failure here means a real export format the
+      // parser does not handle yet, which is the most actionable thing the
+      // dashboard can tell us. The message itself stays local, it can quote
+      // column headers from the file.
+      track("worklist parse failed", { source });
     } finally {
       setBusy(false);
     }
@@ -346,6 +376,7 @@ export default function DenialTriage() {
         new File([blob], "sample-denied-claims.xlsx", {
           type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         }),
+        "sample",
       );
     } catch {
       setError("Could not load the sample file. Please try again.");
@@ -385,8 +416,13 @@ export default function DenialTriage() {
       setChat([]);
       setChatError("");
       setLetterOpen(true);
+      // The remedy category is the useful dimension here: it says which kind of
+      // denial people actually want help writing, which is a product question.
+      // The letter, the codes and the amounts stay out of it.
+      track("appeal drafted", { remedy: row.remedy });
     } catch (err) {
       setDraftError(err instanceof Error ? err.message : "Could not draft the response.");
+      track("appeal draft failed", { remedy: row.remedy });
     } finally {
       setDrafting(false);
     }
