@@ -63,7 +63,13 @@ export default function FooterMark() {
     <div
       ref={rootRef}
       aria-hidden="true"
-      className="pointer-events-none select-none absolute inset-0 flex items-center justify-center overflow-hidden"
+      className="pointer-events-none select-none absolute inset-0 flex items-end justify-center overflow-hidden"
+      style={{
+        // Solid at the top, fading only at the foot so the mark melts into the
+        // surface at the bottom edge rather than ending on a hard line.
+        maskImage: "linear-gradient(to bottom, black 0%, black 78%, transparent 100%)",
+        WebkitMaskImage: "linear-gradient(to bottom, black 0%, black 78%, transparent 100%)",
+      }}
     >
       {LETTERS.map((letter) => (
         <span
@@ -71,10 +77,10 @@ export default function FooterMark() {
           data-letter
           className="font-black text-[#1C1C1C]"
           style={{
-            fontSize: "clamp(6rem, 20vw, 16rem)",
-            opacity: 0.06,
-            letterSpacing: "0.15em",
-            lineHeight: 1,
+            fontSize: "clamp(4.5rem, 15vw, 13rem)",
+            opacity: 0.05,
+            letterSpacing: "0.12em",
+            lineHeight: 0.82,
           }}
         >
           {letter}

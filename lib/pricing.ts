@@ -172,11 +172,28 @@ export function effectiveRate(tier: Tier, denials: number): number | null {
  * file), and a recovery figure we cannot show the working for is exactly the
  * kind of number this pricing page exists to avoid.
  *
- * $25 is the commonly cited cost to rework a claim; appealing one runs closer
- * to $118. The default sits at the low end on purpose — the conservative
- * number is the one worth arguing from.
+ * $57.23 is Premier's 2023 figure for the administrative cost of reworking a
+ * single denied claim (up from $43.84 in 2022); appealing a complex one runs
+ * higher still. It is the most-cited, most defensible number for this work, so
+ * it is the default — adjustable, because it is the customer's figure that
+ * matters.
  */
-export const MANUAL_COST_DEFAULT = 25;
+export const MANUAL_COST_DEFAULT = 57;
+
+/**
+ * Staff time to work one denial by hand. Industry observations put reworking a
+ * denial around 25–45 minutes and drafting an appeal at 30–90; 30 is a
+ * conservative blended default, used to turn a denial count into hours a team
+ * gets back.
+ */
+export const MINUTES_PER_DENIAL = 30;
+
+/** Staff hours reclaimed per month: the denials Yeam works, times the minutes
+ *  each would take by hand. Honest about scope — it is time on the denial work
+ *  Yeam does, not the whole billing operation. */
+export function hoursReclaimed(denials: number, minutesEach: number): number {
+  return (Math.max(0, denials) * Math.max(0, minutesEach)) / 60;
+}
 
 export function manualMonthlyCost(denials: number, manualPerDenial: number): number {
   return Math.max(0, denials) * Math.max(0, manualPerDenial);
@@ -205,7 +222,7 @@ export function savingsPerDenial(
  * Denials per month implied by claim volume. The bucket labels mirror the ones
  * the contact form already asks visitors to pick from.
  */
-export const DENIAL_RATE_DEFAULT = 0.1;
+export const DENIAL_RATE_DEFAULT = 0.12;
 
 export const VOLUME_PRESETS: { label: string; claims: number }[] = [
   { label: "0 – 1,000 claims/month", claims: 1_000 },

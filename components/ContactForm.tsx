@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Reveal from "./Reveal";
 
 /**
  * Getting started, and the way out for people who need a conversation.
@@ -43,16 +44,16 @@ export default function ContactForm() {
 
   return (
     <section id="contact" className="py-24 md:py-32 px-6 bg-[#EEF2FA]">
-      <div className="max-w-2xl mx-auto text-center">
-        <h2 className="text-3xl md:text-5xl font-light text-[#1C1C1C] tracking-tight">
+      <Reveal className="max-w-2xl mx-auto text-center">
+        <h2 data-reveal className="text-3xl md:text-5xl font-light text-[#1C1C1C] tracking-tight">
           Start with your own denials.
         </h2>
-        <p className="mt-4 text-lg text-[#4A5A7A]">
+        <p data-reveal className="mt-4 text-lg text-[#4A5A7A]">
           The worklist is free, needs no account, and runs in your browser. Paid plans add
           real claim data, tracked deadlines and drafted responses under a signed BAA.
         </p>
 
-        <div className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-3">
+        <div data-reveal className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-3">
           <a
             href="https://app.yeam.ai"
             className="w-full sm:w-auto px-8 py-3.5 bg-[#1A4FBF] text-white font-semibold rounded-xl hover:bg-[#1540A0] transition-colors shadow-sm text-base text-center"
@@ -70,7 +71,7 @@ export default function ContactForm() {
           )}
         </div>
 
-        <p className="mt-5 text-sm text-[#5A6A8A]">
+        <p data-reveal className="mt-5 text-sm text-[#5A6A8A]">
           Or email{" "}
           <a
             href="mailto:info@yeam.ai"
@@ -163,7 +164,7 @@ export default function ContactForm() {
             </form>
           )
         )}
-      </div>
+      </Reveal>
     </section>
   );
 }

@@ -28,23 +28,32 @@ export default function Hero() {
       <div className="relative z-10 mx-auto max-w-[1600px]">
         <div className="max-w-4xl">
           <h1 className="text-[clamp(2.5rem,6vw,4.75rem)] font-light leading-[1.05] tracking-tight text-[#1C1C1C]">
-            Meet Yeam, the medical billing stack
-            <br className="hidden sm:block" /> for the{" "}
-            <span className="text-[#1A4FBF]">intelligence era</span>.
+            The billing layer between your{" "}
+            <span className="text-[#1A4FBF]">EHR</span>
+            <br className="hidden sm:block" /> and the{" "}
+            <span className="text-[#1A4FBF]">payer</span>.
           </h1>
 
+          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-[#5A6A8A]">
+            Yeam tracks every claim on its way to getting paid and works the
+            money that stalls. Today that means catching the denials worth
+            working — ranked by what&apos;s recoverable and when they&apos;re
+            due, drafted for your biller to approve. Runs alongside your EHR,
+            nothing to rip out.
+          </p>
+
           <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
-            <a
-              href="https://app.yeam.ai"
-              className="inline-flex items-center justify-center rounded-xl bg-[#1A4FBF] px-7 py-3.5 text-base font-semibold text-white shadow-sm transition-colors hover:bg-[#1540A0]"
-            >
-              Get started
-            </a>
             <Link
               href="/worklist"
+              className="inline-flex items-center justify-center rounded-xl bg-[#1A4FBF] px-7 py-3.5 text-base font-semibold text-white shadow-sm transition-colors hover:bg-[#1540A0]"
+            >
+              Run the free worklist
+            </Link>
+            <Link
+              href="/architecture"
               className="inline-flex items-center justify-center rounded-xl border border-[#E0E6F5] bg-white px-7 py-3.5 text-base font-medium text-[#1C1C1C] transition-colors hover:bg-[#F0F4FC]"
             >
-              See the free worklist
+              See how Yeam works
             </Link>
           </div>
         </div>
