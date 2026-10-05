@@ -18,11 +18,14 @@ gsap.registerPlugin(ScrollTrigger);
  * so one sale reaches many practices. The clinic-role version this replaced
  * pitched an AI workforce the product does not ship.
  *
- * The three cards used to sit side by side. They now stack: on desktop each card
- * is position:sticky at a slightly lower offset than the last, so scrolling
- * gathers them into a deck with each earlier card peeking above the next. Small
- * screens and reduced-motion visitors get the plain vertical list instead, since
- * a sticky deck is awkward on a short viewport and is motion nobody asked for.
+ * The three cards stack into a deck on desktop: each is position:sticky at a
+ * 2.5rem-lower offset than the last, so scrolling gathers them with each earlier
+ * card peeking (its number + role) above the next. As a card is covered it
+ * settles — a small scale + dim anchored to its pinned TOP edge (transform-origin
+ * center top), which is what keeps the peek and the seam from drifting. Equal
+ * min-heights keep the stair even. Small screens and reduced-motion visitors get
+ * the plain vertical list, gated in CSS (md: + motion-reduce:) so the static
+ * layout is correct on the first paint, not after a JS flip.
  */
 
 const audiences = [
@@ -85,16 +88,27 @@ const ACCENTS = [
   { chip: "bg-[#F5F0FA] text-[#6B4A8A]", role: "text-[#6B4A8A]", check: "text-[#6B4A8A]", num: "text-[#6B4A8A]", solid: "#6B4A8A", soft: "rgba(107,74,138,0.14)" },
 ];
 
+/**
+ * One datapoint per card, surfaced in the sticky left panel as each card takes
+ * the front of the deck. All three are drawn from the linked blog post
+ * (/blog/payer-denial-playbook) — KFF/CMS ACA Marketplace figures — so "see the
+ * data behind this" actually leads to the numbers shown here. Index matches the
+ * `audiences` order: owner → lead → practice.
+ */
+const DATAPOINTS = [
+  { stat: "<1%", label: "of denied claims are ever appealed — a backlog nobody works", accent: "text-blue-600" },
+  { stat: "34%", label: "of denials are overturned when someone actually appeals", accent: "text-[#5C8A3A]" },
+  { stat: "61%", label: "of denials are administrative or unspecified — fixable, not clinical", accent: "text-[#6B4A8A]" },
+];
+
 export default function Audiences() {
   const rootRef = useRef<HTMLDivElement>(null);
-  // Starts false so SSR and the first client render agree; flips to true only
-  // when the visitor prefers reduced motion, which drops the sticky deck.
-  const [reduce, setReduce] = useState(false);
+  // Which card is at the front of the deck; drives the left panel's datapoint.
+  const [active, setActive] = useState(0);
 
   useGSAP(
     () => {
       const reduced = prefersReducedMotion();
-      if (reduced) setReduce(true);
 
       const header = gsap.utils.toArray<HTMLElement>("[data-reveal]", rootRef.current);
       const cards = gsap.utils.toArray<HTMLElement>("[data-card]", rootRef.current);
@@ -136,25 +150,55 @@ export default function Audiences() {
         },
       });
 
-      // On desktop, where the cards form a sticky deck, scrub each card down a
-      // touch (scale, not opacity, to avoid fighting the entrance fade) as the
-      // next one rises to cover it. This makes the stack feel like it settles
-      // instead of just holding still.
-      const wraps = gsap.utils.toArray<HTMLElement>("[data-card-wrap]");
-      gsap.matchMedia().add("(min-width: 768px)", () => {
-        cards.slice(0, -1).forEach((card, i) => {
-          gsap.to(card, {
-            scale: 0.94,
-            ease: "none",
-            scrollTrigger: {
-              trigger: wraps[i + 1],
-              start: "top 32%",
-              end: "top 12%",
-              scrub: true,
-            },
+      // On desktop, settle each card as the next rises to cover it: a small
+      // scale plus a dim, anchored to the pinned TOP edge (transform-origin
+      // center top) so the peek and the seam stay put — scaling from the centre
+      // is what made the old deck look broken. The scrub is timed to the
+      // covering card reaching this card's resting top, and gated to
+      // no-preference so reduced-motion visitors get the flat list.
+      const BASE = 96; // 6rem, the first card's sticky top
+      const PEEK = 40; // 2.5rem, the stair between cards
+      gsap.matchMedia().add(
+        "(min-width: 768px) and (prefers-reduced-motion: no-preference)",
+        () => {
+          cards.slice(0, -1).forEach((card, i) => {
+            gsap.fromTo(
+              card,
+              { scale: 1, filter: "brightness(1)" },
+              {
+                scale: 0.96,
+                filter: "brightness(0.93)",
+                transformOrigin: "center top",
+                ease: "none",
+                scrollTrigger: {
+                  trigger: cards[i + 1],
+                  start: "top bottom",
+                  end: `top ${BASE + i * PEEK}px`,
+                  scrub: true,
+                },
+              },
+            );
           });
-        });
-      });
+        },
+      );
+
+      // Surface a different datapoint in the left panel as each card takes the
+      // front of the deck: when a card reaches its resting top it becomes the
+      // focus, so switch to its number; reverse on the way back up. Desktop +
+      // no-preference only — the flat/reduced layout just keeps the first.
+      gsap.matchMedia().add(
+        "(min-width: 768px) and (prefers-reduced-motion: no-preference)",
+        () => {
+          cards.forEach((_, i) => {
+            ScrollTrigger.create({
+              trigger: cards[i],
+              start: `top ${BASE + i * PEEK}px`,
+              onEnter: () => setActive(i),
+              onLeaveBack: () => setActive(Math.max(0, i - 1)),
+            });
+          });
+        },
+      );
 
       // Ambient glossy sheen: each card's accent glow drifts slowly and out of
       // phase with the others, so the deck feels alive without pulling the eye
@@ -178,24 +222,42 @@ export default function Audiences() {
 
   return (
     <section ref={rootRef} className="py-20 md:py-28 px-6 bg-slate-50">
-      <div className="max-w-[1600px] mx-auto">
-        <div className="mb-14 max-w-3xl">
+      <div className="max-w-[1600px] mx-auto grid gap-10 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] md:gap-16 lg:gap-24">
+        {/* Left: the editorial intro, pinned while the deck scrolls past it. */}
+        <div className="md:sticky md:top-28 md:self-start motion-reduce:static!">
           <p
             data-reveal
             className="text-blue-600 text-sm font-semibold uppercase tracking-wider mb-3"
           >
-            Built for the people who work denials
+            Built for the people who get claims paid
           </p>
           <h2 data-reveal className="text-3xl md:text-5xl font-light tracking-tight text-slate-900">
             Most denials are never worked at all.
           </h2>
-          <p data-reveal className="mt-5 text-lg leading-relaxed text-slate-600">
-            On ACA Marketplace plans, fewer than 1% of denied claims are ever
-            appealed, and about a third of the ones that are get overturned. The
-            money is sitting on the table because writing the appeal is slow,
-            manual work.
+
+          {/* Datapoint that changes as each card takes the front of the deck.
+              min-height holds the space so the body copy below never jumps. */}
+          <div data-reveal className="mt-8 min-h-[7rem]">
+            <div
+              key={active}
+              style={{ animation: "fadeSlideIn 0.35s ease-out" }}
+              className="flex items-start gap-4"
+            >
+              <span className={`text-6xl font-extralight tabular-nums md:text-7xl ${DATAPOINTS[active].accent}`}>
+                {DATAPOINTS[active].stat}
+              </span>
+              <span className="mt-1 max-w-[14rem] text-sm leading-snug text-slate-600">
+                {DATAPOINTS[active].label}
+              </span>
+            </div>
+          </div>
+
+          <p data-reveal className="mt-6 max-w-md text-base leading-relaxed text-slate-600">
+            Nearly one in five in-network claims on ACA Marketplace plans is denied,
+            and most denials are administrative — fixable, not clinical. Almost none
+            are ever appealed, so the money just sits on the table.
           </p>
-          <p data-reveal className="mt-3">
+          <p data-reveal className="mt-6">
             <Link
               href="/blog/payer-denial-playbook"
               className="text-sm font-medium text-blue-600 transition-colors hover:text-blue-700"
@@ -205,19 +267,20 @@ export default function Audiences() {
           </p>
         </div>
 
-        <div className="max-w-3xl">
+        {/* Right: the stacking deck fills the rest of the width. */}
+        <div>
           {audiences.map((a, i) => {
             const accent = ACCENTS[i % ACCENTS.length];
             return (
               <div
                 key={a.role}
                 data-card-wrap
-                className={reduce ? "mb-6 last:mb-0" : "mb-6 md:mb-0 md:sticky"}
-                style={reduce ? undefined : { top: `${6 + i * 2.5}rem`, zIndex: i + 1 }}
+                className="mb-6 md:sticky motion-reduce:static!"
+                style={{ top: `${6 + i * 2.5}rem`, zIndex: i + 1 }}
               >
                 <div
                   data-card
-                  className="relative overflow-hidden rounded-3xl bg-white p-8 pl-10 sm:p-10 sm:pl-12 border border-slate-200 shadow-sm md:shadow-xl md:shadow-slate-900/5"
+                  className="relative overflow-hidden rounded-3xl bg-white p-8 pl-10 sm:p-10 sm:pl-12 border border-slate-200 shadow-sm md:min-h-[24rem] md:shadow-[0_18px_50px_-20px_rgba(15,23,42,0.22)]"
                 >
                   {/* Accent rail down the left edge. */}
                   <span
@@ -239,7 +302,7 @@ export default function Audiences() {
                       <div data-icon className={`w-14 h-14 rounded-2xl ${accent.chip} flex items-center justify-center`}>
                         {a.icon}
                       </div>
-                      <span className={`text-4xl font-extralight leading-none tabular-nums ${accent.num}`}>
+                      <span className={`text-5xl font-extralight leading-none tabular-nums ${accent.num}`}>
                         0{i + 1}
                       </span>
                     </div>

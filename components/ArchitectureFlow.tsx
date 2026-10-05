@@ -5,17 +5,23 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { prefersReducedMotion } from "@/lib/motion";
+import { LightPulseLine, animateFlowWires } from "./FlowLine";
 
 gsap.registerPlugin(ScrollTrigger);
 
 /**
  * The connect flow, animated.
  *
- * Ported out of the architecture page so it can run on the client. The stages
- * assemble left to right the first time the diagram scrolls into view, then a
- * packet travels each connector on a gentle loop so the picture reads as data
- * moving through, not a static chart. Everything degrades to the plain diagram
- * under prefers-reduced-motion.
+ * Two tiers. The top tier states where Yeam sits: EHR -> Yeam -> Payer, the
+ * claim's whole round trip to getting paid. The bottom tier opens the middle
+ * box: the Source -> Adapter -> Normalized -> Engine -> Output pipeline that runs
+ * inside Yeam. Denial recovery is the slice of that lifecycle live today; the
+ * status tags carry the honesty.
+ *
+ * The stages assemble the first time the diagram scrolls into view, a light
+ * pulse streams the top-tier wires (LightPulseLine + animateFlowWires), and a
+ * packet travels each inner connector on a gentle loop. Everything degrades to
+ * the plain diagram under prefers-reduced-motion.
  *
  * Colour classes are restricted to the ones the dark-theme block in globals.css
  * overrides (tones, borders, blue tokens), so the whole thing themes for free.
@@ -115,6 +121,45 @@ function Stage({ title, children }: { title: string; children: React.ReactNode }
   );
 }
 
+/** A top-tier endpoint: EHR / Yeam / Payer. Yeam is the emphasised middle. */
+function Endpoint({
+  title,
+  sub,
+  emphasis,
+}: {
+  title: string;
+  sub: string;
+  emphasis?: boolean;
+}) {
+  return (
+    <div
+      data-arch
+      className={`flex-1 rounded-xl border px-5 py-4 text-center ${
+        emphasis
+          ? "border-[#A8BFEE] bg-[#EBF0FA]"
+          : "border-[#E0E6F5] bg-[#F7F9FE]"
+      }`}
+    >
+      <p className={`text-base font-semibold ${emphasis ? "text-[#1A4FBF]" : "text-[#1C1C1C]"}`}>
+        {title}
+      </p>
+      <p className="mt-1 text-xs leading-relaxed text-[#5A6A8A]">{sub}</p>
+    </div>
+  );
+}
+
+/** The wire between two endpoints: a streaming light pulse. Vertical on the
+ *  stacked mobile layout, horizontal on the desktop row. Driven by
+ *  animateFlowWires from the parent's onEnter (one shared reduced-motion guard). */
+function FlowWire() {
+  return (
+    <div aria-hidden data-arch className="flex shrink-0 justify-center text-[#1A4FBF] md:px-2">
+      <LightPulseLine x1={10} y1={2} x2={10} y2={32} w={20} h={34} className="md:hidden" />
+      <LightPulseLine x1={2} y1={10} x2={38} y2={10} w={40} h={20} className="hidden md:block" />
+    </div>
+  );
+}
+
 export default function ArchitectureFlow() {
   const rootRef = useRef<HTMLDivElement>(null);
 
@@ -164,6 +209,10 @@ export default function ArchitectureFlow() {
             yoyo: true,
             delay: 0.9,
           });
+
+          // Stream light along the top-tier EHR -> Yeam -> Payer wires, offset
+          // so it reads as one wave running left to right.
+          animateFlowWires(rootRef.current, { stagger: 0.4 });
         },
       });
     },
@@ -175,6 +224,32 @@ export default function ArchitectureFlow() {
       ref={rootRef}
       className="mt-10 overflow-x-auto rounded-2xl border border-[#E0E6F5] bg-white shadow-sm px-6 py-8 sm:px-8"
     >
+      {/* Top tier: where Yeam sits. The claim's round trip to getting paid. */}
+      <div className="flex flex-col items-stretch gap-3 md:flex-row md:items-center">
+        <Endpoint
+          title="EHR"
+          sub="where the claim starts · your system of record"
+        />
+        <FlowWire />
+        <Endpoint
+          title="Yeam"
+          sub="tracks every claim, works what stalls"
+          emphasis
+        />
+        <FlowWire />
+        <Endpoint
+          title="Payer"
+          sub="adjudicates · pays, or denies"
+        />
+      </div>
+
+      {/* Bottom tier: open the middle box. */}
+      <p
+        data-arch
+        className="mt-9 mb-4 text-[11px] font-semibold uppercase tracking-wider text-[#8A9BBF]"
+      >
+        Inside Yeam
+      </p>
       <div className="flex min-w-[280px] flex-col gap-3 md:flex-row md:items-center md:gap-4">
         <Stage title="Source">
           {SOURCES.map((s) => (

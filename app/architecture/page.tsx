@@ -16,7 +16,7 @@ import ArchitectureFlow from "@/components/ArchitectureFlow";
 export const metadata: Metadata = {
   title: "How Yeam Works",
   description:
-    "Denials arrive as 835s from the clearinghouse, not the EHR. Yeam ranks each denial by what is recoverable and how long is left, maps even vague codes to a specific fix, and drafts the response for a biller to review.",
+    "A claim's round trip runs from your EHR to the payer and back, and Yeam sits in the middle. Today it works the denials that stall: ranking each by what is recoverable and days left, mapping even vague codes to a specific fix, and drafting the response for a biller to review.",
 };
 
 /** Direct answers to what billers say goes wrong with denial-automation tools:
@@ -69,10 +69,11 @@ export default function ArchitecturePage() {
             How Yeam works, end to end
           </h1>
           <p className="text-lg text-[#4A5A7A] max-w-2xl">
-            Denials arrive as 835s from the clearinghouse, not the EHR. Yeam reads that
-            export, ranks each denial by what is still recoverable and how many days are
-            left to file, and drafts the specific fix, all before a biller opens the first
-            claim.
+            A claim&rsquo;s round trip runs from your EHR to the payer and back, and Yeam
+            sits in the middle. Today it works the leg that stalls: when a payer denies,
+            Yeam reads the response, ranks each denial by what is still recoverable and how
+            many days are left to file, and drafts the specific fix, all before a biller
+            opens the first claim.
           </p>
 
           <ArchitectureFlow />

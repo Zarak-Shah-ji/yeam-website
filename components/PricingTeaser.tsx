@@ -39,12 +39,13 @@ export default function PricingTeaser() {
               Pricing
             </p>
             <h2 data-reveal className="text-3xl font-light tracking-tight text-[#1C1C1C] md:text-5xl">
-              The fee buys a lower rate, not a feature gate.
+              It pays for itself on the work it saves.
             </h2>
             <p data-reveal className="mt-5 text-lg leading-relaxed text-[#5A6A8A]">
-              Every paid plan is the same product. You are not decoding which tier
-              holds the feature you need; you are picking the rate that fits your
-              volume.
+              Getting claims paid takes staff time at every step. Yeam takes on the
+              slowest, most repetitive part of that work for a fee well under what it
+              costs your team by hand — every paid plan is the same product, priced by
+              your volume.
             </p>
             <p data-reveal className="mt-8 text-sm">
               <Link href="/pricing" className="font-medium text-[#1A4FBF] transition-colors hover:text-[#1540A0]">

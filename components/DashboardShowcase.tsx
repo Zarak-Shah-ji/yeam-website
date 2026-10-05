@@ -176,7 +176,7 @@ export default function DashboardShowcase() {
               <table className="w-full min-w-[540px] border-collapse text-left">
                 <thead>
                   <tr className="border-b border-[#E0E6F5] text-[11px] font-semibold uppercase tracking-wider text-[#8A9BBF]">
-                    <th className="py-2 pr-3 font-semibold">Code</th>
+                    <th className="py-2 pl-4 pr-3 font-semibold">Code</th>
                     <th className="py-2 pr-3 font-semibold">Payer</th>
                     <th className="py-2 pr-3 font-semibold">Amount</th>
                     <th className="py-2 pr-3 font-semibold">
@@ -184,7 +184,7 @@ export default function DashboardShowcase() {
                         Deadline <Marker n={2} />
                       </span>
                     </th>
-                    <th className="py-2 font-semibold">
+                    <th className="py-2 pr-4 font-semibold">
                       <span className="inline-flex items-center gap-1.5">
                         Remedy <Marker n={3} />
                       </span>
@@ -213,7 +213,7 @@ export default function DashboardShowcase() {
                           isActive ? "bg-[#EBF0FA]" : "hover:bg-[#F7F9FE]"
                         }`}
                       >
-                        <td className="py-3 pr-3">
+                        <td className="py-3 pl-4 pr-3">
                           <span className="inline-flex items-center gap-2">
                             <span className={`h-2.5 w-2.5 shrink-0 rounded-full ${r.pri}`} />
                             <span className="font-mono text-xs font-semibold text-[#1C1C1C]">{r.code}</span>
@@ -222,7 +222,7 @@ export default function DashboardShowcase() {
                         <td className="py-3 pr-3 text-sm text-[#4A5A7A]">{r.payer}</td>
                         <td className="py-3 pr-3 text-sm font-semibold text-[#1A4FBF]">{r.amount}</td>
                         <td className="py-3 pr-3 text-sm text-[#4A5A7A]">{r.deadline}</td>
-                        <td className="py-3">
+                        <td className="py-3 pr-4">
                           <span className={`inline-flex rounded-full border px-2.5 py-0.5 text-xs font-semibold ${r.chip}`}>
                             {r.remedy}
                           </span>

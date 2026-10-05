@@ -14,6 +14,8 @@ import {
   suggestsCustom,
   MANUAL_COST_DEFAULT,
   CUSTOM_FROM_DENIALS,
+  MINUTES_PER_DENIAL,
+  hoursReclaimed,
 } from "@/lib/pricing";
 
 describe("tier table", () => {
@@ -126,6 +128,18 @@ describe("deniedFromClaims", () => {
   it("applies the denial rate and rounds to whole claims", () => {
     expect(deniedFromClaims(1_000, 0.1)).toBe(100);
     expect(deniedFromClaims(1_005, 0.1)).toBe(101);
+  });
+});
+
+describe("hoursReclaimed", () => {
+  it("converts denials and minutes-each into hours", () => {
+    expect(hoursReclaimed(100, 30)).toBe(50);
+    expect(hoursReclaimed(240, MINUTES_PER_DENIAL)).toBe(120);
+  });
+
+  it("clamps negative inputs to zero", () => {
+    expect(hoursReclaimed(-100, 30)).toBe(0);
+    expect(hoursReclaimed(100, -30)).toBe(0);
   });
 });
 

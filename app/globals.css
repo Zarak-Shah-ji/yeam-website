@@ -101,6 +101,7 @@ html.dark,
 .dark .hover\:bg-\[\#1540A0\]:hover { background-color: var(--d-primary-hover); }
 .dark .hover\:bg-\[\#EBF0FA\]:hover,
 .dark .hover\:bg-\[\#D0DAF5\]:hover,
+.dark .hover\:bg-\[\#F7F9FE\]:hover,
 .dark .hover\:bg-\[\#F0F4FC\]:hover { background-color: var(--d-surface-3); }
 
 /* Text */

@@ -16,7 +16,7 @@ import PricingCalculator from "@/components/PricingCalculator";
 export const metadata: Metadata = {
   title: "Pricing",
   description:
-    "The worklist is free and runs in your browser. Paid plans add drafting, deadline tracking and real claim data — the monthly fee buys a lower rate per denial worked, and the calculator shows it against what working a denial manually costs you.",
+    "Getting claims paid costs admin time at every step, and denials are the costliest slice. The worklist is free and runs in your browser; paid plans work the denial slice for a fee on each denial worked. The calculator shows it against your billing-admin cost.",
 };
 
 const HONEST: [string, string][] = [
@@ -48,14 +48,6 @@ const FAQ: [string, string][] = [
     "Not for the free worklist — your file never leaves your machine. Any paid plan touching real claim data does, and we sign one before a pilot starts.",
   ],
   [
-    "Can we switch tiers?",
-    "Every paid tier is the same product at a different rate, so switching changes only the arithmetic. Move whenever your volume says to.",
-  ],
-  [
-    "Where does the $25 come from?",
-    "It's the commonly cited cost of reworking a single claim; appealing one runs closer to $118. The slider defaults to the low end because the conservative number is the one worth arguing from — put your own in, it's your figure that matters.",
-  ],
-  [
     "Why is Network priced on request?",
     "At that volume the payer mix and the feed work move the number more than the denial count does. Publishing a rate we'd renegotiate in the first call is worse than saying so.",
   ],
@@ -71,12 +63,12 @@ export default function PricingPage() {
             Pricing
           </p>
           <h1 className="text-3xl md:text-5xl font-light text-[#1C1C1C] tracking-tight mb-4">
-            Pay for denials worked, not seats
+            Cut the admin cost of getting claims paid
           </h1>
           <p className="text-lg text-[#4A5A7A] max-w-2xl">
-            The worklist is free forever and runs in your browser. Paid plans add the drafting,
-            the deadline tracking and the real claim data, and the monthly fee buys a lower rate
-            per denial, not a longer feature list.
+            The worklist is free forever and runs in your browser. Paid plans work the costliest
+            slice of billing admin — your denials — for a fee on each denial worked, not a per-seat
+            license or a longer feature list.
           </p>
 
           <div className="mt-10">
